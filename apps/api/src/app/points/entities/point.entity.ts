@@ -15,13 +15,13 @@ export class Point {
   id: number;
 
   @Column()
-  team_id: string;
+  team_id: number;
 
   @Column()
-  race_id: string;
+  race_id: number;
 
   @Column()
-  prediction_type_id: string;
+  prediction_type_id: number;
 
   @Column()
   points: string;

@@ -30,7 +30,7 @@ export class Race {
   race_time: Date;
 
   @Column()
-  race_number: number;
+  race_number: string;
 
   @OneToMany(() => Prediction, (prediction) => prediction.race)
   predictions: Prediction[];

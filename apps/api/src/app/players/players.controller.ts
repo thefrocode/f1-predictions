@@ -30,6 +30,11 @@ export class PlayersController {
     return this.playersService.findOne(+id);
   }
 
+  @Get(':user_id/users')
+  findOneByUserId(@Param('user_id') user_id: string) {
+    return this.playersService.findOneByUserId(user_id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
     return this.playersService.update(+id, updatePlayerDto);

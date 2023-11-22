@@ -6,9 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Team } from '../../teams/entities/team.entity';
+import { League } from './league.entity';
 
 @Entity('league_teams')
-export class League {
+export class LeagueTeam {
   @PrimaryGeneratedColumn()
   id: number;
 

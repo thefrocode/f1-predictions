@@ -13,6 +13,9 @@ export class Player {
   @Column()
   nickname: string;
 
+  @Column()
+  user_id: string;
+
   @OneToMany(() => League, (league) => league.owner)
   leagues: League[];
 

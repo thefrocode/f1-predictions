@@ -1,23 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateRaceDto } from './dto/create-race.dto';
 import { UpdateRaceDto } from './dto/update-race.dto';
+import { Race } from './entities/race.entity';
 
 @Injectable()
 export class RacesService {
+  @InjectRepository(Race)
+  private readonly racesRepository: Repository<Race>;
+
   create(createRaceDto: CreateRaceDto) {
-    return 'This action adds a new race';
+    const newRace = this.racesRepository.create(createRaceDto);
+    return this.racesRepository.insert(newRace);
   }
 
   findAll() {
-    return `This action returns all races`;
+    return this.racesRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} race`;
+    return this.racesRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateRaceDto: UpdateRaceDto) {
-    return `This action updates a #${id} race`;
+    return this.racesRepository.update(id, updateRaceDto);
   }
 
   remove(id: number) {
