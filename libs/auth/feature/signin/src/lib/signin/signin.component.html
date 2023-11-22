@@ -1,0 +1,10 @@
+<div *ngIf="user">
+  {{ user.name }}
+  <button (click)="signOut()">Sign out</button>
+</div>
+<asl-google-signin-button type="icon" size="medium">
+  <!-- <button *ngIf="(isAuthenticated | async) === false" (click)="signIn()">
+    Sign in with Google
+  </button> -->
+  <button>Sign in with Google</button>
+</asl-google-signin-button>

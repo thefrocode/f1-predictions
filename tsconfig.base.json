@@ -18,8 +18,26 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@f1-predictions/auth/feature/signin": [
+        "libs/auth/feature/signin/src/index.ts"
+      ],
+      "@f1-predictions/home": [
+        "libs/home/feature/src/index.ts"
+      ],
+      "@f1-predictions/layout": [
+        "libs/shell/ui/layout/src/index.ts"
+      ],
+      "@f1-predictions/shell/feature/web-shell": [
+        "libs/shell/feature/web-shell/src/index.ts"
+      ],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-card-helm": [
+        "libs/shared/ui/ui-card-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        "libs/shared/ui/ui-icon-helm/src/index.ts"
       ]
     }
   },

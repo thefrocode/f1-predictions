@@ -1,0 +1,27 @@
+{
+  "name": "shell-feature-web-shell",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shell/feature/web-shell/src",
+  "prefix": "f1-predictions",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/shell/feature/web-shell/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shell/feature/web-shell/**/*.ts",
+          "libs/shell/feature/web-shell/**/*.html"
+        ]
+      }
+    }
+  }
+}
