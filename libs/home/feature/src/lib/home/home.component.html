@@ -10,7 +10,9 @@
       </div>
       <div hlmCardContent>
         <h3 hlmCardTitle class="text-primary text-center font-bold text-lg">
-          FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023
+          @if(store.active_race()){
+          {{ store.active_race().name }}
+          }
         </h3>
         <p hlmCardDescription class="text-center mt-2 text-black font-semibold">
           UNITED STATES &#x2022; 21/23

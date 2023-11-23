@@ -44,10 +44,6 @@ export class HlmCardTitleDirective {
   @HostBinding('class') _class = this.generateClasses();
 
   private generateClasses() {
-    console.log(
-      'this._variant',
-      hlm(cardTitleVariants({ variant: this._variant }), this._inputs)
-    );
     return hlm(cardTitleVariants({ variant: this._variant }), this._inputs);
   }
 }

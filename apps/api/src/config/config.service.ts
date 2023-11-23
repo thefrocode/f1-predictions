@@ -8,11 +8,10 @@ class ConfigService {
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
-    if (!value && throwOnMissing) {
+    if (value == undefined && throwOnMissing) {
       throw new Error(`config error - missing env.${key}`);
     }
-
-    return value;
+    return value as string;
   }
 
   public ensureValues(keys: string[]) {
@@ -54,7 +53,7 @@ class ConfigService {
         password: this.getValue('F1_MYSQL_PASSWORD'),
         database: this.getValue('F1_MYSQL_DATABASE'),
         autoLoadEntities: true,
-        //synchronize: true,
+        synchronize: true,
         ssl: this.isProduction(),
       };
     }

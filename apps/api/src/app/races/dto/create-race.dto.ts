@@ -32,4 +32,8 @@ export class CreateRaceDto {
   @IsNotEmpty()
   @IsString()
   race_number: string;
+
+  @IsNotEmpty()
+  @IsString()
+  country: string;
 }

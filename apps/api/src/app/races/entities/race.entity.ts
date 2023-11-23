@@ -15,6 +15,9 @@ export class Race {
   short_name: string;
 
   @Column()
+  country: string;
+
+  @Column()
   fp1_time: Date;
 
   @Column()
@@ -31,6 +34,9 @@ export class Race {
 
   @Column()
   race_number: string;
+
+  @Column()
+  active: boolean;
 
   @OneToMany(() => Prediction, (prediction) => prediction.race)
   predictions: Prediction[];

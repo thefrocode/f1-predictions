@@ -4,11 +4,13 @@ import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideRouter(appRoutes),
+    provideHttpClient(),
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

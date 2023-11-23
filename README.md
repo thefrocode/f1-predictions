@@ -63,3 +63,6 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 npx nx g @nrwl/angular:library customers-list --directory customers/feature --simpleName
 nx g @nx/angular:library shell-feature-web-shell --directory libs/shell/feature/web-shell
 nx g @nx/angular:component web-shell --directory libs/shell/feature/web-shell/src/lib/web-shell
+
+Creating Store
+npx nx g @nrwl/angular:library race-store --directory libs/races/store --simpleName --standalone=false

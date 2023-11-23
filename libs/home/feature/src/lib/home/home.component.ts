@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   HlmCardContentDirective,
@@ -12,6 +17,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { provideIcons } from '@ng-icons/core';
 import { radixBell, radixMargin } from '@ng-icons/radix-icons';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { RacesStore } from '@f1-predictions/race-store';
 
 @Component({
   selector: 'f1-predictions-home',
@@ -32,4 +38,8 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
   styleUrls: ['./home.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {}
+export class HomeComponent {
+  readonly store = inject(RacesStore);
+
+  constructor() {}
+}

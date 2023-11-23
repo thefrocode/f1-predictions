@@ -1,19 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "target": "ES2015",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -21,28 +26,22 @@
       "@f1-predictions/auth/feature/signin": [
         "libs/auth/feature/signin/src/index.ts"
       ],
-      "@f1-predictions/home": [
-        "libs/home/feature/src/index.ts"
+      "@f1-predictions/f1-predictions-api": [
+        "libs/shared/data-access/f1-predictions-api/src/index.ts"
       ],
-      "@f1-predictions/layout": [
-        "libs/shell/ui/layout/src/index.ts"
-      ],
+      "@f1-predictions/home": ["libs/home/feature/src/index.ts"],
+      "@f1-predictions/layout": ["libs/shell/ui/layout/src/index.ts"],
+      "@f1-predictions/models": ["libs/shared/data-access/models/src/index.ts"],
+      "@f1-predictions/race-store": ["libs/races/store/src/index.ts"],
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"
       ],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],
-      "@spartan-ng/ui-card-helm": [
-        "libs/shared/ui/ui-card-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-icon-helm": [
-        "libs/shared/ui/ui-icon-helm/src/index.ts"
-      ]
+      "@spartan-ng/ui-card-helm": ["libs/shared/ui/ui-card-helm/src/index.ts"],
+      "@spartan-ng/ui-icon-helm": ["libs/shared/ui/ui-icon-helm/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
