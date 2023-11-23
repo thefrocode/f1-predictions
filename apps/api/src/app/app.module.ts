@@ -9,9 +9,12 @@ import { TeamsModule } from './teams/teams.module';
 import { DriversModule } from './drivers/drivers.module';
 import { PredictionsModule } from './predictions/predictions.module';
 import { PointsModule } from './points/points.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { configService } from '../config/config.service';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     RacesModule,
     LeaguesModule,
     PlayersModule,

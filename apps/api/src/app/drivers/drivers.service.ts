@@ -26,4 +26,8 @@ export class DriversService {
   update(id: number, updateDriverDto: UpdateDriverDto) {
     return this.driversRepository.update(id, updateDriverDto);
   }
+
+  remove(id: number) {
+    return this.driversRepository.delete(id);
+  }
 }
