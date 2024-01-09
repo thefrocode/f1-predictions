@@ -5,6 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Player } from '../../players/entities/player.entity';
 import { Team } from '../../teams/entities/team.entity';
 import { League } from './league.entity';
 
@@ -19,6 +20,9 @@ export class LeagueTeam {
   @Column()
   team_id: number;
 
+  @Column()
+  player_id: number;
+
   @OneToOne(() => League)
   @JoinColumn({ name: 'league_id' })
   league: League;
@@ -26,4 +30,8 @@ export class LeagueTeam {
   @OneToOne(() => Team)
   @JoinColumn({ name: 'team_id' })
   team: Team;
+
+  @OneToOne(() => Player)
+  @JoinColumn({ name: 'player_id' })
+  player: Player;
 }

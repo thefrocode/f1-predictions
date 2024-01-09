@@ -1,0 +1,11 @@
+<div>
+  @for(team of teamsStore.teams(); track team.id){
+  <div class="flex flex-row gap-4">
+    <div class="flex flex-col w-1/2">
+      <p class="text-primary font-semibold text-lg">{{ team.name }}</p>
+      <p class="text-primary font-semibold text-lg">{{ team.id }}</p>
+    </div>
+  </div>
+  }
+</div>
+<button (click)="openCreateTeamDialog()">Open Dialog</button>

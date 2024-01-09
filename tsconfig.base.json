@@ -23,19 +23,37 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@f1-predictions/add-league-dialog": [
+        "libs/leagues/ui/add-league-dialog/src/index.ts"
+      ],
       "@f1-predictions/auth/feature/signin": [
         "libs/auth/feature/signin/src/index.ts"
+      ],
+      "@f1-predictions/create-team-dialog": [
+        "libs/teams/ui/create-team-dialog/src/index.ts"
       ],
       "@f1-predictions/f1-predictions-api": [
         "libs/shared/data-access/f1-predictions-api/src/index.ts"
       ],
       "@f1-predictions/home": ["libs/home/feature/src/index.ts"],
+      "@f1-predictions/join-team-dialog": [
+        "libs/leagues/ui/join-league-dialog/src/index.ts"
+      ],
       "@f1-predictions/layout": ["libs/shell/ui/layout/src/index.ts"],
+      "@f1-predictions/leagues-list": [
+        "libs/leagues/features/leagues-list/src/index.ts"
+      ],
+      "@f1-predictions/leagues-store": ["libs/leagues/store/src/index.ts"],
       "@f1-predictions/models": ["libs/shared/data-access/models/src/index.ts"],
+      "@f1-predictions/players-store": ["libs/players/store/src/index.ts"],
       "@f1-predictions/race-store": ["libs/races/store/src/index.ts"],
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"
       ],
+      "@f1-predictions/teams-list": [
+        "libs/teams/features/teams-list/src/index.ts"
+      ],
+      "@f1-predictions/teams-store": ["libs/teams/store/src/index.ts"],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],

@@ -1,16 +1,31 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { provideToastr } from 'ngx-toastr';
+import { CountdownModule, provideCountdown } from 'ngx-countdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideRouter(appRoutes),
     provideHttpClient(),
+    provideToastr({
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
+    provideCountdown({ format: `DD HH:mm:ss` }),
+    importProvidersFrom(
+      MatDialogModule,
+      BrowserAnimationsModule,
+      CountdownModule
+    ),
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

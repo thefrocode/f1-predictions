@@ -9,14 +9,16 @@
         />
       </div>
       <div hlmCardContent>
+        @if(store.active_race()){
+
         <h3 hlmCardTitle class="text-primary text-center font-bold text-lg">
-          @if(store.active_race()){
           {{ store.active_race().name }}
-          }
         </h3>
         <p hlmCardDescription class="text-center mt-2 text-black font-semibold">
-          UNITED STATES &#x2022; 21/23
+          {{ store.active_race().country }} &#x2022;
+          {{ store.active_race().race_number }}
         </p>
+        }
       </div>
     </section>
     <div class="flex flex-col gap-4 w-5/12">
@@ -101,3 +103,7 @@
     <section hlmCard class="w-1/2">World</section>
   </div>
 </div>
+
+<countdown *ngIf="config" [config]="config"> </countdown>
+<!-- <leagues-list></leagues-list>
+<teams-list></teams-list> -->

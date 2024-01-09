@@ -1,0 +1,20 @@
+<p>leagues-list works!</p>
+
+<div>
+  @for(league of leaguesStore.leagues(); track league.id){
+  <div class="flex flex-row gap-4">
+    <div class="flex flex-col w-1/2">
+      <p class="text-primary font-semibold text-lg">{{ league.name }}</p>
+      <p class="text-primary font-semibold text-lg">{{ league.id }}</p>
+      <button (click)="openJoinLeagueDialog(league.id)">Join</button>
+    </div>
+    <div class="flex flex-col w-1/2">
+      <p class="text-primary font-semibold text-lg">{{ league.name }}</p>
+      <p class="text-primary font-semibold text-lg">{{ league.id }}</p>
+      <button (click)="openJoinLeagueDialog(league.id)">Join</button>
+    </div>
+  </div>
+  }
+</div>
+
+<button (click)="openCreateLeagueDialog()">Open Dialog</button>

@@ -11,7 +11,7 @@ export class Player {
   name: string;
 
   @Column()
-  nickname: string;
+  nick_name: string;
 
   @Column()
   user_id: string;

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AddTeamToLeagueDto } from './dto/add-team-to-league.dto';
+import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { League } from './entities/league.entity';
@@ -19,8 +19,8 @@ export class LeaguesService {
     const newLeague = this.leaguesRepository.create(createLeagueDto);
     return this.leaguesRepository.insert(newLeague);
   }
-  addTeamToLeague(addTeamToLeagueDto: AddTeamToLeagueDto) {
-    const newLeagueTeam = this.leagueTeamsRepository.create(addTeamToLeagueDto);
+  addTeamToLeague(joinLeagueDto: JoinLeagueDto) {
+    const newLeagueTeam = this.leagueTeamsRepository.create(joinLeagueDto);
     return this.leagueTeamsRepository.insert(newLeagueTeam);
   }
 

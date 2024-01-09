@@ -10,7 +10,7 @@ import {
 import { LeaguesService } from './leagues.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
-import { AddTeamToLeagueDto } from './dto/add-team-to-league.dto';
+import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 
 @Controller('leagues')
 export class LeaguesController {
@@ -20,9 +20,9 @@ export class LeaguesController {
   create(@Body() createLeagueDto: CreateLeagueDto) {
     return this.leaguesService.create(createLeagueDto);
   }
-  @Post('add_teams')
-  addTeamToLeague(@Body() addTeamToLeagueDto: AddTeamToLeagueDto) {
-    return this.leaguesService.addTeamToLeague(addTeamToLeagueDto);
+  @Post('join')
+  addTeamToLeague(@Body() joinLeagueDto: JoinLeagueDto) {
+    return this.leaguesService.addTeamToLeague(joinLeagueDto);
   }
 
   @Get()

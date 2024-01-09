@@ -25,9 +25,13 @@ export class TeamsController {
     return this.teamsService.findAll();
   }
 
-  @Get(':player_id/players')
+  @Get(':player_id/player')
   findAllByPlayerId(@Param('player_id') player_id: string) {
     return this.teamsService.findAllByPlayerId(+player_id);
+  }
+  @Get(':league_id/league')
+  findAllByLeagueId(@Param('league_id') league_id: string) {
+    return this.teamsService.findAllByLeagueId(+league_id);
   }
 
   @Get(':id')
