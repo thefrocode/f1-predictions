@@ -31,20 +31,53 @@
           class="text-white flex flex-row justify-center gap-2"
         >
           <countdown *ngIf="config" [config]="config"> </countdown>
-          <!-- <div>
-            <p class="font-bold text-2xl">{{ days }}</p>
-            <p>Days</p>
+        </div>
+      </div>
+    </section>
+    <section hlmCard>
+      <div class="p-2 flex flex-col gap-4">
+        <p hlmCardTitle>Leagues</p>
+        <div hlmCardDescription class="flex flex-col justify-center gap-2">
+          <div class="flex flex-row gap-4">
+            <select
+              class="bg-primary text-white"
+              (change)="fetchPlayersByLeagueId($event.target)"
+            >
+              @for (league of players.leagues(); track league.id) {
+              <option value="{{ league.league_id }}">
+                {{ league.league.name }}
+              </option>
+              } @empty { Empty list of users }
+            </select>
+
+            <hlm-icon
+              size="30px"
+              name="radixPlus"
+              class="self-center text-primary"
+            />
+
+            <hlm-icon
+              size="30px"
+              name="radixEnter"
+              class="self-center text-primary"
+            />
           </div>
-          <p class="align-self-center font-bold text-2xl">:</p>
           <div>
-            <p class="font-bold text-2xl">{{ hours }}</p>
-            <p>Hrs</p>
+            <table class="w-full">
+              <thead class="bg-primary text-white rounded">
+                <tr class="rounded">
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (player of leagues.players(); track player.id) {
+                <tr>
+                  <td>{{ player.player.name }}</td>
+                </tr>
+                } @empty { Empty list of users }
+              </tbody>
+            </table>
           </div>
-          <p class="font-bold text-2xl">:</p>
-          <div>
-            <p class="font-bold text-2xl">{{ minutes }}</p>
-            <p>Mins</p>
-          </div> -->
         </div>
       </div>
     </section>

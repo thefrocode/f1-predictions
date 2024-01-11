@@ -34,10 +34,10 @@ export class LeaguesController {
   findOne(@Param('id') id: string) {
     return this.leaguesService.findOne(+id);
   }
-
-  @Get('/teams/:player_id')
-  findLeaguesByPlayerId(@Param('player_id') player_id: string) {
-    return this.leaguesService.findLeaguesByPlayerId(+player_id);
+  @Get(':league_id/players')
+  findPlayersByLeagueId(@Param('league_id') league_id: string) {
+    console.log('league_id', league_id);
+    return this.leaguesService.findPlayersByLeagueId(+league_id);
   }
 
   @Patch(':id')

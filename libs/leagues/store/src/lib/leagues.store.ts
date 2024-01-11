@@ -10,6 +10,7 @@ import {
   AddLeagueTeam,
   League,
   LeaguesState,
+  Player,
 } from '@f1-predictions/models';
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
@@ -20,6 +21,7 @@ import { tapResponse } from '@ngrx/operators';
 
 const initialState: LeaguesState = {
   leagues: [],
+  players: [],
   isLoading: false,
   error: null,
 };
@@ -40,6 +42,23 @@ export const LeaguesStore = signalStore(
               tapResponse({
                 next: (leagues: League[]) => {
                   patchState(store, { leagues });
+                },
+                error: console.error,
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            )
+          )
+        )
+      ),
+      loadAllPlayersPerLeague: rxMethod<number>(
+        pipe(
+          tap(() => patchState(store, { isLoading: true })),
+          switchMap((league_id) =>
+            leagueApi.loadAllPlayersPerLeague(league_id).pipe(
+              tapResponse({
+                next: (players: Player[]) => {
+                  console.log(players);
+                  patchState(store, { players });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),

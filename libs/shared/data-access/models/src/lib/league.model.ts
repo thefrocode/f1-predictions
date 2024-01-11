@@ -1,3 +1,5 @@
+import { Player } from './player.model';
+
 export interface League {
   id: number;
   name: string;
@@ -7,6 +9,7 @@ export type AddLeague = Omit<League, 'id'>;
 
 export type LeaguesState = {
   leagues: League[];
+  players: Player[];
   isLoading: boolean;
   error: any;
 };

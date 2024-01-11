@@ -1,3 +1,5 @@
+import { LeagueTeam } from './league-team.model';
+
 export interface Player {
   id: number;
   name: string;
@@ -7,6 +9,7 @@ export interface Player {
 
 export type PlayersState = {
   players: Player[];
+  leagues: LeagueTeam[];
   isLoading: boolean;
   error: any;
 };

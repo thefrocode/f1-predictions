@@ -29,6 +29,11 @@ export class PlayersController {
   findOne(@Param('id') id: string) {
     return this.playersService.findOne(+id);
   }
+  @Get(':player_id/leagues')
+  findLeaguesByPlayerId(@Param('player_id') player_id: string) {
+    console.log('player_id', player_id);
+    return this.playersService.findLeaguesByPlayerId(+player_id);
+  }
 
   @Get(':user_id/users')
   findOneByUserId(@Param('user_id') user_id: string) {

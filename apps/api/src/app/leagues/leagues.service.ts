@@ -27,13 +27,13 @@ export class LeaguesService {
   findAll() {
     return this.leaguesRepository.find();
   }
-
-  findLeaguesByPlayerId(playerId: number) {
+  findPlayersByLeagueId(leagueId: number) {
     return this.leagueTeamsRepository.find({
-      relations: ['league'],
-      where: { player_id: playerId },
+      relations: ['player'],
+      where: { league_id: leagueId },
     });
   }
+
   findOne(id: number) {
     return this.leaguesRepository.findOne({ where: { id } });
   }
