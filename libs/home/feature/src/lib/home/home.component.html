@@ -1,4 +1,57 @@
-<div class="w-full">
+<div class="flex flex-row m-8">
+  <div class="flex flex-col gap-4 w-3/4">
+    <section hlmCard class="w-7/12">
+      <div hlmCardHeader>
+        <img
+          src="https://via.placeholder.com/150"
+          alt="placeholder"
+          class="w-10 self-center"
+        />
+      </div>
+      <div hlmCardContent>
+        @if(store.active_race()){
+
+        <h3 hlmCardTitle class="text-primary text-center font-bold text-lg">
+          {{ store.active_race().name }}
+        </h3>
+        <p hlmCardDescription class="text-center mt-2 text-black font-semibold">
+          <!-- {{ store.active_race().country }} &#x2022; -->
+          {{ store.active_race().race_number }}
+        </p>
+        }
+      </div>
+    </section>
+  </div>
+  <div class="flex flex-col gap-4 w-1/4">
+    <section hlmCard class="text-center bg-primary shrink-1">
+      <div class="p-2 flex flex-col gap-4">
+        <p hlmCardTitle class="text-white">Team Lock Deadline</p>
+        <div
+          hlmCardDescription
+          class="text-white flex flex-row justify-center gap-2"
+        >
+          <countdown *ngIf="config" [config]="config"> </countdown>
+          <!-- <div>
+            <p class="font-bold text-2xl">{{ days }}</p>
+            <p>Days</p>
+          </div>
+          <p class="align-self-center font-bold text-2xl">:</p>
+          <div>
+            <p class="font-bold text-2xl">{{ hours }}</p>
+            <p>Hrs</p>
+          </div>
+          <p class="font-bold text-2xl">:</p>
+          <div>
+            <p class="font-bold text-2xl">{{ minutes }}</p>
+            <p>Mins</p>
+          </div> -->
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- <div class="w-full">
   <div class="flex flex-row gap-4 mx-auto w-3/4 m-8">
     <section hlmCard class="w-7/12">
       <div hlmCardHeader>
@@ -104,6 +157,6 @@
   </div>
 </div>
 
-<countdown *ngIf="config" [config]="config"> </countdown>
+ -->
 <!-- <leagues-list></leagues-list>
 <teams-list></teams-list> -->

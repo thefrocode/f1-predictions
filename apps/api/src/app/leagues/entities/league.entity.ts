@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
+import { LeagueTeam } from './league_team.entity';
 
 @Entity('leagues')
 export class League {
@@ -23,4 +25,7 @@ export class League {
   @ManyToOne(() => Player, (player) => player.leagues)
   @JoinColumn({ name: 'owner_id' })
   owner: Player;
+
+  @OneToMany(() => LeagueTeam, (league_team) => league_team.league)
+  leagueTeams: LeagueTeam[];
 }

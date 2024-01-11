@@ -28,6 +28,12 @@ export class LeaguesService {
     return this.leaguesRepository.find();
   }
 
+  findLeaguesByPlayerId(playerId: number) {
+    return this.leagueTeamsRepository.find({
+      relations: ['league'],
+      where: { player_id: playerId },
+    });
+  }
   findOne(id: number) {
     return this.leaguesRepository.findOne({ where: { id } });
   }
