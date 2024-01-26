@@ -24,9 +24,8 @@ class ConfigService {
     return this.getValue('PORT', true);
   }
   public getCert() {
-    const caCert = fs.readFileSync(this.getValue('CA_CERT'), 'utf8');
-    console.log(caCert);
-    return caCert;
+    console.log(this.getValue('CA_CERT'));
+    return this.getValue('CA_CERT');
   }
 
   public isProduction() {
