@@ -26,7 +26,7 @@
     "@ng-icons/core": "^26.0.0",
     "@ng-icons/radix-icons": "^26.0.0",
     "@ngrx/operators": "^17.0.0",
-    "@ngrx/signals": "^17.0.0",
+    "@ngrx/signals": "^17.0.1",
     "@nx/angular": "17.1.1",
     "@spartan-ng/nx": "^0.0.1-alpha.316",
     "@spartan-ng/ui-core": "^0.0.1-alpha.309",

@@ -34,22 +34,18 @@ export const LeaguesStore = signalStore(
       leagueApi = inject(LeagueApiService),
       toastr = inject(ToastrService)
     ) => ({
-      loadAll: rxMethod<string>(
-        pipe(
-          tap(() => patchState(store, { isLoading: true })),
-          switchMap(() =>
-            leagueApi.loadAll().pipe(
-              tapResponse({
-                next: (leagues: League[]) => {
-                  patchState(store, { leagues });
-                },
-                error: console.error,
-                finalize: () => patchState(store, { isLoading: false }),
-              })
-            )
-          )
-        )
-      ),
+      loadAll() {
+        patchState(store, { isLoading: true });
+        leagueApi.loadAll().pipe(
+          tapResponse({
+            next: (leagues: League[]) => {
+              patchState(store, { leagues });
+            },
+            error: console.error,
+            finalize: () => patchState(store, { isLoading: false }),
+          })
+        );
+      },
       loadAllPlayersPerLeague: rxMethod<number>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),

@@ -13,8 +13,8 @@ import { CreateTeamDialogComponent } from '@f1-predictions/create-team-dialog';
   styleUrls: ['./teams-list.component.css'],
 })
 export class TeamsListComponent {
-  playersStore = inject(PlayersStore);
-  teamsStore = inject(TeamsStore);
+  playersStore: any = inject(PlayersStore);
+  teamsStore: any = inject(TeamsStore);
 
   constructor(public dialog: MatDialog) {
     effect(() => {

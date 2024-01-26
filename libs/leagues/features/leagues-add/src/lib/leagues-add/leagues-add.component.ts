@@ -16,8 +16,8 @@ import { AddLeagueDialogComponent } from '@f1-predictions/add-league-dialog';
   providers: [provideIcons({ radixPlus })],
 })
 export class LeaguesAddComponent {
-  leaguesStore = inject(LeaguesStore);
-  playersStore = inject(PlayersStore);
+  leaguesStore: any = inject(LeaguesStore);
+  playersStore: any = inject(PlayersStore);
 
   constructor(private dialog: MatDialog) {}
   openCreateLeagueDialog() {

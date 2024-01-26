@@ -14,9 +14,9 @@ import { JoinTeamDialogComponent } from '@f1-predictions/join-team-dialog';
   styleUrls: ['./leagues-list.component.css'],
 })
 export class LeaguesListComponent {
-  leaguesStore = inject(LeaguesStore);
-  playersStore = inject(PlayersStore);
-  teamsStore = inject(TeamsStore);
+  leaguesStore: any = inject(LeaguesStore);
+  playersStore: any = inject(PlayersStore);
+  teamsStore: any = inject(TeamsStore);
   activePlayerLeagues!: Set<number>;
   constructor(private dialog: MatDialog) {
     effect(() => {

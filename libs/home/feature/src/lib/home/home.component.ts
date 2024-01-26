@@ -76,10 +76,10 @@ const CountdownTimeUnits: Array<[string, number]> = [
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  readonly store = inject(RacesStore);
-  readonly players = inject(PlayersStore);
-  readonly leagues = inject(LeaguesStore);
-  readonly teams = inject(TeamsStore);
+  readonly store: any = inject(RacesStore);
+  readonly players: any = inject(PlayersStore);
+  readonly leagues: any = inject(LeaguesStore);
+  readonly teams: any = inject(TeamsStore);
   active_race = this.store.active_race;
   targetDate!: Date; // Set your target date here
   leftTime: number = 0;
