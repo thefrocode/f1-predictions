@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Race } from '@f1-predictions/models';
 import { Observable } from 'rxjs';
+import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,9 @@ import { Observable } from 'rxjs';
 export class RaceApiService {
   http = inject(HttpClient);
 
-  constructor() {}
+  constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadAll(): Observable<Race[]> {
-    return this.http.get<Race[]>(`http://localhost:3000/api/races`);
+    return this.http.get<Race[]>(`${this.appConfig.baseURL}/races`);
   }
 }

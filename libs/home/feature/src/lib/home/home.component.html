@@ -36,48 +36,22 @@
     </section>
     <section hlmCard>
       <div class="p-2 flex flex-col gap-4">
-        <p hlmCardTitle>Leagues</p>
+        <div hlmCardTitle class="flex flex-row">
+          <p>Leagues</p>
+          <leagues-add></leagues-add>
+          <hlm-icon
+            size="30px"
+            name="{{ toggleLeaguesListIcon }}"
+            class="self-center text-primary"
+            (click)="toggleLeaguesList()"
+          />
+        </div>
         <div hlmCardDescription class="flex flex-col justify-center gap-2">
-          <div class="flex flex-row gap-4">
-            <select
-              class="bg-primary text-white"
-              (change)="fetchPlayersByLeagueId($event.target)"
-            >
-              @for (league of players.leagues(); track league.id) {
-              <option value="{{ league.league_id }}">
-                {{ league.league.name }}
-              </option>
-              } @empty { Empty list of users }
-            </select>
-
-            <hlm-icon
-              size="30px"
-              name="radixPlus"
-              class="self-center text-primary"
-            />
-
-            <hlm-icon
-              size="30px"
-              name="radixEnter"
-              class="self-center text-primary"
-            />
-          </div>
-          <div>
-            <table class="w-full">
-              <thead class="bg-primary text-white rounded">
-                <tr class="rounded">
-                  <th>Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (player of leagues.players(); track player.id) {
-                <tr>
-                  <td>{{ player.player.name }}</td>
-                </tr>
-                } @empty { Empty list of users }
-              </tbody>
-            </table>
-          </div>
+          @if(detailedLeague){
+          <league-players-list></league-players-list>
+          }@else{
+          <leagues-list></leagues-list>
+          }
         </div>
       </div>
     </section>

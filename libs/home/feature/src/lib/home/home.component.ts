@@ -20,6 +20,7 @@ import {
   radixMargin,
   radixPlus,
   radixEnter,
+  radixArrowLeft,
 } from '@ng-icons/radix-icons';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { RacesStore } from '@f1-predictions/race-store';
@@ -29,6 +30,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CountdownComponent, CountdownConfig } from 'ngx-countdown';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
+import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
+import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
+import { TeamsStore } from '@f1-predictions/teams-store';
 const CountdownTimeUnits: Array<[string, number]> = [
   ['Y', 1000 * 60 * 60 * 24 * 365], // years
   ['M', 1000 * 60 * 60 * 24 * 30], // months
@@ -55,8 +59,18 @@ const CountdownTimeUnits: Array<[string, number]> = [
     LeaguesListComponent,
     TeamsListComponent,
     CountdownComponent,
+    LeaguePlayersListComponent,
+    LeaguesAddComponent,
   ],
-  providers: [provideIcons({ radixMargin, radixBell, radixPlus, radixEnter })],
+  providers: [
+    provideIcons({
+      radixMargin,
+      radixBell,
+      radixPlus,
+      radixEnter,
+      radixArrowLeft,
+    }),
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   //changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,10 +79,13 @@ export class HomeComponent {
   readonly store = inject(RacesStore);
   readonly players = inject(PlayersStore);
   readonly leagues = inject(LeaguesStore);
+  readonly teams = inject(TeamsStore);
   active_race = this.store.active_race;
   targetDate!: Date; // Set your target date here
   leftTime: number = 0;
   config!: CountdownConfig;
+  detailedLeague = true;
+  toggleLeaguesListIcon = 'radixEnter';
 
   constructor() {
     effect(
@@ -134,6 +151,7 @@ export class HomeComponent {
         }
         if (this.players.active_player()) {
           this.players.loadAllLeaguesPerPlayer(this.players.active_player().id);
+          this.teams.loadTeamsByPlayer(this.players.active_player().id);
         }
         if (this.leagues.players()) {
           console.log(this.leagues.players());
@@ -144,7 +162,11 @@ export class HomeComponent {
       }
     );
   }
-  fetchPlayersByLeagueId(league_id: any) {
-    this.leagues.loadAllPlayersPerLeague(league_id.value);
+  toggleLeaguesList() {
+    this.detailedLeague = !this.detailedLeague;
+    this.toggleLeaguesListIcon = this.detailedLeague
+      ? 'radixEnter'
+      : 'radixArrowLeft';
+    console.log(this.toggleLeaguesListIcon);
   }
 }

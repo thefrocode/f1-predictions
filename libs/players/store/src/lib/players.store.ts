@@ -22,9 +22,15 @@ const initialState: PlayersState = {
 export const PlayersStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ players }) => ({
+  withComputed(({ players, leagues }) => ({
     active_player: computed(() =>
       players().find((player) => player.user_id === 'dcgfchvj')
+    ),
+    active_player_leagues: computed(() =>
+      leagues().reduce((acc: number[], league) => {
+        acc.push(league.id);
+        return acc;
+      }, [])
     ),
   })),
   withMethods((store, playerApi = inject(PlayerApiService)) => ({

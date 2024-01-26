@@ -26,6 +26,7 @@
       "@f1-predictions/add-league-dialog": [
         "libs/leagues/ui/add-league-dialog/src/index.ts"
       ],
+      "@f1-predictions/app-config": ["libs/shared/app-config/src/index.ts"],
       "@f1-predictions/auth/feature/signin": [
         "libs/auth/feature/signin/src/index.ts"
       ],
@@ -40,6 +41,15 @@
         "libs/leagues/ui/join-league-dialog/src/index.ts"
       ],
       "@f1-predictions/layout": ["libs/shell/ui/layout/src/index.ts"],
+      "@f1-predictions/league-players-list": [
+        "libs/leagues/features/league-players-list/src/index.ts"
+      ],
+      "@f1-predictions/leagues-add": [
+        "libs/leagues/features/leagues-add/src/index.ts"
+      ],
+      "@f1-predictions/leagues-join": [
+        "libs/leagues/features/leagues-join/src/index.ts"
+      ],
       "@f1-predictions/leagues-list": [
         "libs/leagues/features/leagues-list/src/index.ts"
       ],

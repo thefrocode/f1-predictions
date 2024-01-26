@@ -66,3 +66,5 @@ nx g @nx/angular:component web-shell --directory libs/shell/feature/web-shell/sr
 
 Creating Store
 npx nx g @nrwl/angular:library race-store --directory libs/races/store --simpleName --standalone=false
+
+npx nx g @nx/angular:library league-players-list --directory libs/leagues/features/league-players-list
