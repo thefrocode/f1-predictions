@@ -23,10 +23,6 @@ class ConfigService {
   public getPort() {
     return this.getValue('PORT', true);
   }
-  public getCert() {
-    console.log(this.getValue('CA_CERT'));
-    return this.getValue('CA_CERT');
-  }
 
   public isProduction() {
     const mode = this.getValue('MODE', false);
