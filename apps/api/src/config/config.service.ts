@@ -37,10 +37,10 @@ class ConfigService {
         username: this.getValue('MYSQL_USER'),
         password: this.getValue('MYSQL_PASSWORD'),
         database: this.getValue('MYSQL_DATABASE'),
-
+        synchronize: true,
         autoLoadEntities: true,
         logging: true,
-        ssl: false,
+        ssl: true,
       };
     } else {
       return {
