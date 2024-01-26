@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as fs from 'fs';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -22,6 +23,11 @@ class ConfigService {
   public getPort() {
     return this.getValue('PORT', true);
   }
+  public getCert() {
+    const caCert = fs.readFileSync(this.getValue('CA_CERT'), 'utf8');
+    console.log(caCert);
+    return caCert;
+  }
 
   public isProduction() {
     const mode = this.getValue('MODE', false);
@@ -41,7 +47,7 @@ class ConfigService {
         autoLoadEntities: true,
         logging: true,
         ssl: {
-          ca: this.getValue('CA_CERT'),
+          ca: this.getCert(),
         },
       };
     } else {
