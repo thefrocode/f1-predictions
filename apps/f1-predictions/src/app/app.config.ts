@@ -9,10 +9,13 @@ import { provideHttpClient } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { provideToastr } from 'ngx-toastr';
 import { CountdownModule, provideCountdown } from 'ngx-countdown';
+import { getAppConfigProvider } from '@f1-predictions/app-config';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
+    getAppConfigProvider(environment),
     provideRouter(appRoutes),
     provideHttpClient(),
     provideToastr({
