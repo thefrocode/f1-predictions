@@ -45,8 +45,11 @@ class ConfigService {
         synchronize: true,
         autoLoadEntities: true,
         logging: true,
-        ssl: {
-          ca: this.getCert(),
+        ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: true,
+          },
         },
       };
     } else {
