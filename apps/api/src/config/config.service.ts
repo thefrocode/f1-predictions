@@ -40,9 +40,7 @@ class ConfigService {
 
         autoLoadEntities: true,
         logging: true,
-        ssl: {
-          ca: this.getValue('CA_CERT'),
-        },
+        ssl: false,
       };
     } else {
       return {
