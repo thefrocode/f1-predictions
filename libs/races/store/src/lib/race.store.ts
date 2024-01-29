@@ -24,22 +24,27 @@ export const RacesStore = signalStore(
     active_race: computed(() => races().find((race) => race.active)),
   })),
   withMethods((store, raceApi = inject(RaceApiService)) => ({
-    loadAll() {
-      patchState(store, { isLoading: true });
-      raceApi.loadAll().pipe(
-        tapResponse({
-          next: (races: Race[]) => {
-            patchState(store, { races });
-          },
-          error: console.error,
-          finalize: () => patchState(store, { isLoading: false }),
-        })
-      );
-    },
+    loadAll: rxMethod(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap(() =>
+          raceApi.loadAll().pipe(
+            tapResponse({
+              next: (races: Race[]) => {
+                console.log(races);
+                patchState(store, { races });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          )
+        )
+      )
+    ),
   })),
   withHooks({
     onInit({ loadAll }) {
-      loadAll();
+      loadAll('');
     },
   })
 );

@@ -5,7 +5,7 @@ export interface LeagueTeam {
   league_id: number;
   team_id: number;
   player_id: number;
-  league: League;
+  league?: League;
 }
 
 export type AddLeagueTeam = Omit<LeagueTeam, 'id'>;

@@ -78,10 +78,10 @@ const CountdownTimeUnits: Array<[string, number]> = [
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  readonly store: any = inject(RacesStore);
-  readonly players: any = inject(PlayersStore);
-  readonly leagues: any = inject(LeaguesStore);
-  readonly teams: any = inject(TeamsStore);
+  readonly store = inject(RacesStore);
+  readonly players = inject(PlayersStore);
+  readonly leagues = inject(LeaguesStore);
+  readonly teams = inject(TeamsStore);
   active_race = this.store.active_race;
   targetDate!: Date; // Set your target date here
   leftTime: number = 0;
@@ -93,7 +93,7 @@ export class HomeComponent {
     effect(
       () => {
         if (this.store.active_race()) {
-          this.targetDate = new Date(this.store.active_race().race_time);
+          this.targetDate = new Date(this.store.active_race()!.race_time);
           this.leftTime = Math.max(
             0,
             Math.floor(
@@ -152,8 +152,10 @@ export class HomeComponent {
           };
         }
         if (this.players.active_player()) {
-          this.players.loadAllLeaguesPerPlayer(this.players.active_player().id);
-          this.teams.loadTeamsByPlayer(this.players.active_player().id);
+          this.players.loadAllLeaguesPerPlayer(
+            this.players.active_player()!.id
+          );
+          this.teams.loadTeamsByPlayer(this.players.active_player()!.id);
         }
         if (this.leagues.players()) {
           console.log(this.leagues.players());

@@ -13,8 +13,8 @@ import { CreateTeamDialogComponent } from '@f1-predictions/create-team-dialog';
   styleUrls: ['./teams-list.component.css'],
 })
 export class TeamsListComponent {
-  playersStore: any = inject(PlayersStore);
-  teamsStore: any = inject(TeamsStore);
+  playersStore = inject(PlayersStore);
+  teamsStore = inject(TeamsStore);
 
   constructor(public dialog: MatDialog) {
     effect(() => {
@@ -27,18 +27,18 @@ export class TeamsListComponent {
   }
   ngOnInit(): void {
     if (this.playersStore.active_player()) {
-      this.teamsStore.loadTeamsByPlayer(this.playersStore.active_player().id);
+      this.teamsStore.loadTeamsByPlayer(this.playersStore.active_player()!.id);
     }
   }
   openCreateTeamDialog() {
     const dialogRef = this.dialog.open(CreateTeamDialogComponent);
     dialogRef.afterClosed().subscribe((result: any) => {
       if (!result) return;
-      if (!this.playersStore.active_player().id) return;
+      if (!this.playersStore.active_player()) return;
 
       this.teamsStore.createTeam({
         name: result.name,
-        player_id: this.playersStore.active_player().id,
+        player_id: this.playersStore.active_player()!.id,
       });
     });
   }

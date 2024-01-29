@@ -34,11 +34,12 @@ export class LeaguesJoinComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (!result) return;
 
-      console.log(result);
+      if (!this.playersStore.active_player()) return;
+
       this.leaguesStore.joinLeague({
         league_id: league_id,
         team_id: +result.team_id,
-        player_id: this.playersStore.active_player().id,
+        player_id: this.playersStore.active_player()!.id,
       });
     });
   }

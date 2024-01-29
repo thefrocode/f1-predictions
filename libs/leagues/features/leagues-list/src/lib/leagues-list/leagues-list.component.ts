@@ -14,9 +14,9 @@ import { JoinTeamDialogComponent } from '@f1-predictions/join-team-dialog';
   styleUrls: ['./leagues-list.component.css'],
 })
 export class LeaguesListComponent {
-  leaguesStore: any = inject(LeaguesStore);
-  playersStore: any = inject(PlayersStore);
-  teamsStore: any = inject(TeamsStore);
+  leaguesStore = inject(LeaguesStore);
+  playersStore = inject(PlayersStore);
+  teamsStore = inject(TeamsStore);
   activePlayerLeagues!: Set<number>;
   constructor(private dialog: MatDialog) {
     effect(() => {
@@ -35,10 +35,12 @@ export class LeaguesListComponent {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (!result) return;
+
+      if (!this.playersStore.active_player()) return;
       this.leaguesStore.joinLeague({
         league_id: league_id,
         team_id: +result.team_id,
-        player_id: this.playersStore.active_player().id,
+        player_id: this.playersStore.active_player()!.id,
       });
     });
   }

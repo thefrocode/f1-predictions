@@ -15,8 +15,8 @@ import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
   providers: [provideIcons({ radixPlus, radixEnter })],
 })
 export class LeaguePlayersListComponent {
-  readonly leagues: any = inject(LeaguesStore);
-  readonly players: any = inject(PlayersStore);
+  leagues = inject(LeaguesStore);
+  players = inject(PlayersStore);
 
   fetchPlayersByLeagueId(league_id: any) {
     this.leagues.loadAllPlayersPerLeague(league_id.value);

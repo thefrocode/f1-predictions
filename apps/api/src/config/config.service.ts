@@ -31,6 +31,7 @@ class ConfigService {
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     if (this.isProduction()) {
+      console.log('Production');
       return {
         type: 'mysql',
         host: this.getValue('MYSQL_HOST'),
@@ -49,6 +50,7 @@ class ConfigService {
         },
       };
     } else {
+      console.log('Development');
       return {
         type: 'mysql',
         host: this.getValue('F1_MYSQL_HOST'),

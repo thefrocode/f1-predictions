@@ -34,18 +34,22 @@ export const PlayersStore = signalStore(
     ),
   })),
   withMethods((store: any, playerApi = inject(PlayerApiService)) => ({
-    loadAll() {
-      patchState(store, { isLoading: true });
-      playerApi.loadAll().pipe(
-        tapResponse({
-          next: (players: Player[]) => {
-            patchState(store, { players });
-          },
-          error: console.error,
-          finalize: () => patchState(store, { isLoading: false }),
-        })
-      );
-    },
+    loadAll: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap(() =>
+          playerApi.loadAll().pipe(
+            tapResponse({
+              next: (players: Player[]) => {
+                patchState(store, { players });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          )
+        )
+      )
+    ),
     loadAllLeaguesPerPlayer: rxMethod<number>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
@@ -66,7 +70,7 @@ export const PlayersStore = signalStore(
   })),
   withHooks({
     onInit({ loadAll }) {
-      loadAll();
+      loadAll('');
     },
   })
 );

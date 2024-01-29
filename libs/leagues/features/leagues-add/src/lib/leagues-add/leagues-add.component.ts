@@ -16,8 +16,8 @@ import { AddLeagueDialogComponent } from '@f1-predictions/add-league-dialog';
   providers: [provideIcons({ radixPlus })],
 })
 export class LeaguesAddComponent {
-  leaguesStore: any = inject(LeaguesStore);
-  playersStore: any = inject(PlayersStore);
+  leaguesStore = inject(LeaguesStore);
+  playersStore = inject(PlayersStore);
 
   constructor(private dialog: MatDialog) {}
   openCreateLeagueDialog() {
@@ -25,9 +25,11 @@ export class LeaguesAddComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (!result) return;
 
+      if (!this.playersStore.active_player()) return;
+
       this.leaguesStore.createLeague({
         name: result.name,
-        owner_id: this.playersStore.active_player().id,
+        owner_id: this.playersStore.active_player()!.id,
       });
     });
   }
