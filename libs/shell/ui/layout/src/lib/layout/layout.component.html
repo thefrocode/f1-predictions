@@ -1,1 +1,67 @@
-<router-outlet></router-outlet>
+<div class="grid grid-cols-[110px_minmax(900px,_1fr)] h-full">
+  <div class="flex my-4 mx-6">
+    <div
+      class="flex flex-col flex-1 bg-[#954FEE] opacity-70 gap-20 rounded-full py-6"
+    >
+      <hlm-icon size="25px" name="radixMargin" class="self-center" />
+      <div class="flex flex-col mb-auto gap-8">
+        <a
+          routerLink="/home"
+          routerLinkActive="active_link"
+          class="flex self-center justify-center content-center"
+        >
+          <div
+            class="rounded-full w-[42px] h-[42px] self-center absolute"
+          ></div>
+          <hlm-icon
+            size="25px"
+            name="radixHome"
+            class="self-center z-10 text white absolute"
+          />
+        </a>
+        <a
+          routerLink="/team"
+          routerLinkActive="active_link"
+          class="flex self-center justify-center content-center"
+        >
+          <div
+            class="rounded-full w-[42px] h-[42px] self-center absolute"
+          ></div>
+          <hlm-icon size="25px" name="radixPerson" class="self-center" />
+        </a>
+        <a
+          routerLink="/faq"
+          routerLinkActive="active_link"
+          class="flex self-center justify-center content-center"
+        >
+          <div
+            class="rounded-full w-[42px] h-[42px] self-center absolute"
+          ></div>
+          <hlm-icon size="25px" name="radixChatBubble" class="self-center" />
+        </a>
+      </div>
+      <a
+        routerLink="/settings"
+        routerLinkActive="active_link"
+        class="flex self-center justify-center content-center"
+      >
+        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
+        <hlm-icon size="25px" name="radixGear" class="self-center" />
+      </a>
+    </div>
+  </div>
+  <div>
+    <a
+      routerLink="/"
+      class="bg-black opacity-25 flex rounded-full justify-center content-center w-[36px] h-[36px] self-center box red"
+    >
+      <hlm-icon
+        size="25px"
+        name="radixHome"
+        class="self-center text white box blue"
+      />
+    </a>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

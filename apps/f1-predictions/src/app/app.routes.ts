@@ -13,7 +13,7 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'home',
         component: HomeComponent,
       },
     ],
