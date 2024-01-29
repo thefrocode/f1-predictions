@@ -21,6 +21,7 @@ import {
   radixPlus,
   radixEnter,
   radixArrowLeft,
+  radixCalendar,
 } from '@ng-icons/radix-icons';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { RacesStore } from '@f1-predictions/race-store';
@@ -69,6 +70,7 @@ const CountdownTimeUnits: Array<[string, number]> = [
       radixPlus,
       radixEnter,
       radixArrowLeft,
+      radixCalendar,
     }),
   ],
   templateUrl: './home.component.html',
