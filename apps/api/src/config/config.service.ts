@@ -34,11 +34,11 @@ class ConfigService {
       console.log('Production');
       return {
         type: 'mysql',
-        host: this.getValue('MYSQL_HOST'),
-        port: parseInt(this.getValue('MYSQL_PORT')),
-        username: this.getValue('MYSQL_USER'),
-        password: this.getValue('MYSQL_PASSWORD'),
-        database: this.getValue('MYSQL_DATABASE'),
+        host: this.getValue('F!_MYSQL_HOST'),
+        port: parseInt(this.getValue('F1_MYSQL_PORT')),
+        username: this.getValue('F1_MYSQL_USER'),
+        password: this.getValue('F1_MYSQL_PASSWORD'),
+        database: this.getValue('F1_MYSQL_DATABASE'),
         synchronize: true,
         autoLoadEntities: true,
         logging: true,
@@ -53,11 +53,11 @@ class ConfigService {
       console.log('Development');
       return {
         type: 'mysql',
-        host: this.getValue('F1_MYSQL_HOST'),
-        port: parseInt(this.getValue('F1_MYSQL_PORT')),
-        username: this.getValue('F1_MYSQL_USER'),
-        password: this.getValue('F1_MYSQL_PASSWORD'),
-        database: this.getValue('F1_MYSQL_DATABASE'),
+        host: this.getValue('MYSQL_HOST'),
+        port: parseInt(this.getValue('MYSQL_PORT')),
+        username: this.getValue('MYSQL_USER'),
+        password: this.getValue('MYSQL_PASSWORD'),
+        database: this.getValue('MYSQL_DATABASE'),
         autoLoadEntities: true,
         synchronize: true,
         ssl: this.isProduction(),
