@@ -1,203 +1,204 @@
-<div>
-  <div class="flex flex-row">
-    <div class="w-2/3 relative">
-      <div class="flex flex-row mx-4 mt-2 rounded-md bg-banner">
-        <div class="flex flex-col w-2/5 gap-4 pt-6 pl-12 pb-6">
-          <p class="text-white text-xl font-lemon">SAUDI ARABIAN GRAND PRIX</p>
-          <div
-            class="bg-[#F98AE0] rounded-full flex flex-row px-6 py-2 gap-3 items-center shrink"
-          >
-            <i class="bi bi-calendar2-week text-white"></i>
-            <p class="text-xs self-center text-white font-lemon">
-              16th - 18th Jan
-            </p>
+<div class="flex">
+  <div class="w-2/3 relative">
+    <div
+      class="flex flex-row mx-4 mt-2 rounded-md bg-banner justify-between px-12"
+    >
+      <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6">
+        <p class="text-white text-xl font-lemon">SAUDI ARABIAN GRAND PRIX</p>
+        <div
+          class="bg-[#F98AE0] rounded-full flex flex-row px-6 py-2 gap-3 items-center shrink"
+        >
+          <i class="bi bi-calendar2-week text-white"></i>
+          <p class="text-xs self-center text-white font-lemon">
+            16th - 18th Jan
+          </p>
+        </div>
+      </div>
+      <div
+        class="px-4 py-2 my-auto flex-col flex gap-2 justify-center items-center rounded-md bg-[#F98AE0]"
+      >
+        <p class="font-lemonada text-sm text-white">TEAM LOCK DEADLINE</p>
+        <div class="flex gap-2 w-full">
+          <div class="grow">
+            <i
+              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+              ><span
+                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+                >06</span
+              ></i
+            >
+            <p class="font-lemonada text-2xs text-center text-white">Days</p>
+          </div>
+          <div class="grow">
+            <i
+              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+              ><span
+                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+                >06</span
+              ></i
+            >
+            <p class="font-lemonada text-2xs text-center text-white">Hrs</p>
+          </div>
+          <div class="grow">
+            <i
+              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+              ><span
+                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+                >06</span
+              ></i
+            >
+            <p class="font-lemonada text-2xs text-center text-white">Mins</p>
+          </div>
+          <div class="grow">
+            <i
+              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+              ><span
+                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+                >06</span
+              ></i
+            >
+            <p class="font-lemonada text-2xs text-center text-white">Secs</p>
           </div>
         </div>
+      </div>
 
-        <!-- <div>
+      <!-- <div>
           <img
             src="assets/img/f1-car7.png"
             class="absolute right-0 bottom-0 -mb-1 -mr-1 -rotate-2"
           />
         </div> -->
-      </div>
     </div>
+    <div class="flex">
+      <div class="flex flex-col w-full">
+        <div class="flex my-2 mx-4 gap-2">
+          @for (item of [0,1,2,3,4]; track item) {
+          <div
+            class="flex-auto bg-white rounded-md m-1 bg-white rounded-md pr-4 py-2 font-lemonada"
+          >
+            <div class="grid grid-cols-2 grid-rows-2 gap">
+              <i
+                class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
+              ></i>
+              <p class="text-center text-xs">FP1</p>
+              <p class="text-center text-xs">20:00</p>
+            </div>
+          </div>
+          }
+        </div>
+        <div class="flex mb-4 mx-4 gap-4">
+          <div class="w-2/5 flex flex-col gap-2">
+            <div class="flex flex-col bg-white rounded-lg px-4 pt-4 gap-8">
+              <div class="flex justify-between w-full">
+                <div class="flex flex-col">
+                  <p class="text-2xs">POSITION</p>
+                  <p class="font-bold text-2xl">120</p>
+                </div>
 
-    <div
-      class="w-1/3 px-2 py-4 mt-2 flex flex-col gap-6 justify-center items-center rounded-md bg-white drop-shadow-[35px_20px_35px_rgba(177,177,236,0.25)]"
-    >
-      <p class="font-lemon">TEAM LOCK DEADLINE</p>
-      <div class="flex gap-6">
-        <div>
-          <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-5xl relative inline-flex justify-center items-center"
-            ><span
-              class="absolute text-lg pt-3 text-white font-lemonada font-medium"
-              >06</span
-            ></i
-          >
-          <p class="font-lemonada text-sm text-center">Days</p>
-        </div>
-        <div>
-          <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-5xl relative inline-flex justify-center items-center"
-            ><span
-              class="absolute text-lg pt-3 text-white font-lemonada font-medium"
-              >06</span
-            ></i
-          >
-          <p class="font-lemonada text-sm text-center">Days</p>
-        </div>
-        <div>
-          <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-5xl relative inline-flex justify-center items-center"
-            ><span
-              class="absolute text-lg pt-3 text-white font-lemonada font-medium"
-              >06</span
-            ></i
-          >
-          <p class="font-lemonada text-sm text-center">Days</p>
-        </div>
-        <div>
-          <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-5xl relative inline-flex justify-center items-center"
-            ><span
-              class="absolute text-lg pt-3 text-white font-lemonada font-medium"
-              >06</span
-            ></i
-          >
-          <p class="font-lemonada text-sm text-center">Days</p>
+                <i class="bi bi-graph-up-arrow text-lg"></i>
+              </div>
+
+              <div class="relative">
+                <hr class="flex-grow border-4 rounded-lg border-[#b1b1ec4d]" />
+                <i
+                  class="bi bi-chat-square-fill text-white text-3xl relative inline-flex justify-center items-center left-36 -top-10 drop-shadow-lg"
+                  ><span
+                    class="absolute pb-1 px-1 text-black font-lemonada text-xs"
+                    >60</span
+                  ></i
+                >
+                <i
+                  class="bi bi-circle-fill text-3xs absolute -top-0.5 left-40 text-[#B1B1EC]"
+                ></i>
+                <p class="text-2xs font-bold absolute top-4 left-0">
+                  Leaderboard
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-lg px-4 pt-4 gap-8">
+              <div class="flex justify-between w-full">
+                <div class="flex flex-col">
+                  <p class="text-2xs">POSITION</p>
+                  <p class="font-bold text-2xl">120</p>
+                </div>
+
+                <i class="bi bi-graph-up-arrow text-lg"></i>
+              </div>
+
+              <div class="relative">
+                <hr class="flex-grow border-4 rounded-lg border-[#b1b1ec4d]" />
+                <i
+                  class="bi bi-chat-square-fill text-white text-3xl relative inline-flex justify-center items-center left-36 -top-10 drop-shadow-lg"
+                  ><span
+                    class="absolute pb-1 px-1 text-black font-lemonada text-xs"
+                    >60</span
+                  ></i
+                >
+                <i
+                  class="bi bi-circle-fill text-3xs absolute -top-0.5 left-40 text-[#B1B1EC]"
+                ></i>
+                <p class="text-2xs font-bold absolute top-4 left-0">
+                  Leaderboard
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg px-4 py-3 w-3/5">
+            <div class="flex justify-between">
+              <p class="font-lemon self-center">LEAGUES</p>
+              <i class="bi bi-plus text-3xl text-[#F98AE0]"></i>
+            </div>
+            <div class="relative">
+              <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />
+              <i
+                class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"
+              ></i>
+            </div>
+
+            <div
+              class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+            >
+              <p class="w-3/5">League Name</p>
+              <p class="w-1/5">Pos</p>
+              <p></p>
+            </div>
+            @for(item of [1,2,3,8888]; track item){
+            <div
+              class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
+            >
+              <p class="w-3/5 self-center">League Name {{ item }}</p>
+              <p class="w-1/5 self-center">10</p>
+              <i class="bi bi-door-open text-base text-[#F98AE0]"></i>
+            </div>
+            }
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="flex">
-    <div class="flex flex-col w-2/3">
-      <div class="flex my-2 mx-4 gap-2">
-        @for (item of [0,1,2,3,4]; track item) {
-        <div
-          class="flex-auto bg-white rounded-md m-1 bg-white rounded-md pr-4 py-2 font-lemonada"
-        >
-          <div class="grid grid-cols-2 grid-rows-2 gap">
-            <i
-              class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
-            ></i>
-            <p class="text-center text-xs">FP1</p>
-            <p class="text-center text-xs">20:00</p>
-          </div>
-        </div>
-        }
-      </div>
-      <div class="flex mb-4 mx-4 gap-4">
-        <div class="w-2/5 flex flex-col gap-2">
-          <div class="flex flex-col bg-white rounded-lg px-4 pt-4 gap-8">
-            <div class="flex justify-between w-full">
-              <div class="flex flex-col">
-                <p class="text-2xs">POSITION</p>
-                <p class="font-bold text-2xl">120</p>
-              </div>
-
-              <i class="bi bi-graph-up-arrow text-lg"></i>
-            </div>
-
-            <div class="relative">
-              <hr class="flex-grow border-4 rounded-lg border-[#b1b1ec4d]" />
-              <i
-                class="bi bi-chat-square-fill text-white text-3xl relative inline-flex justify-center items-center left-36 -top-10 drop-shadow-lg"
-                ><span
-                  class="absolute pb-1 px-1 text-black font-lemonada text-xs"
-                  >60</span
-                ></i
-              >
-              <i
-                class="bi bi-circle-fill text-3xs absolute -top-0.5 left-40 text-[#B1B1EC]"
-              ></i>
-              <p class="text-2xs font-bold absolute top-4 left-0">
-                Leaderboard
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-col bg-white rounded-lg px-4 pt-4 gap-8">
-            <div class="flex justify-between w-full">
-              <div class="flex flex-col">
-                <p class="text-2xs">POSITION</p>
-                <p class="font-bold text-2xl">120</p>
-              </div>
-
-              <i class="bi bi-graph-up-arrow text-lg"></i>
-            </div>
-
-            <div class="relative">
-              <hr class="flex-grow border-4 rounded-lg border-[#b1b1ec4d]" />
-              <i
-                class="bi bi-chat-square-fill text-white text-3xl relative inline-flex justify-center items-center left-36 -top-10 drop-shadow-lg"
-                ><span
-                  class="absolute pb-1 px-1 text-black font-lemonada text-xs"
-                  >60</span
-                ></i
-              >
-              <i
-                class="bi bi-circle-fill text-3xs absolute -top-0.5 left-40 text-[#B1B1EC]"
-              ></i>
-              <p class="text-2xs font-bold absolute top-4 left-0">
-                Leaderboard
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg px-4 py-3 w-3/5">
-          <p class="font-lemon">Global LeagueBoard</p>
-          <div
-            class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
-          >
-            <p class="w-1/10">Pos</p>
-            <p class="w-3/5">Player Name</p>
-            <p>Last R</p>
-            <p>Total</p>
-          </div>
-          @for(item of [1,2,3,4,5,8888]; track item){
-          <div
-            class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
-            [ngClass]="{
-              'text-base bg-[#B1B1EC] py-2 text-white': item === 4
-            }"
-          >
-            <p class="w-1/10">{{ item }}.</p>
-            <p class="w-3/5">Player Name {{ item }}</p>
-            <p class="grow">10</p>
-            <p class="grow">100</p>
-          </div>
-          }
-        </div>
-      </div>
+  <div class="bg-white rounded-lg px-4 py-4 mt-2 mb-4 w-1/3">
+    <p class="font-lemon">Global LeagueBoard</p>
+    <div
+      class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+    >
+      <p class="w-1/10">Pos</p>
+      <p class="w-3/5">Player Name</p>
+      <p>Last R</p>
+      <p>Total</p>
     </div>
-    <div class="bg-white rounded-lg px-4 py-3 my-3 w-1/3">
-      <div class="flex justify-between">
-        <p class="font-lemon self-center">LEAGUES</p>
-        <i class="bi bi-plus text-3xl text-[#F98AE0]"></i>
-      </div>
-      <div class="relative">
-        <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />
-        <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
-      </div>
-
-      <div
-        class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
-      >
-        <p class="w-3/5">League Name</p>
-        <p class="w-1/5">Pos</p>
-        <p></p>
-      </div>
-      @for(item of [1,2,3,4,8888]; track item){
-      <div
-        class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
-      >
-        <p class="w-3/5 self-center">League Name {{ item }}</p>
-        <p class="w-1/5 self-center">10</p>
-        <i class="bi bi-door-open text-base text-[#F98AE0]"></i>
-      </div>
-      }
+    @for(item of [1,2,3,4,5,6,7,8,9,10,888]; track item){
+    <div
+      class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
+      [ngClass]="{
+        'text-base bg-[#B1B1EC] py-2.5 text-white': item === 4
+      }"
+    >
+      <p class="w-1/10">{{ item }}.</p>
+      <p class="w-3/5">Player Name {{ item }}</p>
+      <p class="grow">10</p>
+      <p class="grow">100</p>
     </div>
+    }
   </div>
 </div>
 <!-- <div class="flex flex-1 flex-col gap-4">
