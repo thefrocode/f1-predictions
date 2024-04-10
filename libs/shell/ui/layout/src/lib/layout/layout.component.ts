@@ -27,4 +27,9 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+  isDropdownOpen: boolean = false;
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+}

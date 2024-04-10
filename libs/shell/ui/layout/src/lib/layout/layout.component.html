@@ -50,8 +50,67 @@
       </a>
     </div>
   </div>
-  <div>
-    <div>Hello</div>
+  <div class="px-4 py-2">
+    <div class="flex justify-end">
+      <i class="bi bi-person-circle text-3xl" (click)="toggleDropdown()"></i>
+      <div
+        *ngIf="isDropdownOpen"
+        class="absolute right-4 z-10 top-12 w-56 origin-top-right divide-y divide-gray-100 px-4 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+        tabindex="-1"
+      >
+        <div class="py-2 text-sm text-gray-700 dark:text-gray-200">
+          <p class="font-inter font-semibold">
+            Bridget
+            <span
+              class="text-2xs inline-flex items-center rounded-md bg-indigo-50 px-1 py-0.5 font-semibold text-indigo-700 ring-1 ring-inset ring-indigo-700/10"
+              >Admin</span
+            >
+          </p>
+          <p class="text-gray-400 text-sm">bridget&#64;gmail.com</p>
+        </div>
+        <ul
+          class="py-2 text-sm text-gray-700 dark:text-gray-200"
+          aria-labelledby="dropdownDefaultButton"
+        >
+          <li>
+            <a
+              href="#"
+              class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              <i class="bi bi-grid me-2"></i>
+              Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              <i class="bi bi-gear me-2"></i>
+              Settings</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/home/companies/add"
+              class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              <i class="bi bi-file-plus me-2"></i>
+              Add Company</a
+            >
+          </li>
+        </ul>
+        <button
+          class="block py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+        >
+          <i class="bi bi-box-arrow-left me-2"></i>
+          Sign out
+        </button>
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

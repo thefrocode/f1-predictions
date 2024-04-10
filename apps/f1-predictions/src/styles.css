@@ -1,5 +1,5 @@
 @import '@angular/cdk/overlay-prebuilt.css';
-
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 @tailwind base;
 @tailwind components;
