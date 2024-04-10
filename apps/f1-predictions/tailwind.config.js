@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         lemon: ['Lemon', 'serif'],
+        lemonada: ['Lemonada', 'serif'],
       },
     },
   },
