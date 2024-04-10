@@ -18,6 +18,9 @@ module.exports = {
         '2xs': '0.625rem',
         '3xs': '0.5rem',
       },
+      width: {
+        '1/10': '10%',
+      },
     },
   },
   plugins: [],
