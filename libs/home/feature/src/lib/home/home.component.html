@@ -71,7 +71,37 @@
       </div>
     </div>
   </div>
-  <div></div>
+  <div class="flex">
+    <div class="flex flex-col w-2/3">
+      <div class="flex m-4 gap-2">
+        @for (item of [0,1,2,3,4]; track item) {
+        <div
+          class="flex-auto bg-white rounded-md m-1 bg-white rounded-md pr-4 py-2 font-lemonada"
+        >
+          <div class="grid grid-cols-2 grid-rows-2 gap">
+            <i
+              class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
+            ></i>
+            <p class="text-center">FP1</p>
+            <p>20:00</p>
+          </div>
+        </div>
+        }
+      </div>
+      <div class="flex">
+        <div>
+          <p>Position Card</p>
+          <p>Points Card</p>
+        </div>
+        <div>
+          <p>Global Leagues</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p>Leagues</p>
+    </div>
+  </div>
 </div>
 <!-- <div class="flex flex-1 flex-col gap-4">
   <div class="flex flex-row">
