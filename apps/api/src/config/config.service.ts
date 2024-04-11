@@ -38,13 +38,15 @@ class ConfigService {
         username: this.getValue('MYSQL_USER'),
         password: this.getValue('MYSQL_PASSWORD'),
         database: this.getValue('MYSQL_DATABASE'),
-        synchronize: false,
+        synchronize: true,
         autoLoadEntities: true,
         logging: true,
         ssl: true,
+
         extra: {
           ssl: {
-            rejectUnauthorized: false,
+            rejectUnauthorized: true,
+            ca: fs.readFileSync('/etc/secrets/ca_cert').toString(),
           },
         },
       };
