@@ -44,7 +44,7 @@ class ConfigService {
         ssl: true,
         extra: {
           ssl: {
-            rejectUnauthorized: true,
+            rejectUnauthorized: false,
           },
         },
       };
