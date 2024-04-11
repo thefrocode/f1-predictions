@@ -21,7 +21,7 @@ export class RacesController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.racesService.findAll();
   }
 

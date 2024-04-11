@@ -15,7 +15,7 @@ export class RacesService {
     return this.racesRepository.insert(newRace);
   }
 
-  findAll() {
+  async findAll() {
     return this.racesRepository.find();
   }
 

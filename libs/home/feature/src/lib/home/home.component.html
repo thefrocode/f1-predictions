@@ -4,75 +4,39 @@
       class="flex flex-row mx-4 mt-2 rounded-md bg-banner justify-between px-12"
     >
       <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6">
-        <p class="text-white text-xl font-lemon">SAUDI ARABIAN GRAND PRIX</p>
+        @if(active_race()){
+        <p class="text-white text-xl font-lemon uppercase">
+          {{ active_race()?.short_name }}
+        </p>
+        }@else{
+        <p class="text-white text-xl font-lemon">ACTIVE RACE LOADING ...</p>
+        }
         <div
           class="bg-[#F98AE0] rounded-full flex flex-row px-6 py-2 gap-3 items-center shrink"
         >
           <i class="bi bi-calendar2-week text-white"></i>
+          @if(active_race()){
           <p class="text-xs self-center text-white font-lemon">
-            16th - 18th Jan
+            {{ active_race()?.fp1_time | date : 'dd MMM' }} -
+            {{ active_race()?.race_time | date : 'dd MMM' }}
           </p>
+          }@else {
+          <p class="text-xs self-center text-white font-lemon">Mar - Dec</p>
+          }
         </div>
       </div>
       <div
         class="px-4 py-2 my-auto flex-col flex gap-2 justify-center items-center rounded-md bg-[#F98AE0]"
       >
         <p class="font-lemonada text-sm text-white">TEAM LOCK DEADLINE</p>
-        <div class="flex gap-2 w-full">
-          <div class="grow">
-            <i
-              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
-              ><span
-                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
-                >06</span
-              ></i
-            >
-            <p class="font-lemonada text-2xs text-center text-white">Days</p>
-          </div>
-          <div class="grow">
-            <i
-              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
-              ><span
-                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
-                >06</span
-              ></i
-            >
-            <p class="font-lemonada text-2xs text-center text-white">Hrs</p>
-          </div>
-          <div class="grow">
-            <i
-              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
-              ><span
-                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
-                >06</span
-              ></i
-            >
-            <p class="font-lemonada text-2xs text-center text-white">Mins</p>
-          </div>
-          <div class="grow">
-            <i
-              class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
-              ><span
-                class="absolute pt-3 text-xs text-white font-lemonada font-medium"
-                >06</span
-              ></i
-            >
-            <p class="font-lemonada text-2xs text-center text-white">Secs</p>
-          </div>
-        </div>
+        <countdown [config]="countDown()" class="w-full"> </countdown>
       </div>
-
-      <!-- <div>
-          <img
-            src="assets/img/f1-car7.png"
-            class="absolute right-0 bottom-0 -mb-1 -mr-1 -rotate-2"
-          />
-        </div> -->
     </div>
+
     <div class="flex">
       <div class="flex flex-col w-full">
         <div class="flex my-2 mx-4 gap-2">
-          @for (item of [0,1,2,3,4]; track item) {
+          @for (session of dates(); track session.session) {
           <div
             class="flex-auto bg-white rounded-md m-1 bg-white rounded-md pr-4 py-2 font-lemonada"
           >
@@ -80,8 +44,13 @@
               <i
                 class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
               ></i>
-              <p class="text-center text-xs">FP1</p>
-              <p class="text-center text-xs">20:00</p>
+              <p class="text-center text-xs capitalize">
+                {{ session.session }}
+              </p>
+
+              <p class="text-center text-xs">
+                {{ session.session_time | date : 'HH:mm' }}
+              </p>
             </div>
           </div>
           }
@@ -201,6 +170,7 @@
     }
   </div>
 </div>
+-->
 <!-- <div class="flex flex-1 flex-col gap-4">
   <div class="flex flex-row">
     <div class="w-2/3 relative">
@@ -236,7 +206,7 @@
   </div>
 
   <div>World</div>
-</div> -->
+</div>
 
 <!-- <div class="flex flex-row m-8">
   <div class="flex flex-col gap-4 w-3/4">
@@ -249,13 +219,13 @@
         />
       </div>
       <div hlmCardContent>
-        @if(store.active_race()){
+        @if(races.active_race()){
 
         <h3 hlmCardTitle class="text-primary text-center font-bold text-lg">
-          {{ store.active_race().name }}
+          {{ races.active_race().name }}
         </h3>
         <p hlmCardDescription class="text-center mt-2 text-black font-semibold">
-          {{ store.active_race().race_number }}
+          {{ races.active_race().race_number }}
         </p>
         }
       </div>
@@ -269,7 +239,7 @@
           hlmCardDescription
           class="text-white flex flex-row justify-center gap-2"
         >
-          <countdown *ngIf="config" [config]="config"> </countdown>
+          <countdown [config]="configState()"> </countdown>
         </div>
       </div>
     </section>
@@ -295,7 +265,8 @@
       </div>
     </section>
   </div>
-</div> -->
+</div>
+-->
 
 <!-- <div class="w-full">
   <div class="flex flex-row gap-4 mx-auto w-3/4 m-8">
@@ -401,8 +372,7 @@
     </section>
     <section hlmCard class="w-1/2">World</section>
   </div>
-</div>
+</div> -->
 
- -->
 <!-- <leagues-list></leagues-list>
 <teams-list></teams-list> -->

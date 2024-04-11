@@ -27,7 +27,7 @@ export class Race {
   fp3_time: Date;
 
   @Column()
-  qualifying_time: Date;
+  quali_time: Date;
 
   @Column()
   race_time: Date;
