@@ -91,7 +91,6 @@ export class HomeComponent {
   readonly teams = inject(TeamsStore);
   active_race = this.races.active_race;
   dates = computed(() => {
-    console.log('Computing Races');
     const dates = [];
     if (this.active_race()) {
       for (let key in this.active_race()) {
@@ -210,6 +209,7 @@ export class HomeComponent {
   constructor() {
     effect(
       () => {
+        this.leagues.loadAll();
         if (this.players.active_player()) {
           this.players.loadAllLeaguesPerPlayer(
             this.players.active_player()!.id
@@ -225,6 +225,7 @@ export class HomeComponent {
       }
     );
   }
+
   toggleLeaguesList() {
     this.detailedLeague = !this.detailedLeague;
     this.toggleLeaguesListIcon = this.detailedLeague

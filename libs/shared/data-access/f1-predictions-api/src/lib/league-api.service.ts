@@ -16,8 +16,10 @@ export class LeagueApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadAll() {
-    return this.http.get<League[]>(`${this.appConfig.baseURL}/leagues`);
+  loadAll(player_id: number) {
+    return this.http.get<League[]>(
+      `${this.appConfig.baseURL}/leagues/${player_id}`
+    );
   }
   loadAllPlayersPerLeague(league_id: number) {
     return this.http.get<Player[]>(

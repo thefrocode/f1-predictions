@@ -25,15 +25,15 @@ export class LeaguesController {
     return this.leaguesService.addTeamToLeague(joinLeagueDto);
   }
 
-  @Get()
-  findAll() {
-    return this.leaguesService.findAll();
+  @Get(':player_id')
+  findAll(@Param('player_id') player_id: string) {
+    return this.leaguesService.findAll(+player_id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.leaguesService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.leaguesService.findOne(+id);
+  // }
   @Get(':league_id/players')
   findPlayersByLeagueId(@Param('league_id') league_id: string) {
     console.log('league_id', league_id);

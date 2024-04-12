@@ -124,13 +124,19 @@
               <p class="w-1/5">Pos</p>
               <p></p>
             </div>
-            @for(item of [1,2,3,8888]; track item){
+            @for(league of leagues.leagues(); track league){
             <div
               class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
             >
-              <p class="w-3/5 self-center">League Name {{ item }}</p>
-              <p class="w-1/5 self-center">10</p>
+              <p class="w-3/5 self-center">{{ league.name }}</p>
+
+              @if(league.position){
+              <p class="w-1/5 self-center">{{ league.position }}</p>
+              <p>Joined</p>
+              }@else {
+              <p class="w-1/5 self-center">-</p>
               <i class="bi bi-door-open text-base text-[#F98AE0]"></i>
+              }
             </div>
             }
           </div>

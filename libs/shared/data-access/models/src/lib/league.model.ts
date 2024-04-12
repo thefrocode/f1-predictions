@@ -4,6 +4,7 @@ export interface League {
   id: number;
   name: string;
   owner_id: number;
+  position?: number;
 }
 export type AddLeague = Omit<League, 'id'>;
 
