@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Result } from '../../points/entities/result.entity';
+import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 
 @Entity('drivers')
@@ -10,7 +10,7 @@ export class Driver {
   @Column()
   name: string;
 
-  @OneToMany(() => Prediction, (prediction) => prediction.driver)
+  @OneToMany(() => Prediction, (prediction) => prediction.predicted_driver)
   predictions: Prediction[];
 
   @OneToMany(() => Result, (result) => result.driver)

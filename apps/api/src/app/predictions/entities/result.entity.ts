@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Driver } from '../../drivers/entities/driver.entity';
-import { PredictionType } from '../../predictions/entities/prediction-type.entity';
+import { PredictionType } from './prediction-type.entity';
 import { Race } from '../../races/entities/race.entity';
 
 @Entity({ name: 'results' })

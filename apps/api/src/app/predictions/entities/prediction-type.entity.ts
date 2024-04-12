@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Point } from '../../points/entities/point.entity';
-import { Result } from '../../points/entities/result.entity';
+import { Result } from './result.entity';
 import { Prediction } from './prediction.entity';
 
 @Entity('prediction_types')

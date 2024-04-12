@@ -21,18 +21,11 @@ export class LeagueTeam {
   league_id: number;
 
   @Column()
-  team_id: number;
-
-  @Column()
   player_id: number;
 
   @ManyToOne(() => League, (league) => league.leagueTeams)
   @JoinColumn({ name: 'league_id' })
   league: League;
-
-  @ManyToOne(() => Team, (team) => team.leagueTeams)
-  @JoinColumn({ name: 'team_id' })
-  team: Team;
 
   @ManyToOne(() => Player, (player) => player.leagueTeams)
   @JoinColumn({ name: 'player_id' })

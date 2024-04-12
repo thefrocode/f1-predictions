@@ -56,6 +56,9 @@
       "@f1-predictions/leagues-store": ["libs/leagues/store/src/index.ts"],
       "@f1-predictions/models": ["libs/shared/data-access/models/src/index.ts"],
       "@f1-predictions/players-store": ["libs/players/store/src/index.ts"],
+      "@f1-predictions/predictions-store": [
+        "libs/predictions/store/src/index.ts"
+      ],
       "@f1-predictions/race-store": ["libs/races/store/src/index.ts"],
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"

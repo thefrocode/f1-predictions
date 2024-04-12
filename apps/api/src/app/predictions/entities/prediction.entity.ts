@@ -6,11 +6,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Driver } from '../../drivers/entities/driver.entity';
+import { Player } from '../../players/entities/player.entity';
 import { Race } from '../../races/entities/race.entity';
-import { Team } from '../../teams/entities/team.entity';
 import { PredictionType } from './prediction-type.entity';
 
-@Entity()
+@Entity('predictions')
 export class Prediction {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,21 +19,27 @@ export class Prediction {
   race_id: number;
 
   @Column()
-  team_id: number;
+  player_id: number;
 
   @Column()
   prediction_type_id: number;
 
   @Column()
-  driver_id: number;
+  prediction: number;
+
+  @Column()
+  result: number;
+
+  @Column()
+  points: number;
 
   @ManyToOne(() => Race, (race) => race.predictions)
   @JoinColumn({ name: 'race_id' })
   race: Race;
 
-  @ManyToOne(() => Team, (team) => team.predictions)
-  @JoinColumn({ name: 'team_id' })
-  team: Team;
+  @ManyToOne(() => Player, (player) => player.predictions)
+  @JoinColumn({ name: 'player_id' })
+  player: Player;
 
   @ManyToOne(
     () => PredictionType,
@@ -43,6 +49,10 @@ export class Prediction {
   prediction_type: PredictionType;
 
   @ManyToOne(() => Driver, (driver) => driver.predictions)
-  @JoinColumn({ name: 'driver_id' })
-  driver: Driver;
+  @JoinColumn({ name: 'prediction' })
+  predicted_driver: Driver;
+
+  @ManyToOne(() => Driver, (driver) => driver.predictions)
+  @JoinColumn({ name: 'result' })
+  correct_driver: Driver;
 }

@@ -15,9 +15,6 @@ export class Point {
   id: number;
 
   @Column()
-  team_id: number;
-
-  @Column()
   race_id: number;
 
   @Column()
@@ -29,10 +26,6 @@ export class Point {
   @ManyToOne(() => Race, (race) => race.points)
   @JoinColumn({ name: 'race_id' })
   race: Race;
-
-  @ManyToOne(() => Team, (team) => team.points)
-  @JoinColumn({ name: 'team_id' })
-  team: Team;
 
   @ManyToOne(() => PredictionType, (prediction_type) => prediction_type.points)
   @JoinColumn({ name: 'prediction_type_id' })

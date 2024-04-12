@@ -34,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CountdownComponent, CountdownConfig } from 'ngx-countdown';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
+import { PointsStore } from '@f1-predictions/predictions-store';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { TeamsStore } from '@f1-predictions/teams-store';
@@ -83,6 +84,8 @@ const CountdownTimeUnits: Array<[string, number]> = [
 })
 export class HomeComponent {
   readonly races = inject(RacesStore);
+  points = inject(PointsStore);
+
   readonly players = inject(PlayersStore);
   readonly leagues = inject(LeaguesStore);
   readonly teams = inject(TeamsStore);
