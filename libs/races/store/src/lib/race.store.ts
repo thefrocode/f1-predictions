@@ -24,7 +24,7 @@ export const RacesStore = signalStore(
     active_race: computed(() => races().find((race) => race.active)),
   })),
   withMethods((store, raceApi = inject(RaceApiService)) => ({
-    loadAll: rxMethod(
+    loadAll: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() =>
@@ -44,7 +44,7 @@ export const RacesStore = signalStore(
   })),
   withHooks({
     onInit({ loadAll }) {
-      loadAll('');
+      loadAll();
     },
   })
 );

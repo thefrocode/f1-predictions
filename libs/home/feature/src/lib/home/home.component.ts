@@ -229,4 +229,7 @@ export class HomeComponent {
       : 'radixArrowLeft';
     console.log(this.toggleLeaguesListIcon);
   }
+  refresh() {
+    this.races.loadAll();
+  }
 }
