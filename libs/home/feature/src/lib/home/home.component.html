@@ -154,17 +154,18 @@
       <p>Last R</p>
       <p>Total</p>
     </div>
-    @for(item of [1,2,3,4,5,6,7,8,9,10,888]; track item){
+    @for(player of leagues.players(); track player){
     <div
       class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
       [ngClass]="{
-        'text-base bg-[#B1B1EC] py-2.5 text-white': item === 4
+        'text-base bg-[#B1B1EC] py-2.5 text-white':
+          player.player_id === active_player()?.id
       }"
     >
-      <p class="w-1/10">{{ item }}.</p>
-      <p class="w-3/5">Player Name {{ item }}</p>
-      <p class="grow">10</p>
-      <p class="grow">100</p>
+      <p class="w-1/10">{{ player.position }}.</p>
+      <p class="w-3/5">{{ player.name }}</p>
+      <p class="grow">{{ player.last_race_points }}</p>
+      <p class="grow">{{ player.total_points }}</p>
     </div>
     }
   </div>

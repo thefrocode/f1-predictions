@@ -30,15 +30,18 @@ export class LeaguesController {
     return this.leaguesService.findAll(+player_id);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.leaguesService.findOne(+id);
-  // }
-  @Get(':league_id/players')
-  findPlayersByLeagueId(@Param('league_id') league_id: string) {
-    console.log('league_id', league_id);
-    return this.leaguesService.findPlayersByLeagueId(+league_id);
+  @Get(':league_id/:player_id')
+  findOne(
+    @Param('league_id') league_id: string,
+    @Param('player_id') player_id: string
+  ) {
+    return this.leaguesService.findOne(+league_id);
   }
+  // @Get(':league_id/players')
+  // findPlayersByLeagueId(@Param('league_id') league_id: string) {
+  //   console.log('league_id', league_id);
+  //   return this.leaguesService.findPlayersByLeagueId(+league_id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLeagueDto: UpdateLeagueDto) {

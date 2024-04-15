@@ -90,6 +90,7 @@ export class HomeComponent {
   readonly leagues = inject(LeaguesStore);
   readonly teams = inject(TeamsStore);
   active_race = this.races.active_race;
+  active_player = this.players.active_player
   dates = computed(() => {
     const dates = [];
     if (this.active_race()) {
@@ -210,6 +211,7 @@ export class HomeComponent {
     effect(
       () => {
         this.leagues.loadAll();
+        this.leagues.loadOne(1);
         if (this.players.active_player()) {
           this.players.loadAllLeaguesPerPlayer(
             this.players.active_player()!.id

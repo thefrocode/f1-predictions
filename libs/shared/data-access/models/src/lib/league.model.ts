@@ -1,4 +1,5 @@
 import { Player } from './player.model';
+import { Point } from './point.model';
 
 export interface League {
   id: number;
@@ -10,7 +11,7 @@ export type AddLeague = Omit<League, 'id'>;
 
 export type LeaguesState = {
   leagues: League[];
-  players: Player[];
+  players: Point[];
   isLoading: boolean;
   error: any;
 };

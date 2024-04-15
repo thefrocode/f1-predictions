@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { join } from 'path';
-import { Connection, getConnection, Repository } from 'typeorm';
+import { Connection, getConnection, IsNull, Not, Repository } from 'typeorm';
 import { Prediction } from '../predictions/entities/prediction.entity';
 import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 import { CreateLeagueDto } from './dto/create-league.dto';
@@ -82,8 +82,46 @@ export class LeaguesService {
     });
   }
 
-  findOne(id: number) {
-    return this.leaguesRepository.findOne({ where: { id } });
+  async findOne(league_id: number) {
+    const race_id = await this.predictionsRepository.maximum('race_id', {
+      result: Not(IsNull()),
+    });
+    console.log(race_id);
+    const pointsSubQuery = this.predictionsRepository
+      .createQueryBuilder('predictions')
+      .select(['player_id', 'sum(points) as points'])
+      .groupBy('player_id')
+      .getSql();
+    const lastRacePointsSubQuery = this.predictionsRepository
+      .createQueryBuilder('predictions')
+      .select(['player_id', 'sum(points) as points'])
+      .where('race_id = :race_id', { race_id })
+      .groupBy('player_id');
+
+    return this.leagueTeamsRepository
+      .createQueryBuilder('league_teams')
+      .select([
+        'league_id',
+        'league_teams.player_id as player_id',
+        'ROW_NUMBER() over(partition by league_id order by points.points desc) as position',
+        'last_race_points.points as last_race_points',
+        'points.points as total_points',
+        'players.name as name',
+      ])
+      .innerJoin('players', 'players', 'league_teams.player_id=players.id')
+      .leftJoin(
+        '(' + pointsSubQuery + ')',
+        'points',
+        'league_teams.player_id=points.player_id'
+      )
+      .leftJoin(
+        '(' + lastRacePointsSubQuery.getQuery() + ')',
+        'last_race_points',
+        'league_teams.player_id=last_race_points.player_id'
+      )
+      .setParameters(lastRacePointsSubQuery.getParameters())
+      .where('league_id = :league_id', { league_id })
+      .getRawMany();
   }
 
   update(id: number, updateLeagueDto: UpdateLeagueDto) {

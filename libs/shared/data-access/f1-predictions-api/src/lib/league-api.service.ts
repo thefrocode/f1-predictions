@@ -5,6 +5,7 @@ import {
   AddLeagueTeam,
   League,
   Player,
+  Point,
 } from '@f1-predictions/models';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
@@ -19,6 +20,11 @@ export class LeagueApiService {
   loadAll(player_id: number) {
     return this.http.get<League[]>(
       `${this.appConfig.baseURL}/leagues/${player_id}`
+    );
+  }
+  loadOne(league_id: number) {
+    return this.http.get<Point[]>(
+      `${this.appConfig.baseURL}/leagues/${league_id}/1`
     );
   }
   loadAllPlayersPerLeague(league_id: number) {

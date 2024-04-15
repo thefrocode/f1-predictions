@@ -19,6 +19,6 @@ export class LeaguePlayersListComponent {
   players = inject(PlayersStore);
 
   fetchPlayersByLeagueId(league_id: any) {
-    this.leagues.loadAllPlayersPerLeague(league_id.value);
+    //this.leagues.loadAllPlayersPerLeague(league_id.value);
   }
 }
