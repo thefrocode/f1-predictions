@@ -16,7 +16,7 @@ import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
 const initialState: PointsState = {
-  points: { total_points: 0, last_race_points: 0 },
+  points: {} as Point,
   isLoading: false,
   error: null,
 };

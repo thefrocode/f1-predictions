@@ -35,7 +35,7 @@ export class LeaguesController {
     @Param('league_id') league_id: string,
     @Param('player_id') player_id: string
   ) {
-    return this.leaguesService.findOne(+league_id);
+    return this.leaguesService.findOne(+league_id, +player_id);
   }
   // @Get(':league_id/players')
   // findPlayersByLeagueId(@Param('league_id') league_id: string) {

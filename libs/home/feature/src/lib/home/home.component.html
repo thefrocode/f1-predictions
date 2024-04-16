@@ -62,7 +62,9 @@
               <div class="flex justify-between w-full">
                 <div class="flex flex-col">
                   <p class="text-2xs">POSITION</p>
-                  <p class="font-bold text-2xl">120</p>
+                  <p class="font-bold text-2xl">
+                    {{ leagues.active_player_position()?.position }}
+                  </p>
                 </div>
 
                 <i class="bi bi-graph-up-arrow text-lg"></i>

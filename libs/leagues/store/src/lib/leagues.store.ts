@@ -1,6 +1,7 @@
 import {
   patchState,
   signalStore,
+  withComputed,
   withHooks,
   withMethods,
   withState,
@@ -15,7 +16,7 @@ import {
 } from '@f1-predictions/models';
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
@@ -23,12 +24,18 @@ import { tapResponse } from '@ngrx/operators';
 const initialState: LeaguesState = {
   leagues: [],
   players: [],
+  active_player_position: {} as Point,
   isLoading: false,
   error: null,
 };
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withComputed(({ players }) => ({
+    active_player_position: computed(() =>
+      players().find((player) => player.player_id == 1)
+    ),
+  })),
   withMethods(
     (
       store,
@@ -59,9 +66,9 @@ export const LeaguesStore = signalStore(
             leagueApi.loadOne(league_id).pipe(
               tapResponse({
                 next: (players: Point[]) => {
-                  console.log(players);
-
-                  patchState(store, { players });
+                  patchState(store, {
+                    players,
+                  });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),

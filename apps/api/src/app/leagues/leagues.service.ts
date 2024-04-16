@@ -82,11 +82,11 @@ export class LeaguesService {
     });
   }
 
-  async findOne(league_id: number) {
+  async findOne(league_id: number, player_id: number) {
     const race_id = await this.predictionsRepository.maximum('race_id', {
       result: Not(IsNull()),
     });
-    console.log(race_id);
+
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
       .select(['player_id', 'sum(points) as points'])
