@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
 import {
   AddLeague,
@@ -18,13 +18,30 @@ export class LeagueApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadAll(player_id: number) {
-    return this.http.get<League[]>(
+    let params = new HttpParams();
+    if (player_id) {
+      params = params.append('player_id', player_id);
+    }
+
+    return this.http.get<League[]>(`${this.appConfig.baseURL}/leagues`, {
+      params,
+    });
+  }
+  loadOne(player_id: number) {
+    return this.http.get<Point[]>(
       `${this.appConfig.baseURL}/leagues/${player_id}`
     );
   }
-  loadOne(league_id: number) {
-    return this.http.get<Point[]>(
-      `${this.appConfig.baseURL}/leagues/${league_id}/1`
+  selectLeagueToBeDisplayed(league: {
+    id: number;
+    league_id: number;
+    player_id: number;
+  }) {
+    return this.http.patch<{ message: string }>(
+      `${this.appConfig.baseURL}/selected-league/${league.id}`,
+      {
+        ...league,
+      }
     );
   }
   loadAllPlayersPerLeague(league_id: number) {

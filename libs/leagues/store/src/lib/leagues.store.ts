@@ -25,6 +25,7 @@ const initialState: LeaguesState = {
   leagues: [],
   players: [],
   active_player_position: {} as Point,
+  selected_id: 1,
   isLoading: false,
   error: null,
 };
@@ -71,6 +72,31 @@ export const LeaguesStore = signalStore(
                   });
                 },
                 error: console.error,
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            )
+          )
+        )
+      ),
+      selectLeague: rxMethod<{
+        id: number;
+        league_id: number;
+        player_id: number;
+      }>(
+        pipe(
+          tap(() => patchState(store, { isLoading: true })),
+          switchMap((league) =>
+            leagueApi.selectLeagueToBeDisplayed(league).pipe(
+              tapResponse({
+                next: (response: { message: string }) => {
+                  toastr.success(response.message, 'Success!');
+                },
+                error: (error: any) => {
+                  toastr.error(
+                    'League could not be created' + error.error.error.message,
+                    'Error!'
+                  );
+                },
                 finalize: () => patchState(store, { isLoading: false }),
               })
             )

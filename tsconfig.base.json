@@ -44,6 +44,9 @@
       "@f1-predictions/league-players-list": [
         "libs/leagues/features/league-players-list/src/index.ts"
       ],
+      "@f1-predictions/league-settings": [
+        "libs/leagues/features/league-settings/src/index.ts"
+      ],
       "@f1-predictions/leagues-add": [
         "libs/leagues/features/leagues-add/src/index.ts"
       ],

@@ -1,0 +1,26 @@
+<div class="bg-white rounded-md p-4 m-2">
+  <h2 class="py-2 font-semibold">Settings</h2>
+  <hr />
+  <div class="py-2">
+    <h1 class="font-medium">Select league to be displayed on home page</h1>
+    <form
+      [formGroup]="selectedLeagueForm"
+      (ngSubmit)="selectLeague()"
+      class="flex flex-col"
+    >
+      @for(league of leagues.leagues(); track league.id){
+      <label>
+        <input
+          type="radio"
+          name="selected_league"
+          [value]="league.id"
+          formControlName="selected_league"
+        />
+        {{ league.name }} {{ league.id }}
+      </label>
+
+      }
+      <button>Submit</button>
+    </form>
+  </div>
+</div>

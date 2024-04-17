@@ -13,6 +13,7 @@ export type LeaguesState = {
   leagues: League[];
   players: Point[];
   active_player_position: Point;
+  selected_id: number;
   isLoading: boolean;
   error: any;
 };

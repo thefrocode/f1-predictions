@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { LeaguesService } from './leagues.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
@@ -25,17 +26,14 @@ export class LeaguesController {
     return this.leaguesService.addTeamToLeague(joinLeagueDto);
   }
 
-  @Get(':player_id')
-  findAll(@Param('player_id') player_id: string) {
-    return this.leaguesService.findAll(+player_id);
+  @Get()
+  findAll(@Query() query: { player_id: string }) {
+    return this.leaguesService.findAll(+query.player_id);
   }
 
-  @Get(':league_id/:player_id')
-  findOne(
-    @Param('league_id') league_id: string,
-    @Param('player_id') player_id: string
-  ) {
-    return this.leaguesService.findOne(+league_id, +player_id);
+  @Get(':player_id')
+  findOne(@Param('player_id') player_id: string) {
+    return this.leaguesService.findOne(+player_id);
   }
   // @Get(':league_id/players')
   // findPlayersByLeagueId(@Param('league_id') league_id: string) {

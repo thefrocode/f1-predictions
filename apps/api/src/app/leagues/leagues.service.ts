@@ -5,9 +5,11 @@ import { Connection, getConnection, IsNull, Not, Repository } from 'typeorm';
 import { Prediction } from '../predictions/entities/prediction.entity';
 import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 import { CreateLeagueDto } from './dto/create-league.dto';
+import { SelectLeagueDto } from './dto/select-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { League } from './entities/league.entity';
 import { LeagueTeam } from './entities/league_team.entity';
+import { SelectedLeague } from './entities/selected_league.entity';
 
 @Injectable()
 export class LeaguesService {
@@ -19,6 +21,9 @@ export class LeaguesService {
 
   @InjectRepository(Prediction)
   private readonly predictionsRepository: Repository<Prediction>;
+
+  @InjectRepository(SelectedLeague)
+  private readonly selectedLeagueRepository: Repository<SelectedLeague>;
 
   constructor(@InjectConnection() private connection: Connection) {}
 
@@ -60,7 +65,9 @@ export class LeaguesService {
 
     return this.leaguesRepository
       .createQueryBuilder('leagues')
-      .select(['*'])
+      .select([
+        'leagues.id as id, leagues.name as name, positions.player_id as player_id, positions.position',
+      ])
       .leftJoin(
         'league_teams',
         'league_teams',
@@ -82,10 +89,15 @@ export class LeaguesService {
     });
   }
 
-  async findOne(league_id: number, player_id: number) {
+  async findOne(player_id: number) {
     const race_id = await this.predictionsRepository.maximum('race_id', {
       result: Not(IsNull()),
     });
+
+    const league = await this.selectedLeagueRepository.findOneBy({
+      player_id,
+    });
+    console.log('League', league);
 
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
@@ -120,7 +132,7 @@ export class LeaguesService {
         'league_teams.player_id=last_race_points.player_id'
       )
       .setParameters(lastRacePointsSubQuery.getParameters())
-      .where('league_id = :league_id', { league_id })
+      .where('league_id = :league_id', { league_id: league?.league_id })
       .getRawMany();
   }
 
