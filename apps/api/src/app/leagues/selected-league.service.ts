@@ -14,12 +14,17 @@ export class SelectedLeagueService {
     return this.selectedLeagueRepository.insert(newLeague);
   }
 
-  update(id: number, selectLeagueDto: SelectLeagueDto) {
-    return this.selectedLeagueRepository.update(id, selectLeagueDto);
+  async update(id: number, selectLeagueDto: SelectLeagueDto) {
+    console.log(selectLeagueDto);
+    const league = await this.selectedLeagueRepository.update(
+      id,
+      selectLeagueDto
+    );
+    return selectLeagueDto;
   }
 
   async findOne(player_id: number) {
-    return this.selectedLeagueRepository.findBy({
+    return this.selectedLeagueRepository.findOneBy({
       player_id,
     });
   }

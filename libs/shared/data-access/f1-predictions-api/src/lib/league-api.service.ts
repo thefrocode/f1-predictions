@@ -6,6 +6,7 @@ import {
   League,
   Player,
   Point,
+  SelectedLeague,
 } from '@f1-predictions/models';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
@@ -32,12 +33,17 @@ export class LeagueApiService {
       `${this.appConfig.baseURL}/leagues/${player_id}`
     );
   }
+  loadSelectedLeague(player_id: number) {
+    return this.http.get<SelectedLeague>(
+      `${this.appConfig.baseURL}/selected-league/${player_id}`
+    );
+  }
   selectLeagueToBeDisplayed(league: {
     id: number;
     league_id: number;
     player_id: number;
   }) {
-    return this.http.patch<{ message: string }>(
+    return this.http.patch<SelectedLeague>(
       `${this.appConfig.baseURL}/selected-league/${league.id}`,
       {
         ...league,

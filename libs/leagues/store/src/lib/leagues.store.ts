@@ -13,44 +13,50 @@ import {
   LeaguesState,
   Player,
   Point,
+  SelectedLeague,
 } from '@f1-predictions/models';
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap } from 'rxjs';
+import { pipe, tap, switchMap, filter } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
+import { PlayersStore } from '@f1-predictions/players-store';
 
 const initialState: LeaguesState = {
   leagues: [],
   players: [],
   active_player_position: {} as Point,
-  selected_id: 1,
+  selected_league: {} as SelectedLeague,
   isLoading: false,
   error: null,
 };
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ players }) => ({
+  withComputed(({ players, leagues }, playersStore = inject(PlayersStore)) => ({
     active_player_position: computed(() =>
       players().find((player) => player.player_id == 1)
+    ),
+    active_player_leagues: computed(() =>
+      leagues().filter((league) => league.position)
     ),
   })),
   withMethods(
     (
       store,
       leagueApi = inject(LeagueApiService),
-      toastr = inject(ToastrService)
+      toastr = inject(ToastrService),
+      players = inject(PlayersStore)
     ) => ({
       loadAll: rxMethod<void>(
         pipe(
+          filter(() => (players.active_player() ? true : false)),
           tap(() => patchState(store, { isLoading: true })),
           switchMap(() =>
-            leagueApi.loadAll(1).pipe(
+            leagueApi.loadAll(players.active_player()!.id).pipe(
               tapResponse({
                 next: (leagues: League[]) => {
-                  console.log(leagues);
                   patchState(store, { leagues });
                 },
                 error: console.error,
@@ -60,11 +66,12 @@ export const LeaguesStore = signalStore(
           )
         )
       ),
-      loadOne: rxMethod<number>(
+      loadOne: rxMethod<void>(
         pipe(
+          filter(() => (players.active_player() ? true : false)),
           tap(() => patchState(store, { isLoading: true })),
-          switchMap((league_id) =>
-            leagueApi.loadOne(league_id).pipe(
+          switchMap(() =>
+            leagueApi.loadOne(players.active_player()!.id).pipe(
               tapResponse({
                 next: (players: Point[]) => {
                   patchState(store, {
@@ -73,6 +80,23 @@ export const LeaguesStore = signalStore(
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),
+              })
+            )
+          )
+        )
+      ),
+      loadSelectedLeague: rxMethod<void>(
+        pipe(
+          filter(() => (players.active_player() ? true : false)),
+          switchMap(() =>
+            leagueApi.loadSelectedLeague(players.active_player()!.id).pipe(
+              tapResponse({
+                next: (selected_league: SelectedLeague) => {
+                  patchState(store, {
+                    selected_league,
+                  });
+                },
+                error: console.error,
               })
             )
           )
@@ -88,8 +112,12 @@ export const LeaguesStore = signalStore(
           switchMap((league) =>
             leagueApi.selectLeagueToBeDisplayed(league).pipe(
               tapResponse({
-                next: (response: { message: string }) => {
-                  toastr.success(response.message, 'Success!');
+                next: (selected_league: SelectedLeague) => {
+                  patchState(store, { selected_league });
+                  toastr.success(
+                    'Display league changed successfully',
+                    'Success!'
+                  );
                 },
                 error: (error: any) => {
                   toastr.error(
@@ -149,8 +177,10 @@ export const LeaguesStore = signalStore(
     })
   ),
   withHooks({
-    onInit({ loadAll }) {
+    onInit({ loadAll, loadOne, loadSelectedLeague }) {
       loadAll();
+      loadOne();
+      loadSelectedLeague();
     },
   })
 );

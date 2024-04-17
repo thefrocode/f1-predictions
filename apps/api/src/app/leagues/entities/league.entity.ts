@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
 import { LeagueTeam } from './league_team.entity';
+import { SelectedLeague } from './selected_league.entity';
 
 @Entity('leagues')
 export class League {
@@ -28,4 +29,7 @@ export class League {
 
   @OneToMany(() => LeagueTeam, (league_team) => league_team.league)
   leagueTeams: LeagueTeam[];
+
+  // @OneToMany(() => SelectedLeague, (selected_league) => selected_league.league)
+  // selectedLeagues: SelectedLeague[];
 }

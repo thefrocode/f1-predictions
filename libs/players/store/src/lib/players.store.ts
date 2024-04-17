@@ -26,12 +26,6 @@ export const PlayersStore = signalStore(
     active_player: computed(() =>
       players().find((player) => player.user_id === 'dcgfchvj')
     ),
-    active_player_leagues: computed(() =>
-      leagues().reduce((acc: number[], league) => {
-        acc.push(league.id);
-        return acc;
-      }, [])
-    ),
   })),
   withMethods((store: any, playerApi = inject(PlayerApiService)) => ({
     loadAll: rxMethod<string>(

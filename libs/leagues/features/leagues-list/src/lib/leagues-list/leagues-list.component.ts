@@ -19,15 +19,15 @@ export class LeaguesListComponent {
   teamsStore = inject(TeamsStore);
   activePlayerLeagues!: Set<number>;
   constructor(private dialog: MatDialog) {
-    effect(() => {
-      this.activePlayerLeagues = new Set<number>(
-        this.playersStore.active_player_leagues()
-      );
-      console.log(this.activePlayerLeagues);
-      console.log(this.teamsStore.teams());
-      console.log(this.playersStore.leagues());
-      console.log(this.leaguesStore.leagues());
-    });
+    // effect(() => {
+    //   this.activePlayerLeagues = new Set<number>(
+    //     this.leaguesStore.active_player_leagues()
+    //   );
+    //   console.log(this.activePlayerLeagues);
+    //   console.log(this.teamsStore.teams());
+    //   console.log(this.playersStore.leagues());
+    //   console.log(this.leaguesStore.leagues());
+    // });
   }
   openJoinLeagueDialog(league_id: number) {
     const dialogRef = this.dialog.open(JoinTeamDialogComponent, {

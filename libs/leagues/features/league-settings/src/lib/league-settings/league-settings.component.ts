@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -21,7 +21,18 @@ export class LeagueSettingsComponent {
   readonly players = inject(PlayersStore);
   selectedLeagueForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.leagues.loadSelectedLeague();
+    effect(() => {
+      console.log(this.leagues.leagues());
+      console.log(this.leagues.selected_league());
+      if (this.leagues.selected_league()) {
+        this.selectedLeagueForm.patchValue({
+          selected_league: this.leagues.selected_league().league_id,
+        });
+      }
+    });
+  }
 
   ngOnInit() {
     this.selectedLeagueForm = this.fb.group({
@@ -31,7 +42,7 @@ export class LeagueSettingsComponent {
   selectLeague() {
     if (this.players.active_player()) {
       this.leagues.selectLeague({
-        id: 1,
+        id: this.leagues.selected_league().id,
         league_id: this.selectedLeagueForm.value['selected_league'],
         player_id: this.players.active_player()!.id,
       });

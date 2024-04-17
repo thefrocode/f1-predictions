@@ -90,13 +90,12 @@ export class HomeComponent {
   readonly leagues = inject(LeaguesStore);
   readonly teams = inject(TeamsStore);
   active_race = this.races.active_race;
-  active_player = this.players.active_player
+  active_player = this.players.active_player;
   dates = computed(() => {
     const dates = [];
     if (this.active_race()) {
       for (let key in this.active_race()) {
         if (this.isDateValid(this.active_race()![key])) {
-          console.log(this.isDateValid(this.active_race()![key]));
           dates.push({
             session: key.split('_')[0],
             session_time: this.active_race()![key] as Date,
@@ -207,25 +206,10 @@ export class HomeComponent {
     };
   });
 
-  constructor() {
-    effect(
-      () => {
-        this.leagues.loadAll();
-        this.leagues.loadOne(1);
-        if (this.players.active_player()) {
-          this.players.loadAllLeaguesPerPlayer(
-            this.players.active_player()!.id
-          );
-          this.teams.loadTeamsByPlayer(this.players.active_player()!.id);
-        }
-        if (this.leagues.players()) {
-          console.log(this.leagues.players());
-        }
-      },
-      {
-        allowSignalWrites: true,
-      }
-    );
+  constructor() {}
+  ngOnInit() {
+    this.leagues.loadAll();
+    this.leagues.loadOne();
   }
 
   toggleLeaguesList() {
@@ -233,7 +217,6 @@ export class HomeComponent {
     this.toggleLeaguesListIcon = this.detailedLeague
       ? 'radixEnter'
       : 'radixArrowLeft';
-    console.log(this.toggleLeaguesListIcon);
   }
   refresh() {
     this.races.loadAll();
