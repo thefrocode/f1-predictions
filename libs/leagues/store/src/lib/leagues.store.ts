@@ -143,7 +143,7 @@ export const LeaguesStore = signalStore(
                 },
                 error: (error: any) => {
                   toastr.error(
-                    'League could not be created' + error.error.error.message,
+                    'League could not be created ' + error.error.error.message,
                     'Error!'
                   );
                 },

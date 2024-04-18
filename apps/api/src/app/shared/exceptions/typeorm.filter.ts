@@ -16,8 +16,13 @@ export class TypeOrmFilter implements ExceptionFilter {
     switch (errNo) {
       case 1062:
         const messageArray = message.split(' ');
-        const duplicateValue = messageArray[2];
-        const duplicateKey = messageArray[5]
+        let duplicateValue;
+        if (messageArray[2].startsWith("'")) {
+          duplicateValue = message.split("'")[1];
+        } else {
+          duplicateValue = messageArray[2];
+        }
+        const duplicateKey = messageArray[messageArray.length - 1]
           .slice(0, -8)
           .split('.')[1]
           .toUpperCase();

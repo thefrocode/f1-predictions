@@ -5,10 +5,10 @@
     >
       <p class="font-semibold text-primary text-lg">Create League</p>
 
-      <div class="flex flex-row gap-2 mt-6">
+      <div class="flex flex-row gap-2 mt-2">
         <input
           type="text"
-          class="border rounded-md h-8 px-4"
+          class="bg-[#FAF2F8] border-[#F98AE0] rounded-md w-full h-8 px-4 focus:outline-none"
           placeholder="Enter League Name"
           formControlName="name"
         />
@@ -16,7 +16,7 @@
 
       <button
         [disabled]="createLeagueForm.invalid"
-        class="bg-primary px-4 py-2 rounded-md text-white font-semibold disabled:opacity-50"
+        class="bg-primary px-4 py-1 w-full rounded-md text-white text-sm font-semibold disabled:opacity-50"
       >
         Create League
       </button>

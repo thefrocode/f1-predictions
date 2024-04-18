@@ -1,10 +1,12 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
 import { LeagueTeam } from './league_team.entity';
@@ -15,9 +17,8 @@ export class League {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    unique: true,
-  })
+  @Unique('name_UNIQUE', ['name'])
+  @Column()
   name: string;
 
   @Column()
