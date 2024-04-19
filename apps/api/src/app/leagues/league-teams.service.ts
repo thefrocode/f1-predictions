@@ -10,7 +10,7 @@ export class LeagueTeamsService {
   @InjectRepository(LeagueTeam)
   private readonly leagueTeamsRepository: Repository<LeagueTeam>;
 
-  addTeamToLeague(joinLeagueDto: JoinLeagueDto) {
+  create(joinLeagueDto: JoinLeagueDto) {
     const newLeagueTeam = this.leagueTeamsRepository.create(joinLeagueDto);
     return this.leagueTeamsRepository.insert(newLeagueTeam);
   }

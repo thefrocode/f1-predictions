@@ -1,15 +1,42 @@
-<div>
-  @for(league of leaguesStore.leagues(); track league.id){
-  <div class="flex flex-row gap-4">
-    <div class="flex flex-row gap-4">
-      <p class="text-primary font-semibold text-lg">{{ league.name }}</p>
-      <p class="text-primary font-semibold text-lg">{{ league.id }}</p>
-      @if(activePlayerLeagues && activePlayerLeagues.has(league.id)){
+<div class="flex flex-wrap gap-4 py-2">
+  <div class="bg-white rounded-lg px-4 py-3 w-1/5">
+    <p>Categories</p>
+    <ul>
+      <li>Category One</li>
+      <li>Category Two</li>
+    </ul>
+  </div>
+  <div class="bg-white rounded-lg px-4 py-3 grow">
+    <div class="flex justify-between">
+      <p class="font-lemon self-center">LEAGUES</p>
+      <leagues-add [type]="'button'"></leagues-add>
+    </div>
+    <div class="relative">
+      <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />
+      <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
+    </div>
+
+    <div
+      class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+    >
+      <p class="w-3/5">League Name</p>
+      <p class="w-1/5">Pos</p>
+      <p></p>
+    </div>
+    @for(league of leagues.leagues(); track league){
+    <div
+      class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
+    >
+      <p class="w-3/5 self-center">{{ league.name }}</p>
+
+      @if(league.position){
+      <p class="w-1/5 self-center">{{ league.position }}</p>
       <p>Joined</p>
       }@else {
-      <button (click)="openJoinLeagueDialog(league.id)">Join</button>
+      <p class="w-1/5 self-center">-</p>
+      <i class="bi bi-door-open text-base text-[#F98AE0]"></i>
       }
     </div>
+    }
   </div>
-  }
 </div>

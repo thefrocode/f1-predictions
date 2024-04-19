@@ -50,18 +50,13 @@ export class LeagueApiService {
       }
     );
   }
-  loadAllPlayersPerLeague(league_id: number) {
-    return this.http.get<Player[]>(
-      `${this.appConfig.baseURL}/leagues/${league_id}/players`
-    );
-  }
 
   createLeague(league: AddLeague) {
     return this.http.post<League>(`${this.appConfig.baseURL}/leagues`, league);
   }
   joinLeague(leagueTeam: AddLeagueTeam) {
     return this.http.post<League>(
-      `${this.appConfig.baseURL}/leagues/join`,
+      `${this.appConfig.baseURL}/league-teams`,
       leagueTeam
     );
   }

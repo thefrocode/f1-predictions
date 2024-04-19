@@ -8,12 +8,18 @@ import { Prediction } from '../predictions/entities/prediction.entity';
 import { SelectedLeague } from './entities/selected_league.entity';
 import { SelectedLeagueService } from './selected-league.service';
 import { SelectedLeagueController } from './selected-league.controller';
+import { LeagueTeamsController } from './league-teams.controller';
+import { LeagueTeamsService } from './league-teams.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([League, LeagueTeam, Prediction, SelectedLeague]),
   ],
-  controllers: [LeaguesController, SelectedLeagueController],
-  providers: [LeaguesService, SelectedLeagueService],
+  controllers: [
+    LeaguesController,
+    SelectedLeagueController,
+    LeagueTeamsController,
+  ],
+  providers: [LeaguesService, SelectedLeagueService, LeagueTeamsService],
 })
 export class LeaguesModule {}

@@ -1,26 +1,22 @@
 <div class="p-6">
-  <form [formGroup]="joinLeagueForm" (ngSubmit)="onSubmit()">
-    <div
-      class="flex flex-col w-5/6 justify-center items-center gap-4 mx-6 my-4"
-    >
-      <p class="font-semibold text-primary text-lg">Join League</p>
+  <div class="flex flex-col w-5/6 justify-center items-center gap-4 mx-6 my-4">
+    <p class="font-semibold text-primary text-lg">Join League</p>
 
-      <div class="flex flex-row gap-2 mt-6">
-        @for(team of data.teams; track team.id){
-        <label>
-          <input type="radio" value="{{ team.id }}" formControlName="team_id" />
-          <span>{{ team.name }}</span>
-        </label>
+    <p>You are about to join {{ data.league_name }}</p>
 
-        }
-      </div>
-
+    <div class="flex gap-4">
       <button
-        [disabled]="joinLeagueForm.invalid"
-        class="bg-primary px-4 py-2 rounded-md text-white font-semibold disabled:opacity-50"
+        class="bg-primary px-4 py-2 rounded-md text-white font-semibold outline-none"
+        (click)="joinLeague(false)"
       >
-        Join League
+        Cancel
+      </button>
+      <button
+        class="bg-primary px-4 py-2 rounded-md text-white font-semibold outline-none"
+        (click)="joinLeague(true)"
+      >
+        Join
       </button>
     </div>
-  </form>
+  </div>
 </div>

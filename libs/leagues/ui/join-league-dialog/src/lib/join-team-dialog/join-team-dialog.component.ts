@@ -22,7 +22,7 @@ export class JoinTeamDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<JoinTeamDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { teams: Team[] }
+    public data: { league_name: string }
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class JoinTeamDialogComponent {
       team_id: new FormControl('', [Validators.required]),
     });
   }
-  onSubmit() {
-    this.dialogRef.close(this.joinLeagueForm.value);
+  joinLeague(confirm: boolean) {
+    this.dialogRef.close(confirm);
   }
 }

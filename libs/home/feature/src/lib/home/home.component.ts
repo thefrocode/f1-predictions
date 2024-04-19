@@ -37,8 +37,10 @@ import { LeaguesStore } from '@f1-predictions/leagues-store';
 import { PointsStore } from '@f1-predictions/predictions-store';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
+import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
 import { TeamsStore } from '@f1-predictions/teams-store';
-import { DataSource } from '@angular/cdk/collections';
+import { RouterModule } from '@angular/router';
+
 const CountdownTimeUnits: Array<[string, number]> = [
   ['Y', 1000 * 60 * 60 * 24 * 365], // years
   ['M', 1000 * 60 * 60 * 24 * 30], // months
@@ -67,6 +69,8 @@ const CountdownTimeUnits: Array<[string, number]> = [
     CountdownComponent,
     LeaguePlayersListComponent,
     LeaguesAddComponent,
+    LeaguesJoinComponent,
+    RouterModule,
   ],
   providers: [
     provideIcons({
@@ -87,6 +91,8 @@ export class HomeComponent {
   points = inject(PointsStore);
 
   readonly players = inject(PlayersStore);
+
+  home_leagues = computed(() => this.leagues.leagues().splice(0, 3));
   readonly leagues = inject(LeaguesStore);
   readonly teams = inject(TeamsStore);
   active_race = this.races.active_race;

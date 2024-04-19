@@ -107,10 +107,10 @@
               </div>
             </div>
           </div>
-          <div class="bg-white rounded-lg px-4 py-3 w-3/5">
+          <div class="bg-white rounded-lg px-4 py-2 w-3/5 flex flex-col">
             <div class="flex justify-between">
               <p class="font-lemon self-center">LEAGUES</p>
-              <leagues-add></leagues-add>
+              <leagues-add [type]="'icon'"></leagues-add>
             </div>
             <div class="relative">
               <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />
@@ -126,9 +126,9 @@
               <p class="w-1/5">Pos</p>
               <p></p>
             </div>
-            @for(league of leagues.leagues(); track league){
+            @for(league of home_leagues(); track league){
             <div
-              class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
+              class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
             >
               <p class="w-3/5 self-center">{{ league.name }}</p>
 
@@ -137,10 +137,13 @@
               <p>Joined</p>
               }@else {
               <p class="w-1/5 self-center">-</p>
-              <i class="bi bi-door-open text-base text-[#F98AE0]"></i>
+              <leagues-join [league]="league"></leagues-join>
               }
             </div>
             }
+            <a class="mx-auto" [routerLink]="'/leagues'">
+              <i class="bi bi-chevron-double-down text-2xl text-[#F98AE0]"> </i>
+            </a>
           </div>
         </div>
       </div>

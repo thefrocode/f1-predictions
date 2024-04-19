@@ -1,4 +1,13 @@
+@if(type =='icon'){
 <i
   class="bi bi-plus text-3xl text-[#F98AE0]"
   (click)="openCreateLeagueDialog()"
 ></i>
+}@else{
+<button
+  (click)="openCreateLeagueDialog()"
+  class="text-white rounded-sm px-4 py-1.5 text-sm bg-[#F98AE0] font-semibold my-2"
+>
+  Create League
+</button>
+}

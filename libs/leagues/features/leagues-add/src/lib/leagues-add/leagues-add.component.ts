@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { radixPlus } from '@ng-icons/radix-icons';
 import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
@@ -18,6 +18,11 @@ import { AddLeagueDialogComponent } from '@f1-predictions/add-league-dialog';
 export class LeaguesAddComponent {
   leaguesStore = inject(LeaguesStore);
   playersStore = inject(PlayersStore);
+
+  @Input({
+    required: true,
+  })
+  type!: string;
 
   constructor(private dialog: MatDialog) {}
   openCreateLeagueDialog() {
