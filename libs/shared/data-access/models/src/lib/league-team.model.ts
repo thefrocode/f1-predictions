@@ -1,10 +1,10 @@
 import { League } from './league.model';
 
-export interface LeagueTeam {
+export interface LeaguePlayer {
   id: number;
   league_id: number;
   player_id: number;
   league?: League;
 }
 
-export type AddLeagueTeam = Omit<LeagueTeam, 'id'>;
+export type AddLeaguePlayer = Omit<LeaguePlayer, 'id'>;

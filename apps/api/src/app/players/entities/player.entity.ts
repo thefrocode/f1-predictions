@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { League } from '../../leagues/entities/league.entity';
-import { LeagueTeam } from '../../leagues/entities/league_team.entity';
+import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Team } from '../../teams/entities/team.entity';
 
@@ -21,8 +21,8 @@ export class Player {
   @OneToMany(() => League, (league) => league.owner)
   leagues: League[];
 
-  @OneToMany(() => LeagueTeam, (league_team) => league_team.player)
-  leagueTeams: LeagueTeam[];
+  @OneToMany(() => LeaguePlayer, (league_player) => league_player.player)
+  leaguePlayers: LeaguePlayer[];
 
   @OneToMany(() => Prediction, (prediction) => prediction.player)
   predictions: Prediction[];

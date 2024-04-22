@@ -1,13 +1,13 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { JoinLeagueDto } from './dto/add-team-to-league.dto';
-import { LeagueTeamsService } from './league-teams.service';
+import { LeaguePlayersService } from './league-teams.service';
 
 @Controller('league-teams')
-export class LeagueTeamsController {
-  constructor(private readonly leagueTeamsService: LeagueTeamsService) {}
+export class LeaguePlayersController {
+  constructor(private readonly leaguePlayersService: LeaguePlayersService) {}
 
   @Post()
   create(@Body() joinLeagueDto: JoinLeagueDto) {
-    return this.leagueTeamsService.create(joinLeagueDto);
+    return this.leaguePlayersService.create(joinLeagueDto);
   }
 }

@@ -11,9 +11,9 @@ import { Player } from '../../players/entities/player.entity';
 import { Team } from '../../teams/entities/team.entity';
 import { League } from './league.entity';
 
-@Entity('league_teams')
+@Entity('league_players')
 @Unique(['league_id', 'player_id'])
-export class LeagueTeam {
+export class LeaguePlayer {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,11 +23,11 @@ export class LeagueTeam {
   @Column()
   player_id: number;
 
-  @ManyToOne(() => League, (league) => league.leagueTeams)
+  @ManyToOne(() => League, (league) => league.leaguePlayers)
   @JoinColumn({ name: 'league_id' })
   league: League;
 
-  @ManyToOne(() => Player, (player) => player.leagueTeams)
+  @ManyToOne(() => Player, (player) => player.leaguePlayers)
   @JoinColumn({ name: 'player_id' })
   player: Player;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LeagueTeam } from '../leagues/entities/league_team.entity';
+import { LeaguePlayer } from '../leagues/entities/league_player.entity';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { Team } from './entities/team.entity';
@@ -11,8 +11,8 @@ export class TeamsService {
   @InjectRepository(Team)
   private readonly teamsRepository: Repository<Team>;
 
-  @InjectRepository(LeagueTeam)
-  private readonly leagueTeamsRepository: Repository<LeagueTeam>;
+  @InjectRepository(LeaguePlayer)
+  private readonly leaguePlayersRepository: Repository<LeaguePlayer>;
 
   // async create(createTeamDto: CreateTeamDto) {
   //   const newTeam = this.teamsRepository.create(createTeamDto);
@@ -27,7 +27,7 @@ export class TeamsService {
   //   return this.teamsRepository.findBy({ player_id });
   // }
   // findAllByLeagueId(league_id: number) {
-  //   return this.leagueTeamsRepository.find({
+  //   return this.leaguePlayersRepository.find({
   //     relations: ['team'],
   //     where: { league_id },
   //   });

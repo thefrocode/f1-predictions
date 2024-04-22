@@ -9,7 +9,7 @@ import {
   Unique,
 } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
-import { LeagueTeam } from './league_team.entity';
+import { LeaguePlayer } from './league_player.entity';
 import { SelectedLeague } from './selected_league.entity';
 
 @Entity('leagues')
@@ -28,8 +28,8 @@ export class League {
   @JoinColumn({ name: 'owner_id' })
   owner: Player;
 
-  @OneToMany(() => LeagueTeam, (league_team) => league_team.league)
-  leagueTeams: LeagueTeam[];
+  @OneToMany(() => LeaguePlayer, (league_player) => league_player.league)
+  leaguePlayers: LeaguePlayer[];
 
   // @OneToMany(() => SelectedLeague, (selected_league) => selected_league.league)
   // selectedLeagues: SelectedLeague[];

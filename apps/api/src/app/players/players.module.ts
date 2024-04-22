@@ -3,10 +3,10 @@ import { PlayersService } from './players.service';
 import { PlayersController } from './players.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from './entities/player.entity';
-import { LeagueTeam } from '../leagues/entities/league_team.entity';
+import { LeaguePlayer } from '../leagues/entities/league_player.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Player, LeagueTeam])],
+  imports: [TypeOrmModule.forFeature([Player, LeaguePlayer])],
   controllers: [PlayersController],
   providers: [PlayersService],
 })

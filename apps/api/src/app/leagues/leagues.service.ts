@@ -8,7 +8,7 @@ import { CreateLeagueDto } from './dto/create-league.dto';
 import { SelectLeagueDto } from './dto/select-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { League } from './entities/league.entity';
-import { LeagueTeam } from './entities/league_team.entity';
+import { LeaguePlayer } from './entities/league_player.entity';
 import { SelectedLeague } from './entities/selected_league.entity';
 
 @Injectable()
@@ -16,8 +16,8 @@ export class LeaguesService {
   @InjectRepository(League)
   private readonly leaguesRepository: Repository<League>;
 
-  @InjectRepository(LeagueTeam)
-  private readonly leagueTeamsRepository: Repository<LeagueTeam>;
+  @InjectRepository(LeaguePlayer)
+  private readonly leaguePlayersRepository: Repository<LeaguePlayer>;
 
   @InjectRepository(Prediction)
   private readonly predictionsRepository: Repository<Prediction>;
@@ -32,8 +32,8 @@ export class LeaguesService {
     return this.leaguesRepository.insert(newLeague);
   }
   addTeamToLeague(joinLeagueDto: JoinLeagueDto) {
-    const newLeagueTeam = this.leagueTeamsRepository.create(joinLeagueDto);
-    return this.leagueTeamsRepository.insert(newLeagueTeam);
+    const newLeaguePlayer = this.leaguePlayersRepository.create(joinLeagueDto);
+    return this.leaguePlayersRepository.insert(newLeaguePlayer);
   }
 
   async findAll(player_id: number) {
@@ -43,17 +43,17 @@ export class LeaguesService {
       .groupBy('player_id')
       .getSql();
 
-    const positionsSubQuery = this.leagueTeamsRepository
-      .createQueryBuilder('league_teams')
+    const positionsSubQuery = this.leaguePlayersRepository
+      .createQueryBuilder('league_players')
       .select([
         'league_id',
-        'league_teams.player_id as player_id',
+        'league_players.player_id as player_id',
         'ROW_NUMBER() over(partition by league_id order by points desc) as position',
       ])
       .innerJoin(
         '(' + pointsSubQuery + ')',
         'points',
-        'league_teams.player_id=points.player_id'
+        'league_players.player_id=points.player_id'
       )
       .getSql();
 
@@ -66,27 +66,21 @@ export class LeaguesService {
     return this.leaguesRepository
       .createQueryBuilder('leagues')
       .select([
-        'leagues.id as id, leagues.name as name, positions.player_id as player_id, positions.position',
+        'leagues.id as id, leagues.name as name, league_players.player_id as player_id, positions.position',
       ])
       .leftJoin(
-        'league_teams',
-        'league_teams',
-        'leagues.id=league_teams.league_id'
+        'league_players',
+        'league_players',
+        'leagues.id=league_players.league_id'
       )
       .leftJoin(
         '(' + activePlayerSubQuery.getQuery() + ')',
         'positions',
-        'league_teams.player_id=positions.player_id and league_teams.league_id=positions.league_id'
+        'league_players.player_id=positions.player_id and league_players.league_id=positions.league_id'
       )
-      .groupBy('league_teams.league_id')
+      .groupBy('leagues.id')
       .setParameters(activePlayerSubQuery.getParameters())
       .getRawMany();
-  }
-  findPlayersByLeagueId(leagueId: number) {
-    return this.leagueTeamsRepository.find({
-      relations: ['player'],
-      where: { league_id: leagueId },
-    });
   }
 
   async findOne(player_id: number) {
@@ -110,26 +104,26 @@ export class LeaguesService {
       .where('race_id = :race_id', { race_id })
       .groupBy('player_id');
 
-    return this.leagueTeamsRepository
-      .createQueryBuilder('league_teams')
+    return this.leaguePlayersRepository
+      .createQueryBuilder('league_players')
       .select([
         'league_id',
-        'league_teams.player_id as player_id',
+        'league_players.player_id as player_id',
         'ROW_NUMBER() over(partition by league_id order by points.points desc) as position',
         'last_race_points.points as last_race_points',
         'points.points as total_points',
         'players.name as name',
       ])
-      .innerJoin('players', 'players', 'league_teams.player_id=players.id')
+      .innerJoin('players', 'players', 'league_players.player_id=players.id')
       .leftJoin(
         '(' + pointsSubQuery + ')',
         'points',
-        'league_teams.player_id=points.player_id'
+        'league_players.player_id=points.player_id'
       )
       .leftJoin(
         '(' + lastRacePointsSubQuery.getQuery() + ')',
         'last_race_points',
-        'league_teams.player_id=last_race_points.player_id'
+        'league_players.player_id=last_race_points.player_id'
       )
       .setParameters(lastRacePointsSubQuery.getParameters())
       .where('league_id = :league_id', { league_id: league?.league_id })

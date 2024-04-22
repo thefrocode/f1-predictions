@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
 import {
   AddLeague,
-  AddLeagueTeam,
+  AddLeaguePlayer,
   League,
   Player,
   Point,
@@ -54,10 +54,10 @@ export class LeagueApiService {
   createLeague(league: AddLeague) {
     return this.http.post<League>(`${this.appConfig.baseURL}/leagues`, league);
   }
-  joinLeague(leagueTeam: AddLeagueTeam) {
+  joinLeague(leaguePlayer: AddLeaguePlayer) {
     return this.http.post<League>(
       `${this.appConfig.baseURL}/league-teams`,
-      leagueTeam
+      leaguePlayer
     );
   }
 }

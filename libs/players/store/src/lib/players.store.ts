@@ -6,7 +6,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { LeagueTeam, Player, PlayersState } from '@f1-predictions/models';
+import { LeaguePlayer, Player, PlayersState } from '@f1-predictions/models';
 import { PlayerApiService } from '@f1-predictions/f1-predictions-api';
 import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
@@ -50,7 +50,7 @@ export const PlayersStore = signalStore(
         switchMap((player_id) =>
           playerApi.loadAllLeaguesPerPlayer(player_id).pipe(
             tapResponse({
-              next: (leagues: LeagueTeam[]) => {
+              next: (leagues: LeaguePlayer[]) => {
                 console.log(leagues);
                 patchState(store, { leagues });
               },

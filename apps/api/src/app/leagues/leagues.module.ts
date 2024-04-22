@@ -2,24 +2,29 @@ import { Module } from '@nestjs/common';
 import { LeaguesService } from './leagues.service';
 import { LeaguesController } from './leagues.controller';
 import { League } from './entities/league.entity';
-import { LeagueTeam } from './entities/league_team.entity';
+import { LeaguePlayer } from './entities/league_player.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prediction } from '../predictions/entities/prediction.entity';
 import { SelectedLeague } from './entities/selected_league.entity';
 import { SelectedLeagueService } from './selected-league.service';
 import { SelectedLeagueController } from './selected-league.controller';
-import { LeagueTeamsController } from './league-teams.controller';
-import { LeagueTeamsService } from './league-teams.service';
+import { LeaguePlayersController } from './league-teams.controller';
+import { LeaguePlayersService } from './league-teams.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([League, LeagueTeam, Prediction, SelectedLeague]),
+    TypeOrmModule.forFeature([
+      League,
+      LeaguePlayer,
+      Prediction,
+      SelectedLeague,
+    ]),
   ],
   controllers: [
     LeaguesController,
     SelectedLeagueController,
-    LeagueTeamsController,
+    LeaguePlayersController,
   ],
-  providers: [LeaguesService, SelectedLeagueService, LeagueTeamsService],
+  providers: [LeaguesService, SelectedLeagueService, LeaguePlayersService],
 })
 export class LeaguesModule {}

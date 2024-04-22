@@ -6,7 +6,6 @@ import { LeaguesStore } from '@f1-predictions/leagues-store';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { TeamsStore } from '@f1-predictions/teams-store';
 import { MatDialog } from '@angular/material/dialog';
-
 import { JoinTeamDialogComponent } from '@f1-predictions/join-team-dialog';
 import { League } from '@f1-predictions/models';
 

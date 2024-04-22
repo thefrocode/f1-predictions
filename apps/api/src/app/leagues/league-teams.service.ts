@@ -3,31 +3,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
-import { LeagueTeam } from './entities/league_team.entity';
+import { LeaguePlayer } from './entities/league_player.entity';
 
 @Injectable()
-export class LeagueTeamsService {
-  @InjectRepository(LeagueTeam)
-  private readonly leagueTeamsRepository: Repository<LeagueTeam>;
+export class LeaguePlayersService {
+  @InjectRepository(LeaguePlayer)
+  private readonly leaguePlayersRepository: Repository<LeaguePlayer>;
 
   create(joinLeagueDto: JoinLeagueDto) {
-    const newLeagueTeam = this.leagueTeamsRepository.create(joinLeagueDto);
-    return this.leagueTeamsRepository.insert(newLeagueTeam);
+    const newLeaguePlayer = this.leaguePlayersRepository.create(joinLeagueDto);
+    return this.leaguePlayersRepository.insert(newLeaguePlayer);
   }
 
   findAll() {
-    return this.leagueTeamsRepository.find();
+    return this.leaguePlayersRepository.find();
   }
 
   findOne(id: number) {
-    return this.leagueTeamsRepository.findOne({ where: { id } });
+    return this.leaguePlayersRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateLeagueDto: UpdateLeagueDto) {
-    //return this.leagueTeamsRepository.update(id, updateLeagueDto);
+    //return this.leaguePlayersRepository.update(id, updateLeagueDto);
   }
 
   remove(id: number) {
-    return this.leagueTeamsRepository.delete(id);
+    return this.leaguePlayersRepository.delete(id);
   }
 }

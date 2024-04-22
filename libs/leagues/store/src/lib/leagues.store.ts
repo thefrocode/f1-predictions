@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 import {
   AddLeague,
-  AddLeagueTeam,
+  AddLeaguePlayer,
   League,
   LeaguesState,
   Player,
@@ -153,11 +153,11 @@ export const LeaguesStore = signalStore(
           )
         )
       ),
-      joinLeague: rxMethod<AddLeagueTeam>(
+      joinLeague: rxMethod<AddLeaguePlayer>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
-          switchMap((leagueTeam) =>
-            leagueApi.joinLeague(leagueTeam).pipe(
+          switchMap((leaguePlayer) =>
+            leagueApi.joinLeague(leaguePlayer).pipe(
               tapResponse({
                 next: () => {
                   toastr.success('Joined league successfully', 'Success!');
