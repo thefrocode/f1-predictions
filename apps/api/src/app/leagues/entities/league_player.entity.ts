@@ -8,7 +8,6 @@ import {
   Unique,
 } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
-import { Team } from '../../teams/entities/team.entity';
 import { League } from './league.entity';
 
 @Entity('league_players')

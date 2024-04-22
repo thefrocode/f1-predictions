@@ -1,5 +1,4 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Point } from '../../points/entities/point.entity';
 import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 
@@ -40,9 +39,6 @@ export class Race {
 
   @OneToMany(() => Prediction, (prediction) => prediction.race)
   predictions: Prediction[];
-
-  @OneToMany(() => Point, (point) => point.race)
-  points: Point[];
 
   @OneToMany(() => Result, (result) => result.race)
   results: Result[];

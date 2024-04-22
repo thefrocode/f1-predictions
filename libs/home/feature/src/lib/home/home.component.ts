@@ -29,7 +29,6 @@ import {
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { RacesStore } from '@f1-predictions/race-store';
 import { LeaguesListComponent } from '@f1-predictions/leagues-list';
-import { TeamsListComponent } from '@f1-predictions/teams-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CountdownComponent, CountdownConfig } from 'ngx-countdown';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -38,7 +37,6 @@ import { PointsStore } from '@f1-predictions/predictions-store';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
-import { TeamsStore } from '@f1-predictions/teams-store';
 import { RouterModule } from '@angular/router';
 
 const CountdownTimeUnits: Array<[string, number]> = [
@@ -65,7 +63,6 @@ const CountdownTimeUnits: Array<[string, number]> = [
     HlmButtonDirective,
     HlmIconComponent,
     LeaguesListComponent,
-    TeamsListComponent,
     CountdownComponent,
     LeaguePlayersListComponent,
     LeaguesAddComponent,
@@ -94,7 +91,7 @@ export class HomeComponent {
 
   home_leagues = computed(() => this.leagues.leagues().splice(0, 3));
   readonly leagues = inject(LeaguesStore);
-  readonly teams = inject(TeamsStore);
+
   active_race = this.races.active_race;
   active_player = this.players.active_player;
   dates = computed(() => {

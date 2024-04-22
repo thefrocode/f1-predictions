@@ -7,9 +7,12 @@ import { PredictionType } from './entities/prediction-type.entity';
 import { PointsController } from './points.controller';
 import { PointsService } from './points.service';
 import { Player } from '../players/entities/player.entity';
+import { Result } from './entities/result.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Prediction, PredictionType, Player])],
+  imports: [
+    TypeOrmModule.forFeature([Prediction, PredictionType, Player, Result]),
+  ],
   controllers: [PredictionsController, PointsController],
   providers: [PredictionsService, PointsService],
 })

@@ -2,7 +2,6 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { League } from '../../leagues/entities/league.entity';
 import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
-import { Team } from '../../teams/entities/team.entity';
 
 @Entity('players')
 export class Player {

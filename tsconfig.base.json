@@ -30,9 +30,6 @@
       "@f1-predictions/auth/feature/signin": [
         "libs/auth/feature/signin/src/index.ts"
       ],
-      "@f1-predictions/create-team-dialog": [
-        "libs/teams/ui/create-team-dialog/src/index.ts"
-      ],
       "@f1-predictions/f1-predictions-api": [
         "libs/shared/data-access/f1-predictions-api/src/index.ts"
       ],
@@ -66,10 +63,6 @@
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"
       ],
-      "@f1-predictions/teams-list": [
-        "libs/teams/features/teams-list/src/index.ts"
-      ],
-      "@f1-predictions/teams-store": ["libs/teams/store/src/index.ts"],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],
