@@ -1,6 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
+import { Team } from '../../predictions/entities/team.entity';
 
 @Entity('drivers')
 export class Driver {
@@ -15,4 +22,7 @@ export class Driver {
 
   @OneToMany(() => Result, (result) => result.driver)
   results: Result[];
+
+  @ManyToMany(() => Team, (team) => team.driver)
+  teams: Result[];
 }

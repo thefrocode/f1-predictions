@@ -1,0 +1,73 @@
+<div class="flex gap-4">
+  <div class="bg-white rounded-md w-2/3">
+    <p class="self-center text-center font-lemonada text-lg py-2">My Team</p>
+    <div class="grid px-14 py-4">
+      @for(driver of selected_team() | keyvalue; track driver){
+      <div class="col flex justify-center">
+        @if(driver.value){
+        <div
+          class="bg-[#FAF2F8] w-[150px] h-full rounded-md flex flex-col relative"
+        >
+          <i
+            class="absolute right-0 top-0 bi bi-x-lg px-2 py-0.5"
+            (click)="removeSelection(driver.key, driver.value)"
+          ></i>
+          <img src="assets/img/driver.png" class="mt-4" />
+          <hr class="border" />
+          <div class="flex justify-between text-sm items-center p-2">
+            <p class="text-center">{{ driver.key }}</p>
+            <p class="text-center">{{ driver.value }}</p>
+          </div>
+        </div>
+        }@else {
+        <div
+          class="bg-[#FAF2F8] w-[150px] h-full rounded-md flex flex-col items-center justify-center"
+          (click)="setSelectionPrediction(driver.key)"
+        >
+          <span
+            class="bg-[#B1B1EC] rounded-md w-[fit-content] mx-auto px-1 py-0.5"
+          >
+            <i class="bi bi-plus text-white mx-auto"></i>
+          </span>
+          <p class="text-center">Add Driver</p>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    <button
+      class="text-white rounded-sm px-4 py-1.5 text-sm bg-[#B1B1EC] font-semibold my-2 mx-auto block"
+    >
+      Save Team
+    </button>
+  </div>
+  @if(selected_position){
+  <div class="bg-white rounded-md flex-grow p-4">
+    <div
+      class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+    >
+      <p class="w-3/5">Driver Name</p>
+      <p>Points</p>
+    </div>
+    @for(driver of driver_selection(); track driver){
+    <div
+      class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
+    >
+      <p class="w-3/5">{{ driver.name }}</p>
+      <p class="grow">{{ driver.points }}</p>
+      @if(selected_position && selected_position.type === 'Positional'){
+      @if(driver.selected){
+      <i
+        class="bi bi-x-lg text-lg"
+        (click)="removeSelection(selected_position.name, driver.name)"
+      ></i>
+      }@else {
+      <i class="bi bi-plus text-lg" (click)="addSelection(driver.name)"></i>
+      } }@else {
+      <i class="bi bi-plus text-lg" (click)="addSelection(driver.name)"></i>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>
