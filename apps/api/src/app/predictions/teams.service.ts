@@ -14,24 +14,25 @@ export class TeamsService {
     const newTeam = this.teamsRepository.create(createTeamDto);
     return this.teamsRepository.insert(newTeam);
   }
-  update(id: number, updateTeamDto: UpdateTeamDto) {
-    return this.teamsRepository.update(id, updateTeamDto);
+  async update(player_id: number, updateTeamDto: CreateTeamDto[]) {
+    console.log(updateTeamDto);
+
+    for (const prediction of updateTeamDto) {
+      const team = await this.teamsRepository.findOne({
+        where: {
+          player_id: prediction.player_id,
+          prediction_type_id: prediction.prediction_type_id,
+        },
+      });
+
+      if (team) {
+        team.driver_id = prediction.driver_id!;
+        await this.teamsRepository.save(team);
+      }
+    }
+    return this.findOne(player_id);
   }
   async findOne(player_id: number) {
-    // console.log(
-    //   await this.teamsRepository
-    //     .find({
-    //       relations: ['prediction_type', 'driver'],
-    //       where: { player_id },
-    //     })
-    //     .then((teams) => {
-    //       return teams.map((t) => ({
-    //         prediction_type: t.prediction_type.name,
-    //         driver: t.driver?.name,
-    //         driver_id: t.driver?.id,
-    //       }));
-    //     })
-    // );
     return this.teamsRepository
       .find({
         relations: ['prediction_type', 'driver'],

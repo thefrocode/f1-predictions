@@ -19,7 +19,10 @@ export class TeamApiService {
     );
   }
 
-  createTeam(team: AddTeam): Observable<Team> {
-    return this.http.post<Team>(`${this.appConfig.baseURL}/teams`, team);
+  updateTeam(player_id: number, team: Team[]): Observable<Team[]> {
+    return this.http.patch<Team[]>(
+      `${this.appConfig.baseURL}/teams/${player_id}`,
+      team
+    );
   }
 }

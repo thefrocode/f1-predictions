@@ -16,4 +16,8 @@ export class CreatePredictionDto {
   @IsNotEmpty()
   @IsNumber()
   driver_id: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  player_id: number;
 }

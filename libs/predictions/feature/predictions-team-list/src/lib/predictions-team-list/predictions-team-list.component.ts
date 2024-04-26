@@ -5,10 +5,9 @@ import {
   PredictionTypesStore,
   TeamStore,
 } from '@f1-predictions/predictions-store';
+import { Team } from '@f1-predictions/models';
+import { PlayersStore } from '@f1-predictions/players-store';
 
-interface Team {
-  [key: string]: string;
-}
 @Component({
   selector: 'predictions-team-list',
   standalone: true,
@@ -19,14 +18,16 @@ interface Team {
 export class PredictionsTeamListComponent {
   prediction_types = inject(PredictionTypesStore).prediction_types;
   teams = inject(TeamStore);
+  active_player = inject(PlayersStore).active_player;
 
   selected_team = computed(() => {
     const team: {
-      [key: string]: string;
+      [key: string]: string | undefined;
     } = {};
-    this.teams.teams().forEach((t) => {
+    this.teams.team().forEach((t) => {
       team[t.prediction_type] = t.driver_name;
     });
+    console.log(team);
     return team;
   });
   drivers = inject(DriversStore).drivers;
@@ -35,7 +36,14 @@ export class PredictionsTeamListComponent {
     //const selected_position = this.teams.teams().map((t) => t.driver_id);
     const drivers = this.drivers().map((d) => {
       Object.keys(this.selected_team()).forEach((key) => {
-        if (d.name === this.selected_team()[key]) {
+        const prediction_type = this.prediction_types().find(
+          (p) => p.name === key
+        )!;
+
+        if (
+          prediction_type.type === 'Positional' &&
+          d.name === this.selected_team()[key]
+        ) {
           d.selected = true;
         }
       });
@@ -96,5 +104,25 @@ export class PredictionsTeamListComponent {
   }
   constructor() {
     effect(() => console.log(this.selected_team()));
+  }
+  saveTeam() {
+    const team: Team[] = [];
+    Object.keys(this.selected_team()).forEach((key) => {
+      const prediction_type = this.prediction_types().find(
+        (p) => p.name === key
+      )!;
+
+      team.push({
+        prediction_type_id: prediction_type.id,
+        driver_id: this.drivers().find(
+          (d) => d.name === this.selected_team()[key]
+        )?.id,
+        driver_name: this.selected_team()[key],
+        prediction_type: prediction_type.name,
+        player_id: this.active_player()!.id,
+      });
+    });
+    console.log(team);
+    this.teams.updateTeam(team);
   }
 }

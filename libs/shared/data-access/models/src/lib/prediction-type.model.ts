@@ -1,4 +1,5 @@
 export interface PredictionType {
+  id: number;
   name: string;
   type: string;
 }

@@ -14,7 +14,7 @@ export class TeamsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() team: UpdateTeamDto) {
+  update(@Param('id') id: string, @Body() team: CreateTeamDto[]) {
     return this.teamsService.update(+id, team);
   }
 
