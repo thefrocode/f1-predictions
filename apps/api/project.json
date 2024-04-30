@@ -66,10 +66,6 @@
         "isolatedConfig": true,
         "generatePackageJson": true,
         "webpackConfig": "apps/api/webpack.config.js"
-      },
-      "configurations": {
-        "development": {},
-        "production": {}
       }
     },
     "seed": {
@@ -77,14 +73,6 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "api:build-seed"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "api:build-seed:development"
-        },
-        "production": {
-          "buildTarget": "api:build-seed:production"
-        }
       }
     }
   },
