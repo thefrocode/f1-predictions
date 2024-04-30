@@ -20,6 +20,7 @@
     "@angular/platform-server": "~17.0.0",
     "@angular/router": "~17.0.0",
     "@angular/ssr": "~17.0.0",
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/mapped-types": "*",
@@ -43,10 +44,11 @@
     "mysql2": "^3.6.5",
     "ngx-countdown": "^17.1.1",
     "ngx-toastr": "^18.0.0",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.1.14",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.5.1",
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
