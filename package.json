@@ -2,7 +2,9 @@
   "name": "@f1-predictions/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js"
+  },
   "private": true,
   "dependencies": {
     "@abacritt/angularx-social-login": "^2.1.0",
