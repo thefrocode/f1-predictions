@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import * as fs from 'fs';
+import http from 'http';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { runSeeders, SeederOptions } from 'typeorm-extension';
 import { Driver } from './app/drivers/entities/driver.entity';
@@ -30,6 +31,20 @@ function getValue(value: string | undefined, throwOnMissing = true): string {
   }
   return value as string;
 }
+
+const PORT = process.env.PORT || 3000;
+
+// Create HTTP server
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Seeding script is running!\n');
+});
+
+// Bind the server to the defined port
+server.listen(PORT, () => {
+  console.log(`Seeding script server is running on port ${PORT}`);
+});
 
 const options =
   MODE === 'PROD'
@@ -87,7 +102,7 @@ const options =
         factories: [PlayersFactory],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions);
-console.log(options);
+
 const dataSource = new DataSource(options);
 
 dataSource.initialize().then(async () => {
