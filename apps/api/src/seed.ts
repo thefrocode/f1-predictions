@@ -14,8 +14,8 @@ import { Result } from './app/predictions/entities/result.entity';
 import { Team } from './app/predictions/entities/team.entity';
 import { Race } from './app/races/entities/race.entity';
 import MainSeeder from './app/shared/seeders/main.seeder';
-import { configService } from './config/config.service';
 import { DriversFactory } from './app/drivers/factories/drivers.factory';
+import { LeaguesFactory } from './app/leagues/factories/leagues.factory';
 
 const {
   F1_MYSQL_HOST,
@@ -76,7 +76,7 @@ const options =
           Race,
           Result,
         ],
-        factories: [PlayersFactory],
+        factories: [PlayersFactory, DriversFactory, LeaguesFactory],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions)
     : ({
@@ -100,7 +100,7 @@ const options =
           Race,
           Result,
         ],
-        factories: [PlayersFactory, DriversFactory],
+        factories: [PlayersFactory, DriversFactory, LeaguesFactory],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions);
 
