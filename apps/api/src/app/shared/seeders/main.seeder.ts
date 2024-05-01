@@ -8,6 +8,9 @@ import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { PredictionType } from '../../predictions/entities/prediction-type.entity';
 import { Race } from '../../races/entities/race.entity';
 import { Team } from '../../predictions/entities/team.entity';
+import { Res } from '@nestjs/common';
+import { Result } from '../../predictions/entities/result.entity';
+import { Prediction } from '../../predictions/entities/prediction.entity';
 
 export default class MainSeeder implements Seeder {
   public async run(
@@ -31,6 +34,12 @@ export default class MainSeeder implements Seeder {
 
     const teamsFactory = factoryManager.get(Team);
     const teamsRepository = dataSource.getRepository(Team);
+
+    const resultsFactory = factoryManager.get(Result);
+    const resultsRepository = dataSource.getRepository(Result);
+
+    const predictionsFactory = factoryManager.get(Prediction);
+    const predictionsRepository = dataSource.getRepository(Prediction);
 
     console.log('Seeding players..');
     const players = await playerFactory.saveMany(100);
@@ -148,7 +157,6 @@ export default class MainSeeder implements Seeder {
               prediction_type,
               driver: faker.helpers.arrayElement(drivers),
             });
-            console.log(made);
             return made;
           })
         );
@@ -157,6 +165,50 @@ export default class MainSeeder implements Seeder {
 
     const teams = teamsPromise.flat();
     await teamsRepository.save(teams);
+
+    console.log('Seeding results..');
+    const resultsArray = await Promise.all(
+      races.slice(0, 5).map(async (race) => {
+        return Promise.all(
+          prediction_types.map(async (prediction_type) => {
+            const made = await resultsFactory.make({
+              race,
+              prediction_type,
+              driver: faker.helpers.arrayElement(drivers),
+            });
+            return made;
+          })
+        );
+      })
+    );
+
+    const results = resultsArray.flat();
+    await resultsRepository.save(results);
+    console.log('Seeding predictions..');
+    const predictionsArray = await Promise.all(
+      races.slice(0, 5).map(async (race) => {
+        return Promise.all(
+          players.map(async (player) => {
+            return Promise.all(
+              prediction_types.map(async (prediction_type) => {
+                const made = await predictionsFactory.make({
+                  race,
+                  player,
+                  prediction_type,
+                  predicted_driver: faker.helpers.arrayElement(drivers),
+                  correct_driver: faker.helpers.arrayElement(drivers),
+                  points: faker.number.int({ min: 0, max: 20 }),
+                });
+                return made;
+              })
+            );
+          })
+        );
+      })
+    );
+
+    const predictions = predictionsArray.flat().flat();
+    await predictionsRepository.save(predictions);
   }
   getRandomThursdayOrFriday(days: number) {
     let date;
