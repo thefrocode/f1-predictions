@@ -51,27 +51,27 @@ export const LeaguesStore = signalStore(
     ) => ({
       loadAll: rxMethod<void>(
         pipe(
-          filter(() => (players.active_player() ? true : false)),
           tap(() => patchState(store, { isLoading: true })),
-          switchMap(() =>
-            leagueApi.loadAll(players.active_player()!.id).pipe(
+          switchMap(() => {
+            console.log('Load Leagues');
+            return leagueApi.loadAll(players.active_player()?.id).pipe(
               tapResponse({
                 next: (leagues: League[]) => {
+                  console.log('Leagues', leagues);
                   patchState(store, { leagues });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),
               })
-            )
-          )
+            );
+          })
         )
       ),
       loadOne: rxMethod<void>(
         pipe(
-          filter(() => (players.active_player() ? true : false)),
           tap(() => patchState(store, { isLoading: true })),
           switchMap(() =>
-            leagueApi.loadOne(players.active_player()!.id).pipe(
+            leagueApi.loadOne(players.active_player()?.id).pipe(
               tapResponse({
                 next: (players: Point[]) => {
                   patchState(store, {

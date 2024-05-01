@@ -57,30 +57,45 @@ export class LeaguesService {
       )
       .getSql();
 
-    const activePlayerSubQuery = this.connection
-      .createQueryBuilder()
-      .select(['active_player_positions.*'])
-      .from('(' + positionsSubQuery + ')', 'active_player_positions')
-      .where('active_player_positions.player_id = :player_id', { player_id });
+    if (player_id) {
+      const activePlayerSubQuery = this.connection
+        .createQueryBuilder()
+        .select(['active_player_positions.*'])
+        .from('(' + positionsSubQuery + ')', 'active_player_positions')
+        .where('active_player_positions.player_id = :player_id', { player_id });
 
-    return this.leaguesRepository
-      .createQueryBuilder('leagues')
-      .select([
-        'leagues.id as id, leagues.name as name, league_players.player_id as player_id, positions.position',
-      ])
-      .leftJoin(
-        'league_players',
-        'league_players',
-        'leagues.id=league_players.league_id'
-      )
-      .leftJoin(
-        '(' + activePlayerSubQuery.getQuery() + ')',
-        'positions',
-        'league_players.player_id=positions.player_id and league_players.league_id=positions.league_id'
-      )
-      .groupBy('leagues.id')
-      .setParameters(activePlayerSubQuery.getParameters())
-      .getRawMany();
+      return this.leaguesRepository
+        .createQueryBuilder('leagues')
+        .select([
+          'leagues.id as id, leagues.name as name, league_players.player_id as player_id, positions.position',
+        ])
+        .leftJoin(
+          'league_players',
+          'league_players',
+          'leagues.id=league_players.league_id'
+        )
+        .leftJoin(
+          '(' + activePlayerSubQuery.getQuery() + ')',
+          'positions',
+          'league_players.player_id=positions.player_id and league_players.league_id=positions.league_id'
+        )
+        .groupBy('leagues.id')
+        .setParameters(activePlayerSubQuery.getParameters())
+        .getRawMany();
+    } else {
+      return this.leaguesRepository
+        .createQueryBuilder('leagues')
+        .select([
+          'leagues.id as id, leagues.name as name, league_players.player_id as player_id',
+        ])
+        .leftJoin(
+          'league_players',
+          'league_players',
+          'leagues.id=league_players.league_id'
+        )
+        .groupBy('leagues.id')
+        .getRawMany();
+    }
   }
 
   async findOne(player_id: number) {
@@ -88,10 +103,13 @@ export class LeaguesService {
       result: Not(IsNull()),
     });
 
-    const league = await this.selectedLeagueRepository.findOneBy({
-      player_id,
-    });
-    console.log('League', league);
+    let league;
+    if (player_id) {
+      league = await this.selectedLeagueRepository.findOneBy({
+        player_id,
+      });
+      console.log('League', league);
+    }
 
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
@@ -126,7 +144,9 @@ export class LeaguesService {
         'league_players.player_id=last_race_points.player_id'
       )
       .setParameters(lastRacePointsSubQuery.getParameters())
-      .where('league_id = :league_id', { league_id: league?.league_id })
+      .where('league_id = :league_id', {
+        league_id: league ? league.league_id : 1,
+      })
       .getRawMany();
   }
 

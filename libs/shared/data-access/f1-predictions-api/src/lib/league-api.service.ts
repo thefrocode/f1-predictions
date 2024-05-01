@@ -18,7 +18,7 @@ export class LeagueApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadAll(player_id: number) {
+  loadAll(player_id?: number) {
     let params = new HttpParams();
     if (player_id) {
       params = params.append('player_id', player_id);
@@ -28,7 +28,7 @@ export class LeagueApiService {
       params,
     });
   }
-  loadOne(player_id: number) {
+  loadOne(player_id?: number) {
     return this.http.get<Point[]>(
       `${this.appConfig.baseURL}/leagues/${player_id}`
     );

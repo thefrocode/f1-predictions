@@ -31,7 +31,6 @@ export const RacesStore = signalStore(
           raceApi.loadAll().pipe(
             tapResponse({
               next: (races: Race[]) => {
-                console.log(races);
                 patchState(store, { races });
               },
               error: console.error,

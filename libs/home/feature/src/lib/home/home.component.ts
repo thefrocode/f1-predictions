@@ -211,6 +211,7 @@ export class HomeComponent {
 
   constructor() {}
   ngOnInit() {
+    console.log('home component');
     this.leagues.loadAll();
     this.leagues.loadOne();
   }

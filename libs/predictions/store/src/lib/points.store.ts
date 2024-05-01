@@ -31,7 +31,6 @@ export const PointsStore = signalStore(
           pointsApi.findOne(1).pipe(
             tapResponse({
               next: (points: Point) => {
-                console.log(points);
                 patchState(store, { points });
               },
               error: console.error,
