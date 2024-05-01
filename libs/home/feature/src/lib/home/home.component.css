@@ -1,17 +1,14 @@
-table> thead>tr{
-    text-align: left;
-    border-radius: 5px;
-}
-table> thead>tr>th{
-    padding: 5px 10px;
-}
-table> tbody>tr>td{
-    padding: 5px 10px;
-}
-
 .bg-banner{
     
     background: linear-gradient(to bottom, #BBB1EC, #954fee99, #f80bbd7a),url('/assets/img/f1-car6.png');
     background-blend-mode: overlay;
     background-size: cover;
 }
+
+/*last child of timing_grid*/
+.timing_grid div:last-child{
+    grid-column: span 2 / span 2;
+}
+
+
+

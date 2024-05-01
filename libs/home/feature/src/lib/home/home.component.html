@@ -1,8 +1,6 @@
 <div class="flex">
-  <div class="w-2/3 relative">
-    <div
-      class="flex flex-row mx-4 mt-2 rounded-md bg-banner justify-between px-12"
-    >
+  <div class="w-2/3 relative mx-4">
+    <div class="flex flex-row my-2 rounded-md bg-banner justify-between px-12">
       <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6">
         @if(active_race()){
         <p class="text-white text-xl font-lemon uppercase">
@@ -34,118 +32,57 @@
       </div>
     </div>
 
-    <div class="flex">
-      <div class="flex flex-col w-full">
-        <div class="flex my-2 mx-4 gap-2">
-          @for (session of dates(); track session.session) {
-          <div
-            class="flex-auto bg-white rounded-md m-1 bg-white rounded-md pr-4 py-2 font-lemonada"
-          >
-            <div class="grid grid-cols-2 grid-rows-2 gap">
-              <i
-                class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
-              ></i>
-              <p class="text-center text-xs capitalize">
-                {{ session.session }}
-              </p>
+    <div class="flex gap-2">
+      <div class="flex flex-col w-1/5 gap-2 bg-white rounded-md py-3 px-2">
+        <p class="font-lemon text-xs text-center">Weekend Times</p>
+        @for (session of dates(); track session.session) {
+        <div class="flex-auto bg-white pr-4 py-2 font-lemonada divider">
+          <div class="grid grid-cols-2 grid-rows-2 gap-2">
+            <i
+              class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
+            ></i>
+            <p class="text-center text-xs capitalize">
+              {{ session.session }}
+            </p>
 
-              <p class="text-center text-xs">
-                {{ session.session_time | date : 'HH:mm' }}
-              </p>
-            </div>
+            <p class="text-center text-xs">
+              {{ session.session_time | date : 'HH:mm' }}
+            </p>
           </div>
+        </div>
+        }
+      </div>
+
+      <div class="bg-white rounded-lg px-4 py-2 flex flex-col w-4/5">
+        <div class="flex justify-between">
+          <p class="font-lemon self-center">LEAGUES</p>
+          <leagues-add [type]="'icon'"></leagues-add>
+        </div>
+        <div
+          class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-1 my-1.5 text-2xs text-white font-lemonada"
+        >
+          <p class="w-3/5">League Name</p>
+          <p class="w-1/5">Pos</p>
+          <p></p>
+        </div>
+        @for(league of home_leagues(); track league){
+        <div
+          class="w-full rounded-md flex gap-2 px-2 pt-2.5 pb-2 my-0.5 text-xs font-lemonada shadow text-nowrap"
+        >
+          <p class="w-3/5 self-center">{{ league.name }}</p>
+
+          @if(league.position){
+          <p class="w-1/5 self-center">{{ league.position }}</p>
+          <p>Joined</p>
+          }@else {
+          <p class="w-1/5 self-center">-</p>
+          <leagues-join [league]="league"></leagues-join>
           }
         </div>
-        <div class="flex mb-4 mx-4 gap-4">
-          <div class="w-2/5 flex flex-col gap-2">
-            <div class="flex flex-col bg-white rounded-lg px-4 pt-4 gap-8">
-              <div class="flex justify-between w-full">
-                <div class="flex flex-col">
-                  <p class="text-2xs">POSITION</p>
-                  <p class="font-bold text-2xl">
-                    {{ leagues.active_player_position()?.position }}
-                  </p>
-                </div>
-
-                <i class="bi bi-graph-up-arrow text-lg"></i>
-              </div>
-
-              <div class="relative">
-                <hr class="flex-grow border-4 rounded-lg border-[#b1b1ec4d]" />
-                <i
-                  class="bi bi-chat-square-fill text-white text-3xl relative inline-flex justify-center items-center left-36 -top-10 drop-shadow-lg"
-                  ><span
-                    class="absolute pb-1 px-1 text-black font-lemonada text-xs"
-                    >60</span
-                  ></i
-                >
-                <i
-                  class="bi bi-circle-fill text-3xs absolute -top-0.5 left-40 text-[#B1B1EC]"
-                ></i>
-                <p class="text-2xs font-bold absolute top-4 left-0">
-                  Leaderboard
-                </p>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-lg px-4 py-4 gap-4">
-              <div class="flex justify-between w-full">
-                <div class="flex flex-col">
-                  <p class="text-2xs">POINTS</p>
-                  <p class="font-bold text-2xl">
-                    {{ points.points().total_points }}
-                  </p>
-                </div>
-
-                <i class="bi bi-align-middle text-lg"></i>
-              </div>
-
-              <div class="flex flex-col">
-                <p class="text-3xs">LAST RACE</p>
-                <p class="font-bold text-lg">
-                  {{ points.points().last_race_points }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg px-4 py-2 w-3/5 flex flex-col">
-            <div class="flex justify-between">
-              <p class="font-lemon self-center">LEAGUES</p>
-              <leagues-add [type]="'icon'"></leagues-add>
-            </div>
-            <div class="relative">
-              <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />
-              <i
-                class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"
-              ></i>
-            </div>
-
-            <div
-              class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
-            >
-              <p class="w-3/5">League Name</p>
-              <p class="w-1/5">Pos</p>
-              <p></p>
-            </div>
-            @for(league of home_leagues(); track league){
-            <div
-              class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
-            >
-              <p class="w-3/5 self-center">{{ league.name }}</p>
-
-              @if(league.position){
-              <p class="w-1/5 self-center">{{ league.position }}</p>
-              <p>Joined</p>
-              }@else {
-              <p class="w-1/5 self-center">-</p>
-              <leagues-join [league]="league"></leagues-join>
-              }
-            </div>
-            }
-            <a class="mx-auto" [routerLink]="'/leagues'">
-              <i class="bi bi-chevron-double-down text-2xl text-[#F98AE0]"> </i>
-            </a>
-          </div>
-        </div>
+        }
+        <a class="mx-auto mt-2 mb-1" [routerLink]="'/leagues'">
+          <i class="bi bi-chevron-double-down text-2xl text-[#F98AE0]"> </i>
+        </a>
       </div>
     </div>
   </div>
@@ -175,7 +112,7 @@
     }
   </div>
 </div>
--->
+
 <!-- <div class="flex flex-1 flex-col gap-4">
   <div class="flex flex-row">
     <div class="w-2/3 relative">

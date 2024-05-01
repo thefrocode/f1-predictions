@@ -89,7 +89,7 @@ export class HomeComponent {
 
   readonly players = inject(PlayersStore);
 
-  home_leagues = computed(() => this.leagues.leagues().splice(0, 3));
+  home_leagues = computed(() => this.leagues.leagues().splice(0, 5));
   readonly leagues = inject(LeaguesStore);
 
   active_race = this.races.active_race;
@@ -211,7 +211,6 @@ export class HomeComponent {
 
   constructor() {}
   ngOnInit() {
-    console.log('home component');
     this.leagues.loadAll();
     this.leagues.loadOne();
   }
