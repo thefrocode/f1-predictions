@@ -3,10 +3,11 @@ import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { Player } from '../../players/entities/player.entity';
 import { Driver } from '../../drivers/entities/driver.entity';
 import { League } from '../../leagues/entities/league.entity';
-import { faker, th } from '@faker-js/faker';
+import { faker, pl, th } from '@faker-js/faker';
 import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { PredictionType } from '../../predictions/entities/prediction-type.entity';
 import { Race } from '../../races/entities/race.entity';
+import { Team } from '../../predictions/entities/team.entity';
 
 export default class MainSeeder implements Seeder {
   public async run(
@@ -27,6 +28,9 @@ export default class MainSeeder implements Seeder {
 
     const racesFactory = factoryManager.get(Race);
     const racesRepository = dataSource.getRepository(Race);
+
+    const teamsFactory = factoryManager.get(Team);
+    const teamsRepository = dataSource.getRepository(Team);
 
     console.log('Seeding players..');
     const players = await playerFactory.saveMany(100);
@@ -100,7 +104,9 @@ export default class MainSeeder implements Seeder {
         type: 'Random',
       },
     ];
-    await predictionTypesRepository.save(predictionTypes);
+    const prediction_types = await predictionTypesRepository.save(
+      predictionTypes
+    );
 
     let days = 3;
     let raceNumber = 1;
@@ -110,7 +116,6 @@ export default class MainSeeder implements Seeder {
         .fill('')
         .map(async () => {
           const currentRace = this.getRandomThursdayOrFriday((days += 7));
-          console.log('Days', days);
           const fp2_time = new Date(currentRace);
           fp2_time.setHours(fp2_time.getHours() + 3);
           const fp3_time = new Date(currentRace);
@@ -119,8 +124,6 @@ export default class MainSeeder implements Seeder {
           quali_time.setHours(fp2_time.getHours() + 24);
           const race_time = new Date(quali_time);
           race_time.setHours(quali_time.getHours() + 23);
-          console.log(fp2_time.getHours());
-          console.log(currentRace.getHours());
           const made = await racesFactory.make({
             fp1_time: currentRace,
             fp2_time: fp2_time,
@@ -135,6 +138,25 @@ export default class MainSeeder implements Seeder {
         })
     );
     await racesRepository.save(races);
+    console.log('Seeding teams..');
+    const teamsPromise = await Promise.all(
+      players.map(async (player) => {
+        return Promise.all(
+          prediction_types.map(async (prediction_type) => {
+            const made = await teamsFactory.make({
+              player,
+              prediction_type,
+              driver: faker.helpers.arrayElement(drivers),
+            });
+            console.log(made);
+            return made;
+          })
+        );
+      })
+    );
+
+    const teams = teamsPromise.flat();
+    await teamsRepository.save(teams);
   }
   getRandomThursdayOrFriday(days: number) {
     let date;

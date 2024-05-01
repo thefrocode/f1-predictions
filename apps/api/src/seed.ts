@@ -18,6 +18,7 @@ import { DriversFactory } from './app/drivers/factories/drivers.factory';
 import { LeaguesFactory } from './app/leagues/factories/leagues.factory';
 import { LeaguePlayersFactory } from './app/leagues/factories/league_players.factory';
 import { RacesFactory } from './app/races/factories/races.factory';
+import { TeamsFactory } from './app/predictions/factories/teams.factories';
 
 const {
   F1_MYSQL_HOST,
@@ -84,6 +85,7 @@ const options =
           LeaguesFactory,
           LeaguePlayersFactory,
           RacesFactory,
+          TeamsFactory,
         ],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions)
@@ -114,6 +116,7 @@ const options =
           LeaguesFactory,
           LeaguePlayersFactory,
           RacesFactory,
+          TeamsFactory,
         ],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions);
