@@ -8,7 +8,7 @@ export default class MainSeeder implements Seeder {
     factoryManager: SeederFactoryManager
   ): Promise<any> {
     const userFactory = factoryManager.get(Player);
-
+    console.log('Seeding players...');
     const users = await userFactory.saveMany(7);
   }
 }
