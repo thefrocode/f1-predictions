@@ -63,6 +63,10 @@
         "libs/predictions/feature/predictions-team-list/src/index.ts"
       ],
       "@f1-predictions/race-store": ["libs/races/store/src/index.ts"],
+      "@f1-predictions/results-list": [
+        "libs/results/feature/results-list/src/index.ts"
+      ],
+      "@f1-predictions/results-store": ["libs/results/store/src/index.ts"],
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"
       ],

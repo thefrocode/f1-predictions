@@ -64,7 +64,9 @@ export class ResultsService {
         'results.prediction_type_id = prediction_types.id'
       )
       .groupBy('race_id')
+      .orderBy('race_id', 'ASC')
       .getRawMany();
+
     return results;
   }
 

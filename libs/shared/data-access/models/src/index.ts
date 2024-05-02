@@ -7,3 +7,4 @@ export * from './lib/league-team.model';
 export * from './lib/point.model';
 export * from './lib/prediction-type.model';
 export * from './lib/driver.model';
+export * from './lib/result.model';
