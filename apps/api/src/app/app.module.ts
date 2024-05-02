@@ -10,6 +10,7 @@ import { PredictionsModule } from './predictions/predictions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from '../config/config.service';
 import { SharedModule } from './shared/shared.module';
+import { ResultsModule } from './results/results.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
     DriversModule,
     PredictionsModule,
     SharedModule,
+    ResultsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

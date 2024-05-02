@@ -10,7 +10,6 @@ import { Player } from './app/players/entities/player.entity';
 import { PlayersFactory } from './app/players/factories/players.factory';
 import { PredictionType } from './app/predictions/entities/prediction-type.entity';
 import { Prediction } from './app/predictions/entities/prediction.entity';
-import { Result } from './app/predictions/entities/result.entity';
 import { Team } from './app/predictions/entities/team.entity';
 import { Race } from './app/races/entities/race.entity';
 import MainSeeder from './app/shared/seeders/main.seeder';
@@ -19,8 +18,9 @@ import { LeaguesFactory } from './app/leagues/factories/leagues.factory';
 import { LeaguePlayersFactory } from './app/leagues/factories/league_players.factory';
 import { RacesFactory } from './app/races/factories/races.factory';
 import { TeamsFactory } from './app/predictions/factories/teams.factory';
-import { ResultsFactory } from './app/predictions/factories/results.factory';
+import { ResultsFactory } from './app/results/factories/result.factory';
 import { PredictionsFactory } from './app/predictions/factories/predictions.factory';
+import { Result } from './app/results/entities/result.entity';
 
 const {
   F1_MYSQL_HOST,

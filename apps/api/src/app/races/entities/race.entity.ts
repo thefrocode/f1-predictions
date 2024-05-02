@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
+import { Result } from '../../results/entities/result.entity';
 
 @Entity('races')
 export class Race {

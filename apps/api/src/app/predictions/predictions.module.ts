@@ -7,12 +7,12 @@ import { PredictionType } from './entities/prediction-type.entity';
 import { PointsController } from './points.controller';
 import { PointsService } from './points.service';
 import { Player } from '../players/entities/player.entity';
-import { Result } from './entities/result.entity';
 import { Team } from './entities/team.entity';
 import { TeamsController } from './teams.controller';
 import { TeamsService } from './teams.service';
 import { PredictionTypesController } from './prediction-types.controller';
 import { PredictionTypesService } from './prediction-types.service';
+import { Result } from '../results/entities/result.entity';
 
 @Module({
   imports: [

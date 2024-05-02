@@ -8,9 +8,8 @@ import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { PredictionType } from '../../predictions/entities/prediction-type.entity';
 import { Race } from '../../races/entities/race.entity';
 import { Team } from '../../predictions/entities/team.entity';
-import { Res } from '@nestjs/common';
-import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
+import { Result } from '../../results/entities/result.entity';
 
 export default class MainSeeder implements Seeder {
   public async run(
@@ -93,24 +92,84 @@ export default class MainSeeder implements Seeder {
         type: 'Positional',
       },
       {
-        name: 'Fastest Lap',
+        name: 'Fastest_Lap',
         type: 'Random',
       },
       {
-        name: 'Driver of the Day',
+        name: 'Driver_of_the_Day',
         type: 'Random',
       },
       {
-        name: 'Most Positions Gained',
+        name: 'Most_Positions_Gained',
         type: 'Random',
       },
       {
-        name: 'Pole Position',
+        name: 'Pole_Position',
         type: 'Random',
       },
       {
-        name: 'Fastest Pistop',
+        name: 'Fastest_Pistop',
         type: 'Random',
+      },
+      {
+        name: 'P6',
+        type: 'Not Played',
+      },
+      {
+        name: 'P7',
+        type: 'Not Played',
+      },
+      {
+        name: 'P8',
+        type: 'Not Played',
+      },
+      {
+        name: 'P9',
+        type: 'Not Played',
+      },
+      {
+        name: 'P10',
+        type: 'Not Played',
+      },
+      {
+        name: 'P11',
+        type: 'Not Played',
+      },
+      {
+        name: 'P12',
+        type: 'Not Played',
+      },
+      {
+        name: 'P13',
+        type: 'Not Played',
+      },
+      {
+        name: 'P14',
+        type: 'Not Played',
+      },
+      {
+        name: 'P15',
+        type: 'Not Played',
+      },
+      {
+        name: 'P16',
+        type: 'Not Played',
+      },
+      {
+        name: 'P17',
+        type: 'Not Played',
+      },
+      {
+        name: 'P18',
+        type: 'Not Played',
+      },
+      {
+        name: 'P19',
+        type: 'Not Played',
+      },
+      {
+        name: 'P20',
+        type: 'Not Played',
       },
     ];
     const prediction_types = await predictionTypesRepository.save(

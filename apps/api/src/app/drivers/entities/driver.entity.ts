@@ -5,9 +5,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Result } from '../../predictions/entities/result.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Team } from '../../predictions/entities/team.entity';
+import { Result } from '../../results/entities/result.entity';
 
 @Entity('drivers')
 export class Driver {

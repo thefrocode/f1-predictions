@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Result } from './result.entity';
+import { Result } from '../../results/entities/result.entity';
 import { Prediction } from './prediction.entity';
 import { Team } from './team.entity';
 
