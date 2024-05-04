@@ -10,6 +10,7 @@ import { Race } from '../../races/entities/race.entity';
 import { Team } from '../../predictions/entities/team.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Result } from '../../results/entities/result.entity';
+import { cp } from 'fs';
 
 export default class MainSeeder implements Seeder {
   public async run(
@@ -92,26 +93,6 @@ export default class MainSeeder implements Seeder {
         type: 'Positional',
       },
       {
-        name: 'Fastest_Lap',
-        type: 'Random',
-      },
-      {
-        name: 'Driver_of_the_Day',
-        type: 'Random',
-      },
-      {
-        name: 'Most_Positions_Gained',
-        type: 'Random',
-      },
-      {
-        name: 'Pole_Position',
-        type: 'Random',
-      },
-      {
-        name: 'Fastest_Pistop',
-        type: 'Random',
-      },
-      {
         name: 'P6',
         type: 'Not Played',
       },
@@ -171,6 +152,26 @@ export default class MainSeeder implements Seeder {
         name: 'P20',
         type: 'Not Played',
       },
+      {
+        name: 'Fastest_Lap',
+        type: 'Random',
+      },
+      {
+        name: 'Driver_of_the_Day',
+        type: 'Random',
+      },
+      {
+        name: 'Most_Positions_Gained',
+        type: 'Random',
+      },
+      {
+        name: 'Pole_Position',
+        type: 'Random',
+      },
+      {
+        name: 'Fastest_Pistop',
+        type: 'Random',
+      },
     ];
     const prediction_types = await predictionTypesRepository.save(
       predictionTypes
@@ -207,10 +208,14 @@ export default class MainSeeder implements Seeder {
     );
     await racesRepository.save(races);
     console.log('Seeding teams..');
+
+    const played_prediction_types = prediction_types.filter(
+      (prediction_type) => prediction_type.type !== 'Not Played'
+    );
     const teamsPromise = await Promise.all(
       players.map(async (player) => {
         return Promise.all(
-          prediction_types.map(async (prediction_type) => {
+          played_prediction_types.map(async (prediction_type) => {
             const made = await teamsFactory.make({
               player,
               prediction_type,
@@ -226,15 +231,47 @@ export default class MainSeeder implements Seeder {
     await teamsRepository.save(teams);
 
     console.log('Seeding results..');
+
+    const positional_prediction_types = prediction_types.filter(
+      (prediction_type) => prediction_type.type !== 'Random'
+    );
+    const random_prediction_types = prediction_types.filter(
+      (prediction_type) => prediction_type.type === 'Random'
+    );
+
     const resultsArray = await Promise.all(
       races.slice(0, 5).map(async (race) => {
+        let count = 1;
+        const driversPerRace = [...drivers];
         return Promise.all(
           prediction_types.map(async (prediction_type) => {
-            const made = await resultsFactory.make({
-              race,
-              prediction_type,
-              driver: faker.helpers.arrayElement(drivers),
-            });
+            let made;
+            console.log(
+              prediction_type.id,
+              prediction_type.name,
+              driversPerRace.length
+            );
+            if (prediction_type.type === 'Random') {
+              made = await resultsFactory.make({
+                race,
+                prediction_type,
+                driver: faker.helpers.arrayElement(drivers),
+              });
+            } else {
+              const selectedDriver = faker.helpers.arrayElement(driversPerRace);
+
+              const index = driversPerRace.indexOf(selectedDriver);
+              if (index !== -1) {
+                driversPerRace.splice(index, 1);
+              }
+
+              made = await resultsFactory.make({
+                race,
+                prediction_type,
+                driver: selectedDriver,
+              });
+            }
+            count++;
             return made;
           })
         );

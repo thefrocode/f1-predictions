@@ -4,6 +4,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Driver } from '../../drivers/entities/driver.entity';
 import { Player } from '../../players/entities/player.entity';
@@ -11,6 +12,11 @@ import { Race } from '../../races/entities/race.entity';
 import { PredictionType } from './prediction-type.entity';
 
 @Entity('predictions')
+@Unique('one_prediction_type_per_race_per_player', [
+  'player_id',
+  'race_id',
+  'prediction_type_id',
+])
 export class Prediction {
   @PrimaryGeneratedColumn()
   id: number;

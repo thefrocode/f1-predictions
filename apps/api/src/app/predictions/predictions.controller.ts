@@ -15,9 +15,9 @@ import { UpdatePredictionDto } from './dto/update-prediction.dto';
 export class PredictionsController {
   constructor(private readonly predictionsService: PredictionsService) {}
 
-  @Post()
-  create(@Body() createPredictionDto: CreatePredictionDto) {
-    return this.predictionsService.create(createPredictionDto);
+  @Post(':race_id')
+  create(@Param('race_id') race_id: string) {
+    return this.predictionsService.create(+race_id);
   }
 
   @Get()
