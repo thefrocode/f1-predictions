@@ -8,8 +8,16 @@ export interface User {
   user_id: string;
 }
 
+export type AuthRegisterPayload = AuthPayload & { name: string };
+
 export type AuthState = {
   user: User | null | undefined;
-  status: 'pending' | 'authenticating' | 'loading' | 'success' | 'error';
+  status:
+    | 'pending'
+    | 'authenticating'
+    | 'registering'
+    | 'registered'
+    | 'success'
+    | 'error';
   error: any;
 };

@@ -9,22 +9,76 @@
   <button>Sign in with Google</button>
 </asl-google-login-button> -->
 <div class="flex flex-col justify-center items-center h-full">
-  <div class="flex flex-col gap-3 rounded-md bg-gray-100 w-2/5 h-2/3 p-4">
+  <div class="flex flex-col gap-3 rounded-md bg-gray-100 w-2/5 p-4">
     <h1 class="text-3xl font-bold text-center">Welcome</h1>
     <p class="text-center">Create an account</p>
-    <div class="textbox mt-8">
-      <label></label>
-      <input type="text" placeholder="Email" />
-    </div>
-    <div class="textbox mt-8">
-      <label></label>
-      <input type="text" placeholder="Password" />
-    </div>
-    <button
-      class="w-full bg-red-900 rounded-md text-white my-6 py-3 flex items-center justify-center"
-    >
-      Sign Up
-    </button>
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()" #form="ngForm">
+      <div class="textbox mt-8">
+        <label></label>
+        <input type="text" placeholder="Name" formControlName="name" />
+        @if(f['name'].invalid && (f['name'].touched || form.submitted)){
+        <div class="errors">
+          @if(f['name'].errors?.['required']){
+          <span>Name is required</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="textbox mt-8">
+        <label></label>
+        <input type="text" placeholder="Email" formControlName="email" />
+        @if(f['email'].invalid && (f['email'].touched || form.submitted)){
+        <div class="errors">
+          @if(f['email'].errors?.['required']){
+          <span>Email is required</span>
+          } @if(f['email'].errors?.['email']){
+          <span>Email should be a valid email address</span>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="textbox mt-8">
+        <label></label>
+        <input type="text" placeholder="Password" formControlName="password" />
+        @if(f['password'].invalid && (f['password'].touched || form.submitted)){
+        <div class="errors">
+          @if(f['password'].errors?.['required']){
+          <span>Password is required</span>
+          } @if(f['password'].errors?.['minlength']){
+          <span>Password must contain atleast 6 digits</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="textbox mt-8">
+        <label></label>
+        <input
+          type="text"
+          placeholder="Confirm Password"
+          formControlName="confirm_password"
+        />
+        @if(f['confirm_password'].invalid && (f['confirm_password'].touched ||
+        form.submitted)){
+        <div class="errors">
+          @if(f['confirm_password'].errors?.['required']){
+          <span>Confirm password is required</span>
+          }
+        </div>
+        } @if( (f['confirm_password'].dirty || form.submitted) &&
+        signUpForm.hasError('passwordMatch') ){
+        <div class="errors">
+          <span>Password does not match</span>
+        </div>
+        }
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-red-900 rounded-md text-white my-6 py-3 flex items-center justify-center"
+      >
+        Sign Up
+      </button>
+    </form>
     <p class="text-center">Or Sign up with</p>
 
     <button

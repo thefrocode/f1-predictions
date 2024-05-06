@@ -9,3 +9,4 @@ export * from './lib/prediction-type.model';
 export * from './lib/driver.model';
 export * from './lib/result.model';
 export * from './lib/auth.model';
+export * from './lib/response.model';

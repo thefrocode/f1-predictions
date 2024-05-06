@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthPayload, User } from '@f1-predictions/models';
+import {
+  ApiResponse,
+  AuthPayload,
+  AuthRegisterPayload,
+  User,
+} from '@f1-predictions/models';
 import { Observable } from 'rxjs';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
@@ -17,5 +22,13 @@ export class AuthApiService {
     return this.http.post<User>(`${this.appConfig.baseURL}/auth/login`, {
       ...user,
     });
+  }
+  signup(user: AuthRegisterPayload): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${this.appConfig.baseURL}/auth/signup`,
+      {
+        ...user,
+      }
+    );
   }
 }

@@ -5,12 +5,21 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { AuthPayload, AuthState, Result, User } from '@f1-predictions/models';
+import {
+  ApiResponse,
+  AuthPayload,
+  AuthRegisterPayload,
+  AuthState,
+  Result,
+  User,
+} from '@f1-predictions/models';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, tap, switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { AuthApiService } from '@f1-predictions/f1-predictions-api';
 import { computed, inject } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 const initialState: AuthState = {
   user: undefined,
   status: 'pending',
@@ -23,25 +32,51 @@ export const AuthStore = signalStore(
   withComputed(({ user }) => ({
     isAuthenticated: computed(() => !!user()),
   })),
-  withMethods((store, authApi = inject(AuthApiService)) => ({
-    login: rxMethod<AuthPayload>(
-      pipe(
-        tap(() => patchState(store, { status: 'loading' })),
-        switchMap((user: AuthPayload) => {
-          return authApi.login(user).pipe(
-            tapResponse({
-              next: (user: User) => {
-                console.log('Results', user);
-                patchState(store, {
-                  user,
-                  status: 'success',
-                });
-              },
-              error: console.error,
-            })
-          );
-        })
-      )
-    ),
-  }))
+  withMethods(
+    (
+      store,
+      authApi = inject(AuthApiService),
+      toastr = inject(ToastrService)
+    ) => ({
+      login: rxMethod<AuthPayload>(
+        pipe(
+          tap(() => patchState(store, { status: 'authenticating' })),
+          switchMap((user: AuthPayload) => {
+            return authApi.login(user).pipe(
+              tapResponse({
+                next: (user: User) => {
+                  console.log('Results', user);
+                  patchState(store, {
+                    user,
+                    status: 'success',
+                  });
+                },
+                error: console.error,
+              })
+            );
+          })
+        )
+      ),
+      signup: rxMethod<AuthRegisterPayload>(
+        pipe(
+          tap(() => patchState(store, { status: 'registering' })),
+          switchMap((user: AuthRegisterPayload) => {
+            return authApi.signup(user).pipe(
+              tapResponse({
+                next: (user: ApiResponse) => {
+                  toastr.success(user.message, 'Success');
+                  setTimeout(() => {
+                    patchState(store, {
+                      status: 'registered',
+                    });
+                  }, 2000);
+                },
+                error: console.error,
+              })
+            );
+          })
+        )
+      ),
+    })
+  )
 );

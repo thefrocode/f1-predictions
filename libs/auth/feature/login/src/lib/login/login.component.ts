@@ -20,6 +20,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
   ],
