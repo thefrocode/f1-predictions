@@ -286,14 +286,40 @@ export default class MainSeeder implements Seeder {
         return Promise.all(
           players.map(async (player) => {
             return Promise.all(
-              prediction_types.map(async (prediction_type) => {
+              played_prediction_types.map(async (prediction_type) => {
+                let points = 0;
+                let predicted_driver = faker.helpers.arrayElement(drivers);
+                const correct_driver_id = results.find(
+                  (result) =>
+                    result.prediction_type_id === prediction_type.id &&
+                    result.race_id === race.id
+                );
+                const correct_driver = drivers.find(
+                  (driver) => driver.id === correct_driver_id?.driver_id
+                );
+
+                if (prediction_type.type === 'Random') {
+                  if (predicted_driver.id == correct_driver?.id) {
+                    points = 5;
+                  }
+                } else {
+                  const predicted_driver_actual_result = results.find(
+                    (result) => result.driver_id === predicted_driver.id
+                  );
+                  points =
+                    20 -
+                    Math.abs(
+                      correct_driver_id!.prediction_type_id -
+                        predicted_driver_actual_result!.prediction_type_id
+                    );
+                }
                 const made = await predictionsFactory.make({
                   race,
                   player,
                   prediction_type,
-                  predicted_driver: faker.helpers.arrayElement(drivers),
-                  correct_driver: faker.helpers.arrayElement(drivers),
-                  points: faker.number.int({ min: 0, max: 20 }),
+                  predicted_driver: predicted_driver,
+                  correct_driver: correct_driver,
+                  points: points,
                 });
                 return made;
               })

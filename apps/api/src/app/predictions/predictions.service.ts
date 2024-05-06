@@ -58,7 +58,6 @@ export class PredictionsService {
       )
       .where('prediction_types.type!="Random"')
       .andWhere('results.race_id = :race_id', { race_id })
-      .andWhere('player_id = :player_id', { player_id: 1 })
       .orderBy('teams.prediction_type_id')
       .getRawMany();
 
@@ -80,7 +79,6 @@ export class PredictionsService {
         'teams.prediction_type_id=prediction_types.id'
       )
       .where('race_id = :race_id', { race_id })
-      .andWhere('player_id = :player_id', { player_id: 1 })
       .andWhere('prediction_types.type="Random"')
       .getRawMany();
 
@@ -93,7 +91,6 @@ export class PredictionsService {
           const newPrediction = this.predictionsRepository.create(prediction);
           this.predictionsRepository.insert(newPrediction);
         });
-        // Output: ['a', 'b', 'c', 1, 2, 3]
       })
       .catch((error) => {
         console.error('At least one promise rejected:', error);

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PredictionType } from '../predictions/entities/prediction-type.entity';
+import { PredictionsService } from '../predictions/predictions.service';
 import { Race } from '../races/entities/race.entity';
 import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
@@ -15,14 +16,17 @@ export class ResultsService {
   @InjectRepository(PredictionType)
   private readonly predictionTypesRepository: Repository<PredictionType>;
 
-  create(createResultDto: CreateResultDto) {
+  constructor(private readonly predictionsService: PredictionsService) {}
+
+  async create(createResultDto: CreateResultDto) {
     const results = createResultDto.results.map((result) => {
       return {
         ...result,
         race_id: createResultDto.race_id,
       };
     });
-    return this.resultsRepository.save(results);
+    await this.resultsRepository.save(results);
+    return await this.predictionsService.create(createResultDto.race_id);
   }
 
   async findAll() {
