@@ -27,6 +27,7 @@
         "libs/leagues/ui/add-league-dialog/src/index.ts"
       ],
       "@f1-predictions/app-config": ["libs/shared/app-config/src/index.ts"],
+      "@f1-predictions/auth-store": ["libs/auth/store/src/index.ts"],
       "@f1-predictions/auth/feature/signin": [
         "libs/auth/feature/signin/src/index.ts"
       ],

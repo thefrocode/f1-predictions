@@ -1,0 +1,27 @@
+{
+  "name": "auth-store",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auth/store/src",
+  "prefix": "f1-predictions",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/auth/store/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/auth/store/**/*.ts",
+          "libs/auth/store/**/*.html"
+        ]
+      }
+    }
+  }
+}

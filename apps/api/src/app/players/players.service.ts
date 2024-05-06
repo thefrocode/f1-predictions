@@ -14,9 +14,12 @@ export class PlayersService {
   @InjectRepository(LeaguePlayer)
   private readonly leaguePlayersRepository: Repository<LeaguePlayer>;
 
-  create(createPlayerDto: CreatePlayerDto) {
+  async create(createPlayerDto: CreatePlayerDto) {
     const newPlayer = this.playersRepository.create(createPlayerDto);
-    return this.playersRepository.insert(newPlayer);
+    await this.playersRepository.insert(newPlayer);
+    return {
+      message: 'Player created successfully',
+    };
   }
 
   findAll() {

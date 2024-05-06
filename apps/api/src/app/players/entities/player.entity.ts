@@ -18,7 +18,9 @@ export class Player {
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   nick_name: string;
 
   @Column()

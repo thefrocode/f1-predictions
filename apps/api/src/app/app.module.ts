@@ -11,6 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from '../config/config.service';
 import { SharedModule } from './shared/shared.module';
 import { ResultsModule } from './results/results.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { APP_GUARD } from '@nestjs/core';
+import { LocalAuthGuard } from './auth/guards/local.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -22,8 +27,10 @@ import { ResultsModule } from './results/results.module';
     PredictionsModule,
     SharedModule,
     ResultsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtService],
 })
 export class AppModule {}
