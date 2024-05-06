@@ -28,13 +28,14 @@ export class AuthService {
   // }
 
   async login(user: User) {
-    console.log(process.env.JWT_SECRET);
     const payload = { email: user.email, sub: user.id };
+
     return {
       access_token: this.jwtService.sign(payload, {
         secret: jwtConstants.secret,
         expiresIn: 3600,
       }),
+      player_id: user.id,
     };
   }
   create(createAuthDto: CreateAuthDto) {

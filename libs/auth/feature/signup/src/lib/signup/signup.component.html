@@ -2,12 +2,12 @@
   {{ user.name }}
   <button (click)="signOut()">Sign out</button>
 </div>
-<asl-google-signin-button type="icon" size="medium">
+<asl-google-login-button type="icon" size="medium">
   <button *ngIf="(isAuthenticated | async) === false" (click)="signIn()">
     Sign in with Google
   </button> 
   <button>Sign in with Google</button>
-</asl-google-signin-button> -->
+</asl-google-login-button> -->
 <div class="flex flex-col justify-center items-center h-full">
   <div class="flex flex-col gap-3 rounded-md bg-gray-100 w-2/5 h-2/3 p-4">
     <h1 class="text-3xl font-bold text-center">Welcome</h1>

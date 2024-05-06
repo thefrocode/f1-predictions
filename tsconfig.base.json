@@ -28,8 +28,8 @@
       ],
       "@f1-predictions/app-config": ["libs/shared/app-config/src/index.ts"],
       "@f1-predictions/auth-store": ["libs/auth/store/src/index.ts"],
-      "@f1-predictions/auth/feature/signin": [
-        "libs/auth/feature/signin/src/index.ts"
+      "@f1-predictions/auth/feature/login": [
+        "libs/auth/feature/login/src/index.ts"
       ],
       "@f1-predictions/f1-predictions-api": [
         "libs/shared/data-access/f1-predictions-api/src/index.ts"
@@ -72,6 +72,7 @@
         "libs/shell/feature/web-shell/src/index.ts"
       ],
       "@f1-predictions/signup": ["libs/auth/feature/signup/src/index.ts"],
+      "@f1-predictions/utils": ["libs/shared/utils/src/index.ts"],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],

@@ -7,3 +7,4 @@ export * from './lib/points-api.service';
 export * from './lib/prediction-type-api.service';
 export * from './lib/driver-api.service';
 export * from './lib/result-api.service';
+export * from './lib/auth-api.service';
