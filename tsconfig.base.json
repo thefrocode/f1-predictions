@@ -70,6 +70,7 @@
       "@f1-predictions/shell/feature/web-shell": [
         "libs/shell/feature/web-shell/src/index.ts"
       ],
+      "@f1-predictions/signup": ["libs/auth/feature/signup/src/index.ts"],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],

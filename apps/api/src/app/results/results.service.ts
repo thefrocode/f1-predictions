@@ -43,7 +43,7 @@ export class ResultsService {
         "GROUP_CONCAT(CONCAT('MAX(CASE WHEN prediction_types.id = ''', id, ''' THEN drivers.name ELSE 0 END) AS ', name) SEPARATOR ', ') as pivot_columns",
       ])
       .where('type="Not Played"')
-      .andWhere('id<20')
+      .andWhere('id>5 and id<=15')
       .getRawOne();
     const predictionTypesQuery3 = await this.predictionTypesRepository
       .createQueryBuilder('prediction_types')
@@ -51,7 +51,7 @@ export class ResultsService {
         "GROUP_CONCAT(CONCAT('MAX(CASE WHEN prediction_types.id = ''', id, ''' THEN drivers.name ELSE 0 END) AS ', name) SEPARATOR ', ') as pivot_columns",
       ])
       .where('type="Not Played"')
-      .andWhere('id>20')
+      .andWhere('id>15')
       .getRawOne();
 
     const results = this.resultsRepository
