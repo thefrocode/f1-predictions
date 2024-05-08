@@ -58,8 +58,6 @@ export class LoginComponent {
     this.authStore.login(this.loginForm.value);
   }
   loginWithGoogle(): void {
-    console.log('loginWithGoogle');
-
     window.location.href = `${this.appConfig.baseURL}/auth/google`;
   }
 }

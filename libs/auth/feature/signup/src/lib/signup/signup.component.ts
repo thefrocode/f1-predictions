@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -9,6 +9,7 @@ import {
 import { passwordMatchesValidator, showErrors } from '@f1-predictions/utils';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { Router } from '@angular/router';
+import { APP_CONFIG, AppConfig } from '@f1-predictions/app-config';
 
 @Component({
   selector: 'f1-predictions-signup',
@@ -33,7 +34,10 @@ export class SignupComponent {
       validators: [passwordMatchesValidator],
     }
   );
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    @Inject(APP_CONFIG) private appConfig: AppConfig
+  ) {
     effect(() => {
       if (this.authStore.status() === 'registered') {
         this.router.navigate(['login']);
@@ -50,5 +54,8 @@ export class SignupComponent {
     if (this.signUpForm.invalid) return;
 
     this.authStore.signup(this.signUpForm.value);
+  }
+  signupWithGoogle(): void {
+    window.location.href = `${this.appConfig.baseURL}/auth/google`;
   }
 }
