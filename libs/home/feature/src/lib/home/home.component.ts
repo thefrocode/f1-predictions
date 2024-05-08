@@ -33,13 +33,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CountdownComponent, CountdownConfig } from 'ngx-countdown';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
-import { PointsStore } from '@f1-predictions/predictions-store';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
 import { RouterModule } from '@angular/router';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-deadline';
+import { PredictionsStore } from '@f1-predictions/predictions-store';
 
 @Component({
   selector: 'f1-predictions-home',
@@ -79,12 +79,13 @@ import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-dea
 })
 export class HomeComponent {
   readonly races = inject(RacesStore);
-  points = inject(PointsStore);
   authStore = inject(AuthStore);
+
+  predictionsStore = inject(PredictionsStore);
 
   readonly players = inject(PlayersStore);
 
-  home_leagues = computed(() => this.leagues.leagues().splice(0, 5));
+  home_leagues = computed(() => this.leagues.leagues().splice(0, 4));
   readonly leagues = inject(LeaguesStore);
 
   active_race = this.races.active_race;

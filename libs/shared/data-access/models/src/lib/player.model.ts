@@ -7,8 +7,13 @@ export interface Player {
   user_id: string;
 }
 
+export type PlayerWithPoints = Player & {
+  last_race_points: number;
+  total_points: number;
+};
+
 export type PlayersState = {
-  active_player: Player | undefined;
+  active_player: PlayerWithPoints | undefined;
   players: Player[];
   leagues: LeaguePlayer[];
   isLoading: boolean;

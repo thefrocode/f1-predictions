@@ -52,18 +52,13 @@ export class PlayersService {
       const last_race_id = await this.predictionsRepository.maximum('race_id', {
         player_id: player.id,
       });
-      let last_race_points;
+      let last_race_points: number | null = 0;
       if (last_race_id) {
         last_race_points = await this.predictionsRepository.sum('points', {
           player_id: player.id,
           race_id: last_race_id,
         });
       }
-      console.log({
-        total_points: total_points,
-        last_race_points: last_race_points,
-        player_id: player.id,
-      });
       return {
         total_points: total_points,
         last_race_points: last_race_points,

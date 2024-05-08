@@ -1,6 +1,6 @@
 <div class="flex">
-  <div class="w-2/3 relative mx-4">
-    <div class="flex flex-row my-2 rounded-md bg-banner justify-between px-12">
+  <div class="w-2/3 relative mx-4 flex flex-col gap-2">
+    <div class="flex flex-row mt-2 rounded-md bg-banner justify-between px-12">
       <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6">
         @if(active_race()){
         <p class="text-white text-xl font-lemon uppercase">
@@ -32,29 +32,27 @@
         <teamlock-deadline [race]="active_race()"></teamlock-deadline>
       </div>
     </div>
+    <div class="flex gap-4">
+      @for (session of dates(); track session.session) {
+      <div class="flex-auto bg-white pr-4 py-2 font-lemonada rounded-md">
+        <div class="grid grid-cols-2 grid-rows-2 gap-2">
+          <i
+            class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
+          ></i>
+          <p class="text-center text-xs capitalize">
+            {{ session.session }}
+          </p>
+
+          <p class="text-center text-xs">
+            {{ session.session_time | date : 'HH:mm' }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
 
     <div class="flex gap-2">
-      <div class="flex flex-col w-1/5 gap-2 bg-white rounded-md py-3 px-2">
-        <p class="font-lemon text-xs text-center">Weekend Times</p>
-        @for (session of dates(); track session.session) {
-        <div class="flex-auto bg-white pr-4 py-2 font-lemonada divider">
-          <div class="grid grid-cols-2 grid-rows-2 gap-2">
-            <i
-              class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
-            ></i>
-            <p class="text-center text-xs capitalize">
-              {{ session.session }}
-            </p>
-
-            <p class="text-center text-xs">
-              {{ session.session_time | date : 'HH:mm' }}
-            </p>
-          </div>
-        </div>
-        }
-      </div>
-
-      <div class="bg-white rounded-lg px-4 py-2 flex flex-col w-4/5">
+      <div class="bg-white rounded-lg px-4 py-2 flex flex-col w-3/5">
         <div class="flex justify-between">
           <p class="font-lemon self-center">LEAGUES</p>
           <leagues-add [type]="'icon'"></leagues-add>
@@ -85,31 +83,66 @@
           <i class="bi bi-chevron-double-down text-2xl text-[#F98AE0]"> </i>
         </a>
       </div>
+      <div class="flex flex-col w-2/5 gap-2">
+        <div class="bg-white rounded-md p-4">
+          <p>Top Overall Team :</p>
+          <p>
+            Name:
+            {{ predictionsStore.top_teams()['overall_highest_points'].name }}
+          </p>
+          <p>
+            Points:
+            {{ predictionsStore.top_teams()['overall_highest_points'].points }}
+          </p>
+        </div>
+        <div class="bg-white rounded-md p-4">
+          <p>Top Team Last Race:</p>
+          <p>
+            Name:
+            {{ predictionsStore.top_teams()['last_race_highest_points'].name }}
+          </p>
+          <p>
+            Points:
+            {{
+              predictionsStore.top_teams()['last_race_highest_points'].points
+            }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="bg-white rounded-lg px-4 py-4 mt-2 mb-4 w-1/3">
-    <p class="font-lemon">Global LeagueBoard</p>
-    <div
-      class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
-    >
-      <p class="w-1/10">Pos</p>
-      <p class="w-3/5">Player Name</p>
-      <p>Last R</p>
-      <p>Total</p>
-    </div>
-    @for(player of leagues.players(); track player){
-    <div
-      class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
-      [ngClass]="{
-        'text-base bg-[#B1B1EC] py-2.5 text-white':
-          player.player_id === active_player()?.id
-      }"
-    >
-      <p class="w-1/10">{{ player.position }}.</p>
-      <p class="w-3/5">{{ player.name }}</p>
-      <p class="grow">{{ player.last_race_points }}</p>
-      <p class="grow">{{ player.total_points }}</p>
+  <div class="mt-2 mb-4 w-1/3 flex flex-col gap-4">
+    @if(active_player()){
+    <div class="bg-white rounded-lg p-4">
+      <p>Last Race Points : {{ active_player()?.last_race_points }}</p>
+      <p>Overall Points : {{ active_player()?.total_points }}</p>
     </div>
     }
+
+    <div class="bg-white rounded-lg px-4 py-4">
+      <p class="font-lemon">Global LeagueBoard</p>
+      <div
+        class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+      >
+        <p class="w-1/10">Pos</p>
+        <p class="w-3/5">Player Name</p>
+        <p>Last R</p>
+        <p>Total</p>
+      </div>
+      @for(player of leagues.players(); track player){
+      <div
+        class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
+        [ngClass]="{
+          'text-base bg-[#B1B1EC] py-2.5 text-white':
+            player.player_id === active_player()?.id
+        }"
+      >
+        <p class="w-1/10">{{ player.position }}.</p>
+        <p class="w-3/5">{{ player.name }}</p>
+        <p class="grow">{{ player.last_race_points }}</p>
+        <p class="grow">{{ player.total_points }}</p>
+      </div>
+      }
+    </div>
   </div>
 </div>

@@ -15,8 +15,6 @@ export class TeamsService {
     return this.teamsRepository.insert(newTeam);
   }
   async update(player_id: number, updateTeamDto: CreateTeamDto[]) {
-    console.log(updateTeamDto);
-
     for (const prediction of updateTeamDto) {
       const team = await this.teamsRepository.findOne({
         where: {

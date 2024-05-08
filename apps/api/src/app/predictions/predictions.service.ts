@@ -94,12 +94,40 @@ export class PredictionsService {
     return { predictions, randomPredictions };
   }
 
-  findAll() {
-    return `This action returns all predictions`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} prediction`;
+  async findOne() {
+    const overall_highest_points = await this.predictionsRepository
+      .createQueryBuilder('predictions')
+      .select([
+        'predictions.player_id as player_id',
+        'SUM(predictions.points) as points',
+        'players.name as name',
+      ])
+      .innerJoin('players', 'players', 'predictions.player_id = players.id')
+      .groupBy('predictions.player_id')
+      .orderBy('points', 'DESC')
+      .limit(1)
+      .getRawOne();
+    const last_race_id = await this.predictionsRepository.maximum('race_id');
+    let last_race_highest_points;
+    if (last_race_id) {
+      last_race_highest_points = await this.predictionsRepository
+        .createQueryBuilder('predictions')
+        .select([
+          'predictions.player_id as player_id',
+          'SUM(predictions.points) as points',
+          'players.name as name',
+        ])
+        .innerJoin('players', 'players', 'predictions.player_id = players.id')
+        .where('predictions.race_id = :race_id', { race_id: last_race_id })
+        .groupBy('predictions.player_id')
+        .orderBy('points', 'DESC')
+        .limit(1)
+        .getRawOne();
+    }
+    return {
+      overall_highest_points,
+      last_race_highest_points,
+    };
   }
 
   update(id: number, updatePredictionDto: UpdatePredictionDto) {

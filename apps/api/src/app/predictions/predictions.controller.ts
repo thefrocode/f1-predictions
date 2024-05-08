@@ -22,12 +22,7 @@ export class PredictionsController {
 
   @Get()
   findAll() {
-    return this.predictionsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.predictionsService.findOne(+id);
+    return this.predictionsService.findOne();
   }
 
   @Patch(':id')

@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
-import { League, LeaguePlayer, Player } from '@f1-predictions/models';
+import {
+  League,
+  LeaguePlayer,
+  Player,
+  PlayerWithPoints,
+} from '@f1-predictions/models';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 @Injectable({
   providedIn: 'root',
@@ -11,7 +16,7 @@ export class PlayerApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadOne(user_id: string) {
-    return this.http.get<Player>(
+    return this.http.get<PlayerWithPoints>(
       `${this.appConfig.baseURL}/players/${user_id}`
     );
   }

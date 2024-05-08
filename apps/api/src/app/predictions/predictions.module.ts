@@ -4,8 +4,6 @@ import { PredictionsController } from './predictions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prediction } from './entities/prediction.entity';
 import { PredictionType } from './entities/prediction-type.entity';
-import { PointsController } from './points.controller';
-import { PointsService } from './points.service';
 import { Player } from '../players/entities/player.entity';
 import { Team } from './entities/team.entity';
 import { TeamsController } from './teams.controller';
@@ -26,15 +24,9 @@ import { Result } from '../results/entities/result.entity';
   ],
   controllers: [
     PredictionsController,
-    PointsController,
     TeamsController,
     PredictionTypesController,
   ],
-  providers: [
-    PredictionsService,
-    PointsService,
-    TeamsService,
-    PredictionTypesService,
-  ],
+  providers: [PredictionsService, TeamsService, PredictionTypesService],
 })
 export class PredictionsModule {}
