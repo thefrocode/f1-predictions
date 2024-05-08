@@ -23,6 +23,9 @@ export class AuthApiService {
       ...user,
     });
   }
+  loginWithGoogle() {
+    return this.http.get(`${this.appConfig.baseURL}/auth/google`);
+  }
   signup(user: AuthRegisterPayload): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
       `${this.appConfig.baseURL}/auth/signup`,

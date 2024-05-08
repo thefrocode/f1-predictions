@@ -6,9 +6,10 @@ import { User } from './entities/user.entity';
 import { PlayersService } from '../players/players.service';
 import { Player } from '../players/entities/player.entity';
 import { LeaguePlayer } from '../leagues/entities/league_player.entity';
+import { Prediction } from '../predictions/entities/prediction.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Player, LeaguePlayer])],
+  imports: [TypeOrmModule.forFeature([User, Player, LeaguePlayer, Prediction])],
   controllers: [UsersController],
   providers: [UsersService, PlayersService],
 })

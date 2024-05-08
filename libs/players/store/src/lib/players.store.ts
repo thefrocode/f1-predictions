@@ -14,6 +14,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 
 const initialState: PlayersState = {
+  active_player: undefined,
   players: [],
   leagues: [],
   isLoading: false,
@@ -22,12 +23,24 @@ const initialState: PlayersState = {
 export const PlayersStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ players, leagues }) => ({
-    active_player: computed(() =>
-      players().find((player) => player.user_id === 'dcgfchvj')
-    ),
-  })),
   withMethods((store: any, playerApi = inject(PlayerApiService)) => ({
+    loadOne: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((user_id: string) =>
+          playerApi.loadOne(user_id).pipe(
+            tapResponse({
+              next: (active_player: Player) => {
+                console.log(active_player);
+                patchState(store, { active_player });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          )
+        )
+      )
+    ),
     loadAll: rxMethod<string>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),

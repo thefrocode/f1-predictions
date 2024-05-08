@@ -12,10 +12,12 @@ import { Player } from '../players/entities/player.entity';
 import { LeaguePlayer } from '../leagues/entities/league_player.entity';
 import { PassportModule } from '@nestjs/passport';
 import * as dotenv from 'dotenv';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { Prediction } from '../predictions/entities/prediction.entity';
 dotenv.config();
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Player, LeaguePlayer]),
+    TypeOrmModule.forFeature([User, Player, LeaguePlayer, Prediction]),
     PassportModule,
     JwtModule,
   ],
@@ -24,6 +26,7 @@ dotenv.config();
     AuthService,
     LocalStrategy,
     JwtStrategy,
+    GoogleStrategy,
     UsersService,
     JwtService,
     PlayersService,

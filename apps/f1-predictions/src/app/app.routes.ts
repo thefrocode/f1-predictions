@@ -8,6 +8,7 @@ import { LeaguesListComponent } from '@f1-predictions/leagues-list';
 import { PredictionsTeamListComponent } from '@f1-predictions/predictions-team-list';
 import { ResultsListComponent } from '@f1-predictions/results-list';
 import { AuthGuard } from '@f1-predictions/utils';
+import { CallbackComponent } from '@f1-predictions/callback';
 
 export const appRoutes: Route[] = [
   {
@@ -17,6 +18,10 @@ export const appRoutes: Route[] = [
   {
     path: 'signup',
     component: SignupComponent,
+  },
+  {
+    path: 'callback',
+    component: CallbackComponent,
   },
   {
     path: '',

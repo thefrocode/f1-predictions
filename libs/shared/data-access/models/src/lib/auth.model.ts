@@ -15,6 +15,7 @@ export type AuthState = {
   status:
     | 'pending'
     | 'authenticating'
+    | 'authenticated'
     | 'registering'
     | 'registered'
     | 'success'

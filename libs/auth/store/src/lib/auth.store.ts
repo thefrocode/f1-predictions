@@ -77,6 +77,13 @@ export const AuthStore = signalStore(
           })
         )
       ),
+      loginWithGoogle: rxMethod<User>(
+        pipe(
+          tap((user: User) =>
+            patchState(store, { user: user, status: 'authenticated' })
+          )
+        )
+      ),
     })
   )
 );

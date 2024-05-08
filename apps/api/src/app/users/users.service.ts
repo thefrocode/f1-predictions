@@ -4,7 +4,11 @@ import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcryptjs';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  CreateGoogleUserDto,
+  CreateLocalUserDto,
+  CreateUserDto,
+} from './dto/create-user.dto';
 import { PlayersService } from '../players/players.service';
 
 @Injectable()
@@ -14,7 +18,7 @@ export class UsersService {
 
   constructor(private playersService: PlayersService) {}
 
-  async createLocalUser(createUserDto: CreateUserDto) {
+  async createLocalUser(createUserDto: CreateLocalUserDto) {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser = this.usersRepository.create({
       email: createUserDto.email,
@@ -25,6 +29,26 @@ export class UsersService {
       ...createUserDto,
       user_id: createdUser.id,
     });
+  }
+  async createGoogleUser(createUserDto: CreateGoogleUserDto) {
+    const googleUser = await this.usersRepository.findOneBy({
+      googleId: createUserDto.google_id,
+    });
+    if (!googleUser) {
+      const newUser = this.usersRepository.create({
+        email: createUserDto.email,
+        googleId: createUserDto.google_id,
+      });
+      const createdUser = await this.usersRepository.save(newUser);
+      await this.playersService.create({
+        ...createUserDto,
+        user_id: createdUser.id,
+        name: createUserDto.name,
+      });
+      return createdUser;
+    }
+
+    return googleUser;
   }
 
   findUserByEmail(email: string) {

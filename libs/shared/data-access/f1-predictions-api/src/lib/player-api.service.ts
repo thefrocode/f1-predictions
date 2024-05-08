@@ -10,6 +10,11 @@ export class PlayerApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
+  loadOne(user_id: string) {
+    return this.http.get<Player>(
+      `${this.appConfig.baseURL}/players/${user_id}`
+    );
+  }
   loadAll() {
     return this.http.get<Player[]>(`${this.appConfig.baseURL}/players`);
   }

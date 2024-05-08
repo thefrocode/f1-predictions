@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +10,7 @@ import { League } from '../../leagues/entities/league.entity';
 import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Team } from '../../predictions/entities/team.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('players')
 export class Player {
@@ -37,4 +39,8 @@ export class Player {
 
   @OneToMany(() => Team, (team) => team.player)
   teams: Team[];
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

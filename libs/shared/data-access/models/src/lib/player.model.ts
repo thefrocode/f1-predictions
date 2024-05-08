@@ -8,6 +8,7 @@ export interface Player {
 }
 
 export type PlayersState = {
+  active_player: Player | undefined;
   players: Player[];
   leagues: LeaguePlayer[];
   isLoading: boolean;

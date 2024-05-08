@@ -38,6 +38,7 @@ import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list'
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
 import { RouterModule } from '@angular/router';
+import { AuthStore } from '@f1-predictions/auth-store';
 
 const CountdownTimeUnits: Array<[string, number]> = [
   ['Y', 1000 * 60 * 60 * 24 * 365], // years
@@ -86,6 +87,7 @@ const CountdownTimeUnits: Array<[string, number]> = [
 export class HomeComponent {
   readonly races = inject(RacesStore);
   points = inject(PointsStore);
+  authStore = inject(AuthStore);
 
   readonly players = inject(PlayersStore);
 
@@ -209,7 +211,18 @@ export class HomeComponent {
     };
   });
 
-  constructor() {}
+  constructor() {
+    effect(
+      () => {
+        if (this.authStore.user()) {
+          this.players.loadOne(this.authStore.user()!.user_id);
+        }
+      },
+      {
+        allowSignalWrites: true,
+      }
+    );
+  }
   ngOnInit() {
     this.leagues.loadAll();
     this.leagues.loadOne();

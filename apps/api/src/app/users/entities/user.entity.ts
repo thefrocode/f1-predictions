@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Player } from '../../players/entities/player.entity';
 
 @Entity('users')
 @Unique('email_UNIQUE', ['email'])

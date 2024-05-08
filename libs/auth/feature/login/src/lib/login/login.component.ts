@@ -1,7 +1,8 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import {
+  GoogleLoginProvider,
   GoogleSigninButtonModule,
   SocialAuthService,
   SocialLoginModule,
@@ -13,6 +14,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthStore } from '@f1-predictions/auth-store';
+import { AuthApiService } from '@f1-predictions/f1-predictions-api';
+import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
 @Component({
   selector: 'f1-predictions-login',
@@ -38,9 +41,10 @@ export class LoginComponent {
   });
 
   constructor(
-    private authService: SocialAuthService,
+    private authService: AuthApiService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    @Inject(APP_CONFIG) private appConfig: AppConfig
   ) {
     effect(() => {
       if (this.authStore.user()) {
@@ -49,21 +53,13 @@ export class LoginComponent {
       console.log(this.authStore.error());
     });
   }
-  ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      console.log(user);
-    });
-  }
 
   login(): void {
     this.authStore.login(this.loginForm.value);
   }
+  loginWithGoogle(): void {
+    console.log('loginWithGoogle');
 
-  signOut(): void {
-    this.authService.signOut();
-  }
-  refreshToken(): void {
-    //this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+    window.location.href = `${this.appConfig.baseURL}/auth/google`;
   }
 }
