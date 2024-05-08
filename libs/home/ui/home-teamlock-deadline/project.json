@@ -1,0 +1,27 @@
+{
+  "name": "home-teamlock-deadline",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/home/ui/home-teamlock-deadline/src",
+  "prefix": "f1-predictions",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/home/ui/home-teamlock-deadline/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/home/ui/home-teamlock-deadline/**/*.ts",
+          "libs/home/ui/home-teamlock-deadline/**/*.html"
+        ]
+      }
+    }
+  }
+}

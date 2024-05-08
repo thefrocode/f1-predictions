@@ -36,6 +36,9 @@
         "libs/shared/data-access/f1-predictions-api/src/index.ts"
       ],
       "@f1-predictions/home": ["libs/home/feature/src/index.ts"],
+      "@f1-predictions/home-teamlock-deadline": [
+        "libs/home/ui/home-teamlock-deadline/src/index.ts"
+      ],
       "@f1-predictions/join-team-dialog": [
         "libs/leagues/ui/join-league-dialog/src/index.ts"
       ],

@@ -1,13 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { on } from 'events';
-import { join } from 'path';
-import { from } from 'rxjs';
 import { Repository } from 'typeorm';
 import { Result } from '../results/entities/result.entity';
-import { CreatePredictionDto } from './dto/create-prediction.dto';
 import { UpdatePredictionDto } from './dto/update-prediction.dto';
-import { PredictionType } from './entities/prediction-type.entity';
 import { Prediction } from './entities/prediction.entity';
 import { Team } from './entities/team.entity';
 
