@@ -21,6 +21,8 @@ import { TeamsFactory } from './app/predictions/factories/teams.factory';
 import { ResultsFactory } from './app/results/factories/result.factory';
 import { PredictionsFactory } from './app/predictions/factories/predictions.factory';
 import { Result } from './app/results/entities/result.entity';
+import { User } from './app/users/entities/user.entity';
+import { UsersFactory } from './app/users/factories/user.factory';
 
 const {
   F1_MYSQL_HOST,
@@ -80,6 +82,7 @@ const options =
           PredictionType,
           Race,
           Result,
+          User,
         ],
         factories: [
           PlayersFactory,
@@ -90,6 +93,7 @@ const options =
           TeamsFactory,
           ResultsFactory,
           PredictionsFactory,
+          UsersFactory,
         ],
         seeds: [MainSeeder],
       } as DataSourceOptions & SeederOptions)
@@ -113,6 +117,7 @@ const options =
           PredictionType,
           Race,
           Result,
+          User,
         ],
         factories: [
           PlayersFactory,
@@ -123,6 +128,7 @@ const options =
           TeamsFactory,
           ResultsFactory,
           PredictionsFactory,
+          UsersFactory,
         ],
 
         seeds: [MainSeeder],
