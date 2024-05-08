@@ -11,13 +11,16 @@ import { Team } from '../../predictions/entities/team.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Result } from '../../results/entities/result.entity';
 import { cp } from 'fs';
+import { User } from '../../users/entities/user.entity';
 
 export default class MainSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
     factoryManager: SeederFactoryManager
   ): Promise<any> {
+    const userFactory = factoryManager.get(User);
     const playerFactory = factoryManager.get(Player);
+    const playersRepository = dataSource.getRepository(Player);
 
     const driverFactory = factoryManager.get(Driver);
 
@@ -40,11 +43,26 @@ export default class MainSeeder implements Seeder {
 
     const predictionsFactory = factoryManager.get(Prediction);
     const predictionsRepository = dataSource.getRepository(Prediction);
-
+    console.log('Seeding users..');
+    const users = await userFactory.saveMany(100);
     console.log('Seeding players..');
-    const players = await playerFactory.saveMany(100);
-    console.log('Seeding drivers..');
-    const drivers = await driverFactory.saveMany(20);
+    const players = await Promise.all(
+      Array(100)
+        .fill('')
+        .map(async () => {
+          const selectedUser = faker.helpers.arrayElement(users);
+
+          const index = users.indexOf(selectedUser);
+          if (index !== -1) {
+            users.splice(index, 1);
+          }
+          const made = await playerFactory.make({
+            user: selectedUser,
+          });
+          return made;
+        })
+    );
+    await playersRepository.save(players);
 
     const leagues = await Promise.all(
       Array(23)
@@ -57,6 +75,21 @@ export default class MainSeeder implements Seeder {
         })
     );
     await leaguesRepository.save(leagues);
+    //const players = await playerFactory.saveMany(100);
+    console.log('Seeding drivers..');
+    const drivers = await driverFactory.saveMany(20);
+
+    const globalLeaguePlayers = await Promise.all(
+      players.map(async (player) => {
+        const made = await leaguePlayersFactory.make({
+          league_id: 1,
+          player,
+        });
+        return made;
+      })
+    );
+    await leaguePlayersRepository.save(globalLeaguePlayers);
+    leagues.splice(1, 1);
 
     const leaguePlayers = await Promise.all(
       Array(23)
