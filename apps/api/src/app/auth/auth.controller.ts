@@ -40,22 +40,16 @@ export class AuthController {
   }
 
   @Get('google')
-  //@UseGuards(GoogleOauthGuard)
-  googleLogin(@Res() res: Response) {
-    res.redirect(this.authService.generateGoogleRedirectUrl());
-  }
+  @UseGuards(GoogleOauthGuard)
+  googleLogin() {}
 
   @Get('callback/google')
-  //@UseGuards(GoogleOauthGuard)
+  @UseGuards(GoogleOauthGuard)
   async googleAuthCallback(@Req() req: any, @Res() res: Response) {
-    const { code } = req.query;
-
-    const profile = await this.authService.getProfile(code);
-
     const user = await this.usersService.createGoogleUser({
-      email: profile.email,
-      name: profile.name,
-      google_id: profile.id,
+      email: req.user.email,
+      name: req.user.name,
+      google_id: req.user.providerId,
     });
     const loggedInUser = await this.authService.login(user);
 
