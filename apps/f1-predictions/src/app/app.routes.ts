@@ -11,6 +11,7 @@ import { AuthGuard } from '@f1-predictions/utils';
 import { CallbackComponent } from '@f1-predictions/callback';
 
 export const appRoutes: Route[] = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
@@ -26,7 +27,6 @@ export const appRoutes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
-    canActivateChild: [AuthGuard()],
     children: [
       {
         path: 'home',
