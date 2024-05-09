@@ -14,10 +14,17 @@ import { PassportModule } from '@nestjs/passport';
 import * as dotenv from 'dotenv';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { Prediction } from '../predictions/entities/prediction.entity';
+import { SelectedLeague } from '../leagues/entities/selected_league.entity';
 dotenv.config();
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Player, LeaguePlayer, Prediction]),
+    TypeOrmModule.forFeature([
+      User,
+      Player,
+      LeaguePlayer,
+      Prediction,
+      SelectedLeague,
+    ]),
     PassportModule,
     JwtModule,
   ],

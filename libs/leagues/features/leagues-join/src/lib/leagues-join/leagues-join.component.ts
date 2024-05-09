@@ -26,10 +26,10 @@ export class LeaguesJoinComponent {
   league!: League;
 
   constructor(private dialog: MatDialog) {
-    effect(() => {
-      console.log(this.leaguesStore.leagues());
-      console.log(this.playersStore.active_player());
-    });
+    // effect(() => {
+    //   console.log(this.leaguesStore.leagues());
+    //   console.log(this.playersStore.active_player());
+    // });
   }
   openJoinLeagueDialog() {
     const dialogRef = this.dialog.open(JoinTeamDialogComponent, {

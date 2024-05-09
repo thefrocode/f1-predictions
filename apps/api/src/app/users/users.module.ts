@@ -7,9 +7,18 @@ import { PlayersService } from '../players/players.service';
 import { Player } from '../players/entities/player.entity';
 import { LeaguePlayer } from '../leagues/entities/league_player.entity';
 import { Prediction } from '../predictions/entities/prediction.entity';
+import { SelectedLeague } from '../leagues/entities/selected_league.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Player, LeaguePlayer, Prediction])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      Player,
+      LeaguePlayer,
+      Prediction,
+      SelectedLeague,
+    ]),
+  ],
   controllers: [UsersController],
   providers: [UsersService, PlayersService],
 })

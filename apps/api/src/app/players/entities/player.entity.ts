@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { League } from '../../leagues/entities/league.entity';
 import { LeaguePlayer } from '../../leagues/entities/league_player.entity';
+import { SelectedLeague } from '../../leagues/entities/selected_league.entity';
 import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Team } from '../../predictions/entities/team.entity';
 import { User } from '../../users/entities/user.entity';
@@ -39,6 +40,9 @@ export class Player {
 
   @OneToMany(() => Team, (team) => team.player)
   teams: Team[];
+
+  @OneToOne(() => SelectedLeague, (selected_league) => selected_league.player)
+  selected_league: SelectedLeague;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })

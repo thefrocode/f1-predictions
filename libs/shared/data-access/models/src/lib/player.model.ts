@@ -10,6 +10,7 @@ export interface Player {
 export type PlayerWithPoints = Player & {
   last_race_points: number;
   total_points: number;
+  selected_league_id: number;
 };
 
 export type PlayersState = {

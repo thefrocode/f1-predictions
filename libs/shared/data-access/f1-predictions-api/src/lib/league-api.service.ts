@@ -4,6 +4,8 @@ import {
   AddLeague,
   AddLeaguePlayer,
   League,
+  LeaguePlayer,
+  LeaguePlayers,
   Player,
   Point,
   SelectedLeague,
@@ -28,9 +30,9 @@ export class LeagueApiService {
       params,
     });
   }
-  loadOne(player_id?: number) {
-    return this.http.get<Point[]>(
-      `${this.appConfig.baseURL}/leagues/${player_id}`
+  loadOne(league_id: number) {
+    return this.http.get<LeaguePlayers>(
+      `${this.appConfig.baseURL}/leagues/${league_id}`
     );
   }
   loadSelectedLeague(player_id: number) {

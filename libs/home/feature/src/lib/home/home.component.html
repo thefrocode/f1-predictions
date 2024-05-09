@@ -129,7 +129,8 @@
         <p>Last R</p>
         <p>Total</p>
       </div>
-      @for(player of leagues.players(); track player){
+      @if(displayed_league()){ @for(player of displayed_league().players; track
+      player){
       <div
         class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
         [ngClass]="{
@@ -142,7 +143,7 @@
         <p class="grow">{{ player.last_race_points }}</p>
         <p class="grow">{{ player.total_points }}</p>
       </div>
-      }
+      } }
     </div>
   </div>
 </div>

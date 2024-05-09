@@ -40,6 +40,8 @@ import { RouterModule } from '@angular/router';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-deadline';
 import { PredictionsStore } from '@f1-predictions/predictions-store';
+import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'f1-predictions-home',
@@ -90,6 +92,30 @@ export class HomeComponent {
 
   active_race = this.races.active_race;
   active_player = this.players.active_player;
+
+  displayed_league = computed(() => {
+    if (this.active_player()) {
+      return this.leagues.league_players()[
+        this.active_player()!.selected_league_id
+      ];
+    } else {
+      return this.leagues.league_players()[1];
+    }
+  });
+
+  active_player_league$ = toObservable(this.players.active_player)
+    .pipe(
+      takeUntilDestroyed(),
+      tap((active_player) => {
+        if (active_player) {
+          return this.leagues.loadOne(active_player.selected_league_id);
+        } else {
+          return this.leagues.loadOne(1);
+        }
+      })
+    )
+    .subscribe();
+
   dates = computed(() => {
     const dates = [];
     if (this.active_race()) {
@@ -131,8 +157,14 @@ export class HomeComponent {
     );
   }
   ngOnInit() {
+    // if (this.active_player()) {
+    //   console.log(this.active_player());
+    //   this.leagues.loadOne(this.active_player()!.selected_league_id);
+    // } else {
+    //   this.leagues.loadOne(1);
+    // }
+    this.leagues.loadOne(1);
     this.leagues.loadAll();
-    this.leagues.loadOne();
   }
 
   toggleLeaguesList() {

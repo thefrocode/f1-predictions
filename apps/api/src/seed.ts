@@ -23,6 +23,7 @@ import { PredictionsFactory } from './app/predictions/factories/predictions.fact
 import { Result } from './app/results/entities/result.entity';
 import { User } from './app/users/entities/user.entity';
 import { UsersFactory } from './app/users/factories/user.factory';
+import { SelectedLeague } from './app/leagues/entities/selected_league.entity';
 
 const {
   F1_MYSQL_HOST,
@@ -83,6 +84,7 @@ const options =
           Race,
           Result,
           User,
+          SelectedLeague,
         ],
         factories: [
           PlayersFactory,
@@ -118,6 +120,7 @@ const options =
           Race,
           Result,
           User,
+          SelectedLeague,
         ],
         factories: [
           PlayersFactory,

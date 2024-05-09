@@ -98,18 +98,10 @@ export class LeaguesService {
     }
   }
 
-  async findOne(player_id: number) {
+  async findOne(league_id: number) {
     const race_id = await this.predictionsRepository.maximum('race_id', {
       result: Not(IsNull()),
     });
-
-    let league;
-    if (player_id) {
-      league = await this.selectedLeagueRepository.findOneBy({
-        player_id,
-      });
-      console.log('League', league);
-    }
 
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
@@ -122,7 +114,7 @@ export class LeaguesService {
       .where('race_id = :race_id', { race_id })
       .groupBy('player_id');
 
-    return this.leaguePlayersRepository
+    const players = await this.leaguePlayersRepository
       .createQueryBuilder('league_players')
       .select([
         'league_id',
@@ -144,10 +136,13 @@ export class LeaguesService {
         'league_players.player_id=last_race_points.player_id'
       )
       .setParameters(lastRacePointsSubQuery.getParameters())
-      .where('league_id = :league_id', {
-        league_id: league ? league.league_id : 1,
-      })
+      .where('league_id = :league_id', { league_id })
       .getRawMany();
+    return {
+      league_id,
+      players,
+      number_of_players: players.length,
+    };
   }
 
   update(id: number, updateLeagueDto: UpdateLeagueDto) {

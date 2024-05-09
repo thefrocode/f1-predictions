@@ -26,9 +26,9 @@ export class LeaguesController {
     return this.leaguesService.findAll(+query.player_id);
   }
 
-  @Get(':player_id')
-  findOne(@Param('player_id') player_id: string) {
-    return this.leaguesService.findOne(+player_id);
+  @Get(':league_id')
+  findOne(@Param('league_id') league_id: string) {
+    return this.leaguesService.findOne(+league_id);
   }
 
   @Patch(':id')

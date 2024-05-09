@@ -14,11 +14,16 @@ export interface SelectedLeague {
   league_id: number;
   player_id: number;
 }
+export type LeaguePlayers = League & {
+  league_id: number;
+  number_of_players: number;
+  average_points: number;
+  players: Point[];
+};
 
 export type LeaguesState = {
   leagues: League[];
-  players: Point[];
-  active_player_position: Point;
+  league_players: LeaguePlayers[];
   selected_league: SelectedLeague;
   isLoading: boolean;
   error: any;

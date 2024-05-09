@@ -12,6 +12,7 @@ import { Prediction } from '../../predictions/entities/prediction.entity';
 import { Result } from '../../results/entities/result.entity';
 import { cp } from 'fs';
 import { User } from '../../users/entities/user.entity';
+import { SelectedLeague } from '../../leagues/entities/selected_league.entity';
 
 export default class MainSeeder implements Seeder {
   public async run(
@@ -29,6 +30,7 @@ export default class MainSeeder implements Seeder {
 
     const leaguePlayersFactory = factoryManager.get(LeaguePlayer);
     const leaguePlayersRepository = dataSource.getRepository(LeaguePlayer);
+    const selectedLeagueRepository = dataSource.getRepository(SelectedLeague);
 
     const predictionTypesRepository = dataSource.getRepository(PredictionType);
 
@@ -75,7 +77,7 @@ export default class MainSeeder implements Seeder {
         })
     );
     await leaguesRepository.save(leagues);
-    //const players = await playerFactory.saveMany(100);
+
     console.log('Seeding drivers..');
     const drivers = await driverFactory.saveMany(20);
 
@@ -103,6 +105,17 @@ export default class MainSeeder implements Seeder {
         })
     );
     await leaguePlayersRepository.save(leaguePlayers);
+    //Ading Global League as selected League
+    const selectedLeagues = await Promise.all(
+      players.map(async (player) => {
+        const made = {
+          league_id: 1,
+          player_id: player.id,
+        };
+        return made;
+      })
+    );
+    await selectedLeagueRepository.save(selectedLeagues);
 
     const predictionTypes = [
       {

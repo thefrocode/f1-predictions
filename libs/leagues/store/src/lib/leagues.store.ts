@@ -10,6 +10,8 @@ import {
   AddLeague,
   AddLeaguePlayer,
   League,
+  LeaguePlayer,
+  LeaguePlayers,
   LeaguesState,
   Player,
   Point,
@@ -25,8 +27,7 @@ import { PlayersStore } from '@f1-predictions/players-store';
 
 const initialState: LeaguesState = {
   leagues: [],
-  players: [],
-  active_player_position: {} as Point,
+  league_players: [],
   selected_league: {} as SelectedLeague,
   isLoading: false,
   error: null,
@@ -34,14 +35,6 @@ const initialState: LeaguesState = {
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ players, leagues }, playersStore = inject(PlayersStore)) => ({
-    active_player_position: computed(() =>
-      players().find((player) => player.player_id == 1)
-    ),
-    active_player_leagues: computed(() =>
-      leagues().filter((league) => league.position)
-    ),
-  })),
   withMethods(
     (
       store,
@@ -67,15 +60,19 @@ export const LeaguesStore = signalStore(
           })
         )
       ),
-      loadOne: rxMethod<void>(
+      loadOne: rxMethod<number>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
-          switchMap(() =>
-            leagueApi.loadOne(players.active_player()?.id).pipe(
+          switchMap((league_id: number) =>
+            leagueApi.loadOne(league_id).pipe(
               tapResponse({
-                next: (players: Point[]) => {
+                next: (league_players: LeaguePlayers) => {
+                  store.league_players()[league_players.league_id] =
+                    league_players;
+                  const new_league_players = [...store.league_players()];
+                  new_league_players[league_players.league_id] = league_players;
                   patchState(store, {
-                    players,
+                    league_players: new_league_players,
                   });
                 },
                 error: console.error,
@@ -179,7 +176,6 @@ export const LeaguesStore = signalStore(
   withHooks({
     onInit({ loadAll, loadOne, loadSelectedLeague }) {
       loadAll();
-      loadOne();
       loadSelectedLeague();
     },
   })

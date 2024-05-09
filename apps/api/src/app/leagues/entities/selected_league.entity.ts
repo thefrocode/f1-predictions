@@ -22,7 +22,7 @@ export class SelectedLeague {
   league_id: number;
 
   @OneToOne(() => Player)
-  @JoinColumn({ name: 'player_id' })
+  @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   player: Player;
 
   @ManyToOne(() => League, (league) => league.leaguePlayers)
