@@ -7,6 +7,8 @@ import {
 } from '@f1-predictions/predictions-store';
 import { Team } from '@f1-predictions/models';
 import { PlayersStore } from '@f1-predictions/players-store';
+import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'predictions-team-list',
@@ -19,12 +21,27 @@ export class PredictionsTeamListComponent {
   prediction_types = inject(PredictionTypesStore).prediction_types;
   teams = inject(TeamStore);
   active_player = inject(PlayersStore).active_player;
+  active_player_team$ = toObservable(this.active_player)
+    .pipe(
+      takeUntilDestroyed(),
+      tap((active_player) => {
+        if (active_player) {
+          return this.teams.loadOne(active_player.id);
+        } else {
+          return {};
+        }
+      })
+    )
+    .subscribe();
 
   selected_team = computed(() => {
     const team: {
       [key: string]: string | undefined;
     } = {};
-    this.teams.team().forEach((t) => {
+    console.log(this.teams.teams(), this.teams.selected_team());
+    if (!this.teams.selected_team()) return team;
+
+    this.teams.selected_team()!.team.forEach((t) => {
       team[t.prediction_type] = t.driver_name;
     });
     console.log(team);
@@ -99,12 +116,8 @@ export class PredictionsTeamListComponent {
       (p) => p.name === position
     )!;
   }
-  ngOnInit() {
-    console.log(this.prediction_types());
-  }
-  constructor() {
-    effect(() => console.log(this.selected_team()));
-  }
+
+  constructor() {}
   saveTeam() {
     const team: Team[] = [];
     Object.keys(this.selected_team()).forEach((key) => {

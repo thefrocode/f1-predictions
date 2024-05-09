@@ -8,8 +8,15 @@ export interface Team {
 
 export type AddTeam = Omit<Team, 'id'>;
 
-export type TeamsState = {
+export type PlayerTeam = {
+  player_id: number;
   team: Team[];
+};
+
+export type TeamsState = {
+  teams: PlayerTeam[];
+  selected_team: PlayerTeam | null;
+  selected_player_id: number | null;
   isLoading: boolean;
   error: any;
 };

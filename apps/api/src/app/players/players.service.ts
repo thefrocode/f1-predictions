@@ -75,7 +75,7 @@ export class PlayersService {
       return {
         total_points: total_points,
         last_race_points: last_race_points,
-        player_id: player.id,
+        id: player.id,
         selected_league_id: player.selected_league.league_id,
       };
     }

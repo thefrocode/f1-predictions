@@ -7,35 +7,49 @@ import {
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Team, TeamsState } from '@f1-predictions/models';
+import { PlayerTeam, Team, TeamsState } from '@f1-predictions/models';
 import { TeamApiService } from '@f1-predictions/f1-predictions-api';
 import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
 import { PlayersStore } from '@f1-predictions/players-store';
 const initialState: TeamsState = {
-  team: [],
+  teams: [],
+  selected_player_id: null,
+  selected_team: null,
   isLoading: false,
   error: null,
 };
 export const TeamStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withComputed(({ selected_player_id, teams }) => ({
+    selected_team: computed(() => {
+      if (selected_player_id()) {
+        return teams()[selected_player_id()!];
+      } else return null;
+    }),
+  })),
   withMethods(
     (
       store,
       teamApi = inject(TeamApiService),
       players = inject(PlayersStore)
     ) => ({
-      loadTeam: rxMethod<number>(
+      loadOne: rxMethod<number>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
-          switchMap(() =>
-            teamApi.loadTeam(1).pipe(
+          switchMap((player_id: number) =>
+            teamApi.loadOne(player_id).pipe(
               tapResponse({
                 next: (team: Team[]) => {
                   console.log(team);
-                  patchState(store, { team });
+                  const new_teams = [...store.teams()];
+                  new_teams[player_id] = { team, player_id };
+                  patchState(store, {
+                    teams: new_teams,
+                    selected_player_id: player_id,
+                  });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),
@@ -52,7 +66,15 @@ export const TeamStore = signalStore(
               tapResponse({
                 next: (team: Team[]) => {
                   console.log(team);
-                  patchState(store, { team });
+                  const new_teams = [...store.teams()];
+                  new_teams[players.active_player()!.id] = {
+                    player_id: players.active_player()!.id,
+                    team: team,
+                  };
+                  patchState(store, {
+                    teams: new_teams,
+                  });
+                  patchState(store, { teams: new_teams });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),
@@ -62,10 +84,5 @@ export const TeamStore = signalStore(
         )
       ),
     })
-  ),
-  withHooks({
-    onInit({ loadTeam }) {
-      loadTeam(1);
-    },
-  })
+  )
 );

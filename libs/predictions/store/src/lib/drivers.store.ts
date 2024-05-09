@@ -31,7 +31,6 @@ export const DriversStore = signalStore(
           driverApi.loadAll().pipe(
             tapResponse({
               next: (drivers: Driver[]) => {
-                console.log(drivers);
                 patchState(store, { drivers });
               },
               error: console.error,

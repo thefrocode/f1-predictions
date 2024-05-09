@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AddTeam, Team } from '@f1-predictions/models';
+import { AddTeam, PlayerTeam, Team } from '@f1-predictions/models';
 import { Observable } from 'rxjs';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
@@ -13,7 +13,7 @@ export class TeamApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadTeam(player_id: number): Observable<Team[]> {
+  loadOne(player_id: number): Observable<Team[]> {
     return this.http.get<Team[]>(
       `${this.appConfig.baseURL}/teams/${player_id}`
     );

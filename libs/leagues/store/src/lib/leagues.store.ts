@@ -74,7 +74,6 @@ export const LeaguesStore = signalStore(
             leagueApi.loadOne(league_id).pipe(
               tapResponse({
                 next: (league_players: LeaguePlayers) => {
-                  console.log(league_players);
                   store.league_players()[league_players.league_id] =
                     league_players;
                   const new_league_players = [...store.league_players()];

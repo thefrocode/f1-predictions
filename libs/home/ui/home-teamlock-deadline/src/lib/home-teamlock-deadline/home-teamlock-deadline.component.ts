@@ -118,7 +118,6 @@ export class HomeTeamlockDeadlineComponent {
   });
   ngOnChanges(changes: SimpleChanges) {
     if (changes['race']) {
-      console.log(changes['race'].currentValue);
       this.active_race.set(changes['race'].currentValue);
     }
   }
