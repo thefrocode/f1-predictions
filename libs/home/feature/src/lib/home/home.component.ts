@@ -93,15 +93,7 @@ export class HomeComponent {
   active_race = this.races.active_race;
   active_player = this.players.active_player;
 
-  displayed_league = computed(() => {
-    if (this.active_player()) {
-      return this.leagues.league_players()[
-        this.active_player()!.selected_league_id
-      ];
-    } else {
-      return this.leagues.league_players()[1];
-    }
-  });
+  displayed_league = this.leagues.display_league;
 
   active_player_league$ = toObservable(this.players.active_player)
     .pipe(

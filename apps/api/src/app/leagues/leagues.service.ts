@@ -102,6 +102,7 @@ export class LeaguesService {
     const race_id = await this.predictionsRepository.maximum('race_id', {
       result: Not(IsNull()),
     });
+    const league = await this.leaguesRepository.findOneBy({ id: league_id });
 
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
@@ -142,6 +143,7 @@ export class LeaguesService {
       league_id,
       players,
       number_of_players: players.length,
+      name: league?.name,
     };
   }
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -15,10 +15,12 @@ import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
   providers: [provideIcons({ radixPlus, radixEnter })],
 })
 export class LeaguePlayersListComponent {
-  leagues = inject(LeaguesStore);
-  players = inject(PlayersStore);
+  active_player = inject(PlayersStore).active_player;
 
-  fetchPlayersByLeagueId(league_id: any) {
-    //this.leagues.loadAllPlayersPerLeague(league_id.value);
+  displayed_league = inject(LeaguesStore).display_league;
+  constructor() {
+    effect(() => {
+      console.log(this.displayed_league());
+    });
   }
 }

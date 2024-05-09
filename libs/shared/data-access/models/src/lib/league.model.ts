@@ -24,6 +24,8 @@ export type LeaguePlayers = League & {
 export type LeaguesState = {
   leagues: League[];
   league_players: LeaguePlayers[];
+  display_league_id: number | null;
+  display_league: LeaguePlayers;
   selected_league: SelectedLeague;
   isLoading: boolean;
   error: any;

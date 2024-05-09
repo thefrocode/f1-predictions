@@ -28,6 +28,8 @@ import { PlayersStore } from '@f1-predictions/players-store';
 const initialState: LeaguesState = {
   leagues: [],
   league_players: [],
+  display_league_id: null,
+  display_league: {} as LeaguePlayers,
   selected_league: {} as SelectedLeague,
   isLoading: false,
   error: null,
@@ -35,6 +37,13 @@ const initialState: LeaguesState = {
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withComputed(({ display_league_id, league_players }) => ({
+    display_league: computed(() => {
+      if (display_league_id()) {
+        return league_players()[display_league_id()!];
+      } else return {} as LeaguePlayers;
+    }),
+  })),
   withMethods(
     (
       store,
@@ -46,11 +55,9 @@ export const LeaguesStore = signalStore(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap(() => {
-            console.log('Load Leagues');
             return leagueApi.loadAll(players.active_player()?.id).pipe(
               tapResponse({
                 next: (leagues: League[]) => {
-                  console.log('Leagues', leagues);
                   patchState(store, { leagues });
                 },
                 error: console.error,
@@ -67,12 +74,14 @@ export const LeaguesStore = signalStore(
             leagueApi.loadOne(league_id).pipe(
               tapResponse({
                 next: (league_players: LeaguePlayers) => {
+                  console.log(league_players);
                   store.league_players()[league_players.league_id] =
                     league_players;
                   const new_league_players = [...store.league_players()];
                   new_league_players[league_players.league_id] = league_players;
                   patchState(store, {
                     league_players: new_league_players,
+                    display_league_id: league_players.league_id,
                   });
                 },
                 error: console.error,
