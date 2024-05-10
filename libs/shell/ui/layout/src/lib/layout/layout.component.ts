@@ -9,13 +9,12 @@ import {
   radixChatBubble,
   radixGear,
 } from '@ng-icons/radix-icons';
-import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { AuthStore } from '@f1-predictions/auth-store';
 
 @Component({
   selector: 'f1-predictions-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, HlmIconComponent],
+  imports: [CommonModule, RouterModule],
   providers: [
     provideIcons({
       radixMargin,

@@ -1,7 +1,6 @@
 import { Component, effect, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { radixEnter } from '@ng-icons/radix-icons';
-import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,10 +10,10 @@ import { League } from '@f1-predictions/models';
 @Component({
   selector: 'leagues-join',
   standalone: true,
-  imports: [CommonModule, HlmIconComponent],
+  imports: [CommonModule],
   templateUrl: './leagues-join.component.html',
   styleUrls: ['./leagues-join.component.css'],
-  providers: [provideIcons({ radixEnter })],
+  providers: [],
 })
 export class LeaguesJoinComponent {
   leaguesStore = inject(LeaguesStore);
