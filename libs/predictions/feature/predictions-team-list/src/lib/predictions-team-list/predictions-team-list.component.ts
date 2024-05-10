@@ -38,16 +38,18 @@ export class PredictionsTeamListComponent {
     const team: {
       [key: string]: string | undefined;
     } = {};
-    console.log(this.teams.teams(), this.teams.selected_team());
-    if (!this.teams.selected_team()) return team;
-
+    if (!this.teams.selected_team() || !this.active_player()) return team;
     this.teams.selected_team()!.team.forEach((t) => {
       team[t.prediction_type] = t.driver_name;
     });
-    console.log(team);
     return team;
   });
   drivers = inject(DriversStore).drivers;
+  ngOnInit() {
+    if (this.active_player()) {
+      this.teams.loadOne(this.active_player()!.id);
+    }
+  }
 
   driver_selection = computed(() => {
     const drivers = this.drivers().map((d) => {

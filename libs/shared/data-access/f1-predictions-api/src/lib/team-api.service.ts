@@ -14,11 +14,9 @@ export class TeamApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadOne(player_id: number): Observable<Team[]> {
-    return this.http
-      .get<Team[]>(`${this.appConfig.baseURL}/teams/${player_id}`)
-      .pipe(
-        delay(5000) // Delay of 5 seconds (5000 milliseconds)
-      );
+    return this.http.get<Team[]>(
+      `${this.appConfig.baseURL}/teams/${player_id}`
+    );
   }
 
   updateTeam(player_id: number, team: Team[]): Observable<Team[]> {
