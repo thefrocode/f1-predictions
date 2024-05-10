@@ -25,7 +25,7 @@ export class LeagueSettingsComponent {
     this.leagues.loadSelectedLeague();
     effect(() => {
       console.log(this.leagues.leagues());
-      console.log(this.leagues.selected_league());
+
       if (this.leagues.selected_league()) {
         this.selectedLeagueForm.patchValue({
           selected_league: this.leagues.selected_league().league_id,

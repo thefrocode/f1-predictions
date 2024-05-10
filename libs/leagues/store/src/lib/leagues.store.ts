@@ -37,12 +37,15 @@ const initialState: LeaguesState = {
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ display_league_id, league_players }) => ({
+  withComputed(({ display_league_id, league_players, leagues }) => ({
     display_league: computed(() => {
       if (display_league_id()) {
         return league_players()[display_league_id()!];
       } else return {} as LeaguePlayers;
     }),
+    active_player_leagues: computed(() =>
+      leagues().filter((league) => league.position)
+    ),
   })),
   withMethods(
     (

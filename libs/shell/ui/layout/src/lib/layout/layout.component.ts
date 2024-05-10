@@ -14,6 +14,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
 export class LayoutComponent {
   isDropdownOpen: boolean = false;
   authStore = inject(AuthStore);
+
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }

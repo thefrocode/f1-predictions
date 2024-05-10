@@ -4,7 +4,7 @@
       class="flex flex-col flex-1 bg-[#954FEE] opacity-70 gap-20 rounded-full py-6"
     >
       <i class="bi bi-car-front text-2xl self-center"></i>
-      <div class="flex flex-col mb-auto gap-8">
+      <div class="flex flex-col gap-8">
         <a
           routerLink="/home"
           routerLinkActive="active_link"
@@ -36,14 +36,15 @@
           <i class="bi bi-chat-fill text-2xl"></i>
         </a>
       </div>
+      @if(authStore.isAuthenticated()){
       <a
         routerLink="/settings"
         routerLinkActive="active_link"
         class="flex self-center justify-center content-center"
       >
-        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
         <i class="bi bi-gear text-2xl"></i>
       </a>
+      }
     </div>
   </div>
   <div class="px-4 py-2">

@@ -41,7 +41,7 @@ export class HomeComponent {
 
   readonly players = inject(PlayersStore);
 
-  home_leagues = computed(() => this.leagues.leagues().splice(0, 4));
+  home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
   readonly leagues = inject(LeaguesStore);
 
   active_race = this.races.active_race;
@@ -93,6 +93,7 @@ export class HomeComponent {
   constructor() {
     effect(
       () => {
+        console.log(this.leagues.leagues());
         if (this.authStore.user()) {
           this.players.loadOne(this.authStore.user()!.user_id);
         }

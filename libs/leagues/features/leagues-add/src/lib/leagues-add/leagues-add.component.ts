@@ -1,6 +1,5 @@
 import { Component, effect, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { radixPlus } from '@ng-icons/radix-icons';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { MatDialog } from '@angular/material/dialog';

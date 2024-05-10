@@ -8,7 +8,7 @@
       (ngSubmit)="selectLeague()"
       class="flex flex-col justify-items-start w-1/3"
     >
-      <!-- @for(league of leagues.active_player_leagues(); track league.id){
+      @for(league of leagues.active_player_leagues(); track league.id){
       <label>
         <input
           type="radio"
@@ -19,7 +19,7 @@
         {{ league.name }} {{ league.id }}
       </label>
 
-      } -->
+      }
       <button
         class="grow-0 my-2 mx-auto w-1/3 text-white p-2 bg-[#954FEE] rounded-md"
       >

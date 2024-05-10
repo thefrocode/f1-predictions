@@ -77,9 +77,10 @@ export class LeaguesService {
         .leftJoin(
           '(' + activePlayerSubQuery.getQuery() + ')',
           'positions',
-          'league_players.player_id=positions.player_id and league_players.league_id=positions.league_id'
+          'league_players.league_id=positions.league_id'
         )
         .groupBy('leagues.id')
+        .orderBy('positions.position', 'DESC')
         .setParameters(activePlayerSubQuery.getParameters())
         .getRawMany();
     } else {
@@ -94,6 +95,7 @@ export class LeaguesService {
           'leagues.id=league_players.league_id'
         )
         .groupBy('leagues.id')
+        .orderBy('leagues.id', 'ASC')
         .getRawMany();
     }
   }

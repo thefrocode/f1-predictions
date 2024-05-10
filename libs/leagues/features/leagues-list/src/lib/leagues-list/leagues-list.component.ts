@@ -26,4 +26,9 @@ export class LeaguesListComponent {
   loadOneLeague(league_id: number) {
     this.leagues.loadOne(league_id);
   }
+  constructor() {
+    effect(() => {
+      console.log(this.leagues.leagues());
+    });
+  }
 }
