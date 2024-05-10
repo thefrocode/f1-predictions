@@ -50,7 +50,6 @@ export class PredictionsTeamListComponent {
   drivers = inject(DriversStore).drivers;
 
   driver_selection = computed(() => {
-    //const selected_position = this.teams.teams().map((t) => t.driver_id);
     const drivers = this.drivers().map((d) => {
       Object.keys(this.selected_team()).forEach((key) => {
         const prediction_type = this.prediction_types().find(

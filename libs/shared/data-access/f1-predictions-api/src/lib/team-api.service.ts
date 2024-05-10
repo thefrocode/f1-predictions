@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AddTeam, PlayerTeam, Team } from '@f1-predictions/models';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
 @Injectable({
@@ -14,9 +14,11 @@ export class TeamApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadOne(player_id: number): Observable<Team[]> {
-    return this.http.get<Team[]>(
-      `${this.appConfig.baseURL}/teams/${player_id}`
-    );
+    return this.http
+      .get<Team[]>(`${this.appConfig.baseURL}/teams/${player_id}`)
+      .pipe(
+        delay(5000) // Delay of 5 seconds (5000 milliseconds)
+      );
   }
 
   updateTeam(player_id: number, team: Team[]): Observable<Team[]> {

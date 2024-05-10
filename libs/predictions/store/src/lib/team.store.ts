@@ -11,7 +11,7 @@ import { PlayerTeam, Team, TeamsState } from '@f1-predictions/models';
 import { TeamApiService } from '@f1-predictions/f1-predictions-api';
 import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap } from 'rxjs';
+import { pipe, tap, switchMap, startWith } from 'rxjs';
 import { PlayersStore } from '@f1-predictions/players-store';
 const initialState: TeamsState = {
   teams: [],
@@ -38,12 +38,13 @@ export const TeamStore = signalStore(
     ) => ({
       loadOne: rxMethod<number>(
         pipe(
-          tap(() => patchState(store, { isLoading: true })),
+          tap(() =>
+            patchState(store, { isLoading: true, selected_player_id: null })
+          ),
           switchMap((player_id: number) =>
             teamApi.loadOne(player_id).pipe(
               tapResponse({
                 next: (team: Team[]) => {
-                  console.log(team);
                   const new_teams = [...store.teams()];
                   new_teams[player_id] = { team, player_id };
                   patchState(store, {

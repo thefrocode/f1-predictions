@@ -10,18 +10,27 @@
     <p>Total</p>
   </div>
   @if(displayed_league()){ @for(player of displayed_league().players; track
-  player){
-  <div
-    class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
-    [ngClass]="{
-      'text-base bg-[#B1B1EC] py-2.5 text-white':
-        player.player_id === active_player()?.id
-    }"
-  >
-    <p class="w-1/10">{{ player.position }}.</p>
-    <p class="w-3/5">{{ player.name }}</p>
-    <p class="grow">{{ player.last_race_points }}</p>
-    <p class="grow">{{ player.total_points }}</p>
-  </div>
+  player;let index = $index){
+  <details #details (click)="loadOneTeam(details, player.player_id)">
+    <summary>
+      <div
+        class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
+        [ngClass]="{
+          'text-base bg-[#B1B1EC] py-2.5 text-white':
+            player.player_id === active_player()?.id
+        }"
+      >
+        <p class="w-1/10">{{ player.position }}.</p>
+        <p class="w-3/5">{{ player.name }}</p>
+        <p class="grow">{{ player.last_race_points }}</p>
+        <p class="grow">{{ player.total_points }}</p>
+      </div>
+    </summary>
+    <div>
+      @for(prediction of selected_team()?.team; track prediction){
+      <p>{{ prediction.driver_name }}</p>
+      }
+    </div>
+  </details>
   } }
 </div>
