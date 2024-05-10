@@ -1,29 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { provideIcons } from '@ng-icons/core';
-import {
-  radixHome,
-  radixMargin,
-  radixPerson,
-  radixChatBubble,
-  radixGear,
-} from '@ng-icons/radix-icons';
 import { AuthStore } from '@f1-predictions/auth-store';
 
 @Component({
   selector: 'f1-predictions-layout',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  providers: [
-    provideIcons({
-      radixMargin,
-      radixHome,
-      radixPerson,
-      radixChatBubble,
-      radixGear,
-    }),
-  ],
+  providers: [],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })

@@ -28,8 +28,6 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/typeorm": "^10.0.1",
-    "@ng-icons/core": "^26.0.0",
-    "@ng-icons/radix-icons": "^26.0.0",
     "@ngrx/operators": "^17.0.0",
     "@ngrx/signals": "^17.0.1",
     "@nx/angular": "17.1.1",

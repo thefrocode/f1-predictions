@@ -1,14 +1,5 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { provideIcons } from '@ng-icons/core';
-import {
-  radixBell,
-  radixMargin,
-  radixPlus,
-  radixEnter,
-  radixArrowLeft,
-  radixCalendar,
-} from '@ng-icons/radix-icons';
 import { RacesStore } from '@f1-predictions/race-store';
 import { LeaguesListComponent } from '@f1-predictions/leagues-list';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -37,16 +28,7 @@ import { of, switchMap, tap } from 'rxjs';
     RouterModule,
     HomeTeamlockDeadlineComponent,
   ],
-  providers: [
-    provideIcons({
-      radixMargin,
-      radixBell,
-      radixPlus,
-      radixEnter,
-      radixArrowLeft,
-      radixCalendar,
-    }),
-  ],
+  providers: [],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   //changeDetection: ChangeDetectionStrategy.OnPush,
