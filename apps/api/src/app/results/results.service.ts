@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { PredictionType } from '../predictions/entities/prediction-type.entity';
 import { PredictionsService } from '../predictions/predictions.service';
 import { Race } from '../races/entities/race.entity';
+import { RacesService } from '../races/races.service';
 import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
 import { Result } from './entities/result.entity';
@@ -16,7 +17,13 @@ export class ResultsService {
   @InjectRepository(PredictionType)
   private readonly predictionTypesRepository: Repository<PredictionType>;
 
-  constructor(private readonly predictionsService: PredictionsService) {}
+  @InjectRepository(Race)
+  private readonly racesRepository: Repository<Race>;
+
+  constructor(
+    private readonly predictionsService: PredictionsService,
+    private readonly racesService: RacesService
+  ) {}
 
   async create(createResultDto: CreateResultDto) {
     const results = createResultDto.results.map((result) => {
@@ -26,7 +33,13 @@ export class ResultsService {
       };
     });
     await this.resultsRepository.save(results);
-    return await this.predictionsService.create(createResultDto.race_id);
+    await this.predictionsService.create(createResultDto.race_id);
+    await this.racesService.update(createResultDto.race_id, {
+      race_status: 'Completed',
+    });
+    return this.racesService.update(createResultDto.race_id + 1, {
+      race_status: 'Active',
+    });
   }
 
   async findAll() {

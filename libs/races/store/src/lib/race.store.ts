@@ -21,7 +21,9 @@ export const RacesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withComputed(({ races }) => ({
-    active_race: computed(() => races().find((race) => race.active)),
+    active_race: computed(() =>
+      races().find((race) => race.race_status === 'Active')
+    ),
   })),
   withMethods((store, raceApi = inject(RaceApiService)) => ({
     loadAll: rxMethod<void>(

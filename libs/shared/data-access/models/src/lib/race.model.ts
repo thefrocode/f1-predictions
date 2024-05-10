@@ -8,7 +8,7 @@ export interface Race {
   quali_time: Date;
   race_time: Date;
   race_number: string;
-  active: boolean;
+  race_status: string;
 }
 
 export type RacesState = {

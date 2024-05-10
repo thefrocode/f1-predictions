@@ -245,7 +245,7 @@ export default class MainSeeder implements Seeder {
             fp3_time: fp3_time,
             quali_time: quali_time,
             race_time: race_time,
-            active: raceNumber === 1,
+            race_status: raceNumber === 1 ? 'Active' : 'Upcoming',
             race_number: `${raceNumber++}/23`,
           });
 

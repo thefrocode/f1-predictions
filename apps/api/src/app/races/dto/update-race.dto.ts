@@ -4,5 +4,5 @@ import { CreateRaceDto } from './create-race.dto';
 
 export class UpdateRaceDto extends PartialType(CreateRaceDto) {
   @IsBoolean()
-  active: boolean;
+  race_status: string;
 }

@@ -35,7 +35,7 @@ export class Race {
   race_number: string;
 
   @Column()
-  active: boolean;
+  race_status: string;
 
   @OneToMany(() => Prediction, (prediction) => prediction.race)
   predictions: Prediction[];
