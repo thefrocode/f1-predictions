@@ -2,7 +2,9 @@
   <div class="bg-white rounded-lg px-4 py-3 w-2/3">
     <div class="flex justify-between">
       <p class="font-lemon self-center">LEAGUES</p>
+      @if(auth.isAuthenticated()){
       <leagues-add [type]="'button'"></leagues-add>
+      }
     </div>
     <div class="relative">
       <input class="bg-[#FAF2F8] rounded-md w-full h-[30px]" />

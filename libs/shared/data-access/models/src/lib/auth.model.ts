@@ -4,14 +4,13 @@ export interface AuthPayload {
 }
 
 export interface User {
-  access_token: string;
-  user_id: string;
+  name: string;
 }
 
 export type AuthRegisterPayload = AuthPayload & { name: string };
 
 export type AuthState = {
-  user: User | null | undefined;
+  user: User | undefined;
   status:
     | 'pending'
     | 'authenticating'

@@ -19,9 +19,15 @@ export class AuthApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   login(user: AuthPayload): Observable<User> {
-    return this.http.post<User>(`${this.appConfig.baseURL}/auth/login`, {
-      ...user,
-    });
+    return this.http.post<User>(
+      `${this.appConfig.baseURL}/auth/login`,
+      {
+        ...user,
+      },
+      {
+        withCredentials: true,
+      }
+    );
   }
   loginWithGoogle() {
     return this.http.get(`${this.appConfig.baseURL}/auth/google`);

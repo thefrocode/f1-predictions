@@ -29,9 +29,14 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req: any) {
-    console.log(req.user);
-    return this.authService.login(req.user);
+  async login(@Request() req: any, @Res() res: Response) {
+    const user = await this.authService.login(req.user);
+    res.cookie('access_token', user.access_token, {
+      httpOnly: true,
+      secure: false,
+      path: '/',
+    });
+    return res.send({ message: 'Login successful' });
   }
 
   @Post('signup')
@@ -54,7 +59,7 @@ export class AuthController {
     const loggedInUser = await this.authService.login(user);
 
     res.redirect(
-      `http://localhost:4200/callback?token=${loggedInUser.access_token}&user_id=${loggedInUser.user_id}`
+      `http://localhost:4200/callback?token=${loggedInUser.access_token}`
     );
   }
 }

@@ -10,7 +10,6 @@ import {
   AuthPayload,
   AuthRegisterPayload,
   AuthState,
-  Result,
   User,
 } from '@f1-predictions/models';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -45,7 +44,6 @@ export const AuthStore = signalStore(
             return authApi.login(user).pipe(
               tapResponse({
                 next: (user: User) => {
-                  console.log('Results', user);
                   patchState(store, {
                     user,
                     status: 'success',
@@ -77,13 +75,13 @@ export const AuthStore = signalStore(
           })
         )
       ),
-      loginWithGoogle: rxMethod<User>(
-        pipe(
-          tap((user: User) =>
-            patchState(store, { user: user, status: 'authenticated' })
-          )
-        )
-      ),
+      // loginWithGoogle: rxMethod<User>(
+      //   pipe(
+      //     tap((user: User) =>
+      //       patchState(store, { user: user, status: 'authenticated' })
+      //     )
+      //   )
+      // ),
     })
   )
 );

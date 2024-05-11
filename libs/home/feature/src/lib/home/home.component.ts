@@ -95,7 +95,7 @@ export class HomeComponent {
       () => {
         console.log(this.leagues.leagues());
         if (this.authStore.user()) {
-          this.players.loadOne(this.authStore.user()!.user_id);
+          this.players.loadActivePlayer();
         }
       },
       {

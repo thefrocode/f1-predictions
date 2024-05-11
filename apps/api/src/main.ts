@@ -8,15 +8,21 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { TypeOrmFilter } from './app/shared/exceptions/typeorm.filter';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
+
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalFilters(new TypeOrmFilter());
-  app.enableCors();
+  app.enableCors({
+    origin: [process.env.FRONTEND_URL || ''],
+    credentials: true,
+  });
   app.useGlobalPipes(new ValidationPipe());
   const port = process.env.PORT || 3000;
+  app.use(cookieParser.default());
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

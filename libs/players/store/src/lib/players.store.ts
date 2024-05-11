@@ -29,6 +29,23 @@ export const PlayersStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withMethods((store: any, playerApi = inject(PlayerApiService)) => ({
+    loadActivePlayer: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap(() =>
+          playerApi.loadActivePlayer().pipe(
+            tapResponse({
+              next: (active_player: PlayerWithPoints) => {
+                console.log(active_player);
+                patchState(store, { active_player });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          )
+        )
+      )
+    ),
     loadOne: rxMethod<string>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),

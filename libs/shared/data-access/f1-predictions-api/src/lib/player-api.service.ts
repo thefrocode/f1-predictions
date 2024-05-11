@@ -15,6 +15,13 @@ export class PlayerApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
+  loadActivePlayer() {
+    return this.http.get<PlayerWithPoints>(
+      `${this.appConfig.baseURL}/active-player`,
+      { withCredentials: true }
+    );
+  }
+
   loadOne(user_id: string) {
     return this.http.get<PlayerWithPoints>(
       `${this.appConfig.baseURL}/players/${user_id}`

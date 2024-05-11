@@ -3,20 +3,30 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constants';
 import * as dotenv from 'dotenv';
+import { Request } from 'express';
+
 dotenv.config();
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
-    console.log('JwtStrategy constructor', process.env.JWT_SECRET);
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJWTFromCookie,
+      ]),
+      ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
     });
+  }
+  private static extractJWTFromCookie(req: Request): string | null {
+    if (req.cookies && req.cookies.access_token) {
+      return req.cookies.access_token;
+    }
+    return null;
   }
 
   async validate(payload: any) {
     return {
-      player_id: payload.sub,
+      user_id: payload.sub,
     };
   }
 }

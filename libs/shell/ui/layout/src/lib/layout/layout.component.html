@@ -15,6 +15,7 @@
           ></div>
           <i class="bi bi-house text-2xl"></i>
         </a>
+        @if(authStore.isAuthenticated()){
         <a
           routerLink="/team"
           routerLinkActive="active_link"
@@ -25,6 +26,7 @@
           ></div>
           <i class="bi bi-people-fill text-2xl"></i>
         </a>
+        }
         <a
           routerLink="/results"
           routerLinkActive="active_link"

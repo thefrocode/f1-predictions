@@ -2,8 +2,7 @@
   <div class="bg-white rounded-md w-2/3">
     <p class="self-center text-center font-lemonada text-lg py-2">My Team</p>
     <div class="grid px-14 py-4">
-      @if(active_player()){ @for(driver of selected_team() | keyvalue; track
-      driver){
+      @for(driver of selected_team() | keyvalue; track driver){
       <div class="col flex justify-center">
         @if(driver.value){
         <div
@@ -34,8 +33,6 @@
         </div>
         }
       </div>
-      } }@else {
-      <p>Login or sign up to create your account</p>
       }
     </div>
     <button

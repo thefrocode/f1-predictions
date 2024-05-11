@@ -32,30 +32,9 @@ export class AuthService {
         secret: jwtConstants.secret,
         expiresIn: 3600,
       }),
-      user_id: user.id,
     };
   }
-  generateGoogleRedirectUrl() {
-    return `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleConstants.google_client_id}&redirect_uri=${googleConstants.google_callback_url}&response_type=code&scope=profile email`;
-  }
-  async getProfile(code: string) {
-    const { data } = await axios.post('https://oauth2.googleapis.com/token', {
-      client_id: googleConstants.google_client_id,
-      client_secret: googleConstants.google_client_secret,
-      code,
-      redirect_uri: googleConstants.google_callback_url,
-      grant_type: 'authorization_code',
-    });
-    const { access_token } = data;
 
-    const { data: profile } = await axios.get(
-      'https://www.googleapis.com/oauth2/v1/userinfo',
-      {
-        headers: { Authorization: `Bearer ${access_token}` },
-      }
-    );
-    return profile;
-  }
   create(createAuthDto: CreateAuthDto) {
     return 'This action adds a new auth';
   }
