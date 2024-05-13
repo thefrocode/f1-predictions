@@ -55,6 +55,12 @@ export class PlayersService {
   findOne(id: number) {
     return `This action removes a #${id} player`;
   }
+  async findPlayerByUserId(user_id: string) {
+    return await this.playersRepository.findOne({
+      where: { user_id: user_id },
+      relations: ['selected_league'],
+    });
+  }
   async findActivePlayer(user_id: string) {
     const player = await this.playersRepository.findOne({
       where: { user_id: user_id },
@@ -77,7 +83,6 @@ export class PlayersService {
       return {
         total_points: total_points,
         last_race_points: last_race_points,
-        id: player.id,
         selected_league_id: player.selected_league.league_id,
       };
     }

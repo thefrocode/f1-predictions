@@ -11,6 +11,9 @@ import { TeamsService } from './teams.service';
 import { PredictionTypesController } from './prediction-types.controller';
 import { PredictionTypesService } from './prediction-types.service';
 import { Result } from '../results/entities/result.entity';
+import { PlayersService } from '../players/players.service';
+import { LeaguePlayer } from '../leagues/entities/league_player.entity';
+import { SelectedLeague } from '../leagues/entities/selected_league.entity';
 
 @Module({
   imports: [
@@ -20,6 +23,8 @@ import { Result } from '../results/entities/result.entity';
       Player,
       Result,
       Team,
+      LeaguePlayer,
+      SelectedLeague,
     ]),
   ],
   controllers: [
@@ -27,6 +32,11 @@ import { Result } from '../results/entities/result.entity';
     TeamsController,
     PredictionTypesController,
   ],
-  providers: [PredictionsService, TeamsService, PredictionTypesService],
+  providers: [
+    PredictionsService,
+    TeamsService,
+    PredictionTypesService,
+    PlayersService,
+  ],
 })
 export class PredictionsModule {}

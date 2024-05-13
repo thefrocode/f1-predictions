@@ -33,20 +33,27 @@ export const appRoutes: Route[] = [
         component: HomeComponent,
       },
       {
-        path: 'settings',
-        component: LeagueSettingsComponent,
-      },
-      {
-        path: 'team',
-        component: PredictionsTeamListComponent,
-      },
-      {
         path: 'leagues',
         component: LeaguesListComponent,
       },
       {
         path: 'results',
         component: ResultsListComponent,
+      },
+    ],
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    canActivateChild: [AuthGuard()],
+    children: [
+      {
+        path: 'settings',
+        component: LeagueSettingsComponent,
+      },
+      {
+        path: 'team',
+        component: PredictionsTeamListComponent,
       },
     ],
   },

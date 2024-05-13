@@ -13,6 +13,11 @@ export class TeamApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
+  loadActivePlayerTeam(): Observable<Team[]> {
+    return this.http.get<Team[]>(`${this.appConfig.baseURL}/teams/`, {
+      withCredentials: true,
+    });
+  }
   loadOne(player_id: number): Observable<Team[]> {
     return this.http.get<Team[]>(
       `${this.appConfig.baseURL}/teams/${player_id}`

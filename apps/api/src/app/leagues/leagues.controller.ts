@@ -13,14 +13,19 @@ import { LeaguesService } from './leagues.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('leagues')
 export class LeaguesController {
   constructor(private readonly leaguesService: LeaguesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createLeagueDto: CreateLeagueDto) {
-    return this.leaguesService.create(createLeagueDto);
+  create(@Body() createLeagueDto: CreateLeagueDto, @Req() req: any) {
+    return this.leaguesService.create({
+      ...createLeagueDto,
+      owner_id: req.user.player_id,
+    });
   }
 
   @UseGuards(OptionalJwtAuthGuard)

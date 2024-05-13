@@ -21,34 +21,20 @@ export class PredictionsTeamListComponent {
   prediction_types = inject(PredictionTypesStore).prediction_types;
   teams = inject(TeamStore);
   active_player = inject(PlayersStore).active_player;
-  active_player_team$ = toObservable(this.active_player)
-    .pipe(
-      takeUntilDestroyed(),
-      tap((active_player) => {
-        if (active_player) {
-          return this.teams.loadOne(active_player.id);
-        } else {
-          return {};
-        }
-      })
-    )
-    .subscribe();
 
   selected_team = computed(() => {
     const team: {
       [key: string]: string | undefined;
     } = {};
-    if (!this.teams.selected_team() || !this.active_player()) return team;
-    this.teams.selected_team()!.team.forEach((t) => {
+    if (!this.teams.active_player_team) return team;
+    this.teams.active_player_team()!.forEach((t) => {
       team[t.prediction_type] = t.driver_name;
     });
     return team;
   });
   drivers = inject(DriversStore).drivers;
   ngOnInit() {
-    if (this.active_player()) {
-      this.teams.loadOne(this.active_player()!.id);
-    }
+    this.teams.loadActivePlayerTeam();
   }
 
   driver_selection = computed(() => {

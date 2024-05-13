@@ -15,6 +15,7 @@ export type PlayerTeam = {
 
 export type TeamsState = {
   teams: PlayerTeam[];
+  active_player_team: Team[] | undefined;
   selected_team: PlayerTeam | null;
   selected_player_id: number | null;
   isLoading: boolean;

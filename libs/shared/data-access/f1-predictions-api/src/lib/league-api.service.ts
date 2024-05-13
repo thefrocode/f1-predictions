@@ -30,26 +30,30 @@ export class LeagueApiService {
       `${this.appConfig.baseURL}/leagues/${league_id}`
     );
   }
-  loadSelectedLeague(player_id: number) {
+  loadSelectedLeague() {
     return this.http.get<SelectedLeague>(
-      `${this.appConfig.baseURL}/selected-league/${player_id}`
+      `${this.appConfig.baseURL}/selected-league`,
+      {
+        withCredentials: true,
+      }
     );
   }
-  selectLeagueToBeDisplayed(league: {
-    id: number;
-    league_id: number;
-    player_id: number;
-  }) {
+  selectLeagueToBeDisplayed(league: { id: number; league_id: number }) {
     return this.http.patch<SelectedLeague>(
       `${this.appConfig.baseURL}/selected-league/${league.id}`,
       {
-        ...league,
+        league_id: league.league_id,
+      },
+      {
+        withCredentials: true,
       }
     );
   }
 
   createLeague(league: AddLeague) {
-    return this.http.post<League>(`${this.appConfig.baseURL}/leagues`, league);
+    return this.http.post<League>(`${this.appConfig.baseURL}/leagues`, league, {
+      withCredentials: true,
+    });
   }
   joinLeague(leaguePlayer: AddLeaguePlayer) {
     return this.http.post<League>(

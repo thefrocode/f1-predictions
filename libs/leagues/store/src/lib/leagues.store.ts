@@ -99,7 +99,7 @@ export const LeaguesStore = signalStore(
         pipe(
           filter(() => (players.active_player() ? true : false)),
           switchMap(() =>
-            leagueApi.loadSelectedLeague(players.active_player()!.id).pipe(
+            leagueApi.loadSelectedLeague().pipe(
               tapResponse({
                 next: (selected_league: SelectedLeague) => {
                   patchState(store, {
@@ -115,7 +115,6 @@ export const LeaguesStore = signalStore(
       selectLeague: rxMethod<{
         id: number;
         league_id: number;
-        player_id: number;
       }>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),

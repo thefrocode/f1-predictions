@@ -24,8 +24,6 @@ export class LeagueSettingsComponent {
   constructor(private fb: FormBuilder) {
     this.leagues.loadSelectedLeague();
     effect(() => {
-      console.log(this.leagues.leagues());
-
       if (this.leagues.selected_league()) {
         this.selectedLeagueForm.patchValue({
           selected_league: this.leagues.selected_league().league_id,
@@ -40,12 +38,9 @@ export class LeagueSettingsComponent {
     });
   }
   selectLeague() {
-    if (this.players.active_player()) {
-      this.leagues.selectLeague({
-        id: this.leagues.selected_league().id,
-        league_id: this.selectedLeagueForm.value['selected_league'],
-        player_id: this.players.active_player()!.id,
-      });
-    }
+    this.leagues.selectLeague({
+      id: this.leagues.selected_league().id,
+      league_id: this.selectedLeagueForm.value['selected_league'],
+    });
   }
 }

@@ -15,6 +15,7 @@ import { pipe, tap, switchMap, startWith } from 'rxjs';
 import { PlayersStore } from '@f1-predictions/players-store';
 const initialState: TeamsState = {
   teams: [],
+  active_player_team: undefined,
   selected_player_id: null,
   selected_team: null,
   isLoading: false,
@@ -50,6 +51,24 @@ export const TeamStore = signalStore(
                   patchState(store, {
                     teams: new_teams,
                     selected_player_id: player_id,
+                  });
+                },
+                error: console.error,
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            )
+          )
+        )
+      ),
+      loadActivePlayerTeam: rxMethod<void>(
+        pipe(
+          tap(() => patchState(store, { isLoading: true })),
+          switchMap(() =>
+            teamApi.loadActivePlayerTeam().pipe(
+              tapResponse({
+                next: (active_player_team: Team[]) => {
+                  patchState(store, {
+                    active_player_team,
                   });
                 },
                 error: console.error,

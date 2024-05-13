@@ -11,6 +11,7 @@ import { SelectedLeagueController } from './selected-league.controller';
 import { LeaguePlayersController } from './league-teams.controller';
 import { LeaguePlayersService } from './league-teams.service';
 import { Player } from '../players/entities/player.entity';
+import { PlayersService } from '../players/players.service';
 
 @Module({
   imports: [
@@ -27,6 +28,11 @@ import { Player } from '../players/entities/player.entity';
     SelectedLeagueController,
     LeaguePlayersController,
   ],
-  providers: [LeaguesService, SelectedLeagueService, LeaguePlayersService],
+  providers: [
+    LeaguesService,
+    SelectedLeagueService,
+    LeaguePlayersService,
+    PlayersService,
+  ],
 })
 export class LeaguesModule {}
