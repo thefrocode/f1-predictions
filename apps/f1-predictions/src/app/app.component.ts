@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthStore } from '@f1-predictions/auth-store';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
@@ -11,4 +12,8 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 })
 export class AppComponent {
   title = 'f1-predictions';
+  auth = inject(AuthStore);
+  ngOnInit() {
+    this.auth.loginAutomatically();
+  }
 }

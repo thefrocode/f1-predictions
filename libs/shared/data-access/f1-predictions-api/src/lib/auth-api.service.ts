@@ -42,4 +42,17 @@ export class AuthApiService {
       }
     );
   }
+  loginAutomatically(): Observable<User> {
+    return this.http.get<User>(
+      `${this.appConfig.baseURL}/auth/login-automatically`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+  logout() {
+    return this.http.get(`${this.appConfig.baseURL}/auth/logout`, {
+      withCredentials: true,
+    });
+  }
 }

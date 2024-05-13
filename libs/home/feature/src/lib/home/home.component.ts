@@ -103,12 +103,6 @@ export class HomeComponent {
     );
   }
   ngOnInit() {
-    // if (this.active_player()) {
-    //   console.log(this.active_player());
-    //   this.leagues.loadOne(this.active_player()!.selected_league_id);
-    // } else {
-    //   this.leagues.loadOne(1);
-    // }
     this.leagues.loadAll();
     this.races.loadAll();
     this.leagues.loadOne(1);

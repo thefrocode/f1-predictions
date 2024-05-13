@@ -74,6 +74,24 @@ export const AuthStore = signalStore(
           })
         )
       ),
+      logout: rxMethod<void>(
+        pipe(
+          switchMap(() => {
+            return authApi.logout().pipe(
+              tapResponse({
+                next: () => {
+                  patchState(store, {
+                    user: undefined,
+                    isAuthenticated: false,
+                    status: 'pending',
+                  });
+                },
+                error: console.error,
+              })
+            );
+          })
+        )
+      ),
       loginWithGoogle: rxMethod<void>(
         pipe(
           tap(() =>
@@ -82,6 +100,24 @@ export const AuthStore = signalStore(
               status: 'authenticated',
             })
           )
+        )
+      ),
+      loginAutomatically: rxMethod<void>(
+        pipe(
+          switchMap(() => {
+            return authApi.loginAutomatically().pipe(
+              tapResponse({
+                next: (user: User) => {
+                  patchState(store, {
+                    user,
+                    isAuthenticated: true,
+                    status: 'authenticated',
+                  });
+                },
+                error: console.error,
+              })
+            );
+          })
         )
       ),
     })

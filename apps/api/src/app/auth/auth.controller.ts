@@ -16,6 +16,7 @@ import {
 } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
+import { LoginAutomatically } from './guards/login-automatically';
 import { GoogleOauthGuard } from './guards/google.guard';
 import { LocalAuthGuard } from './guards/local.guard';
 const axios = require('axios');
@@ -38,6 +39,15 @@ export class AuthController {
       sameSite: 'lax',
     });
     return res.send({ message: 'Login successful' });
+  }
+  @UseGuards(LoginAutomatically)
+  @Get('login-automatically')
+  async isLoggedIn() {}
+
+  @Get('logout')
+  async logout(@Res() res: Response) {
+    res.clearCookie('access_token');
+    res.send();
   }
 
   @Post('signup')
