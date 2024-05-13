@@ -27,11 +27,7 @@ export class LeaguePlayersListComponent {
   selected_team = this.teamsStore.selected_team;
 
   @ViewChildren('details') details!: QueryList<any>;
-  constructor() {
-    effect(() => {
-      console.log(this.displayed_league());
-    });
-  }
+
   loadOneTeam(selectedDetail: HTMLElement, player_id: number) {
     this.details.forEach((detail) => {
       if (detail.nativeElement !== selectedDetail) {

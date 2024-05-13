@@ -15,9 +15,7 @@ export class CallbackComponent {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   public ngOnInit(): void {
-    const token = this.route.snapshot.queryParamMap.get('token');
-    const user_id = this.route.snapshot.queryParamMap.get('user_id');
-    //this.auth.loginWithGoogle({ access_token: token!, user_id: user_id! });
+    this.auth.loginWithGoogle();
     this.router.navigate(['/home']);
   }
 }

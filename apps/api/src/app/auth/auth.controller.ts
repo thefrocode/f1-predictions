@@ -35,6 +35,7 @@ export class AuthController {
       httpOnly: true,
       secure: false,
       path: '/',
+      sameSite: 'lax',
     });
     return res.send({ message: 'Login successful' });
   }
@@ -57,9 +58,11 @@ export class AuthController {
       google_id: req.user.providerId,
     });
     const loggedInUser = await this.authService.login(user);
+    res.cookie('access_token', loggedInUser.access_token, {
+      httpOnly: true,
+      path: '/',
+    });
 
-    res.redirect(
-      `http://localhost:4200/callback?token=${loggedInUser.access_token}`
-    );
+    res.redirect(process.env.FRONTEND_CALLBACK_URL || '');
   }
 }

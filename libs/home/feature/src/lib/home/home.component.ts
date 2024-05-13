@@ -1,7 +1,6 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RacesStore } from '@f1-predictions/race-store';
-import { LeaguesListComponent } from '@f1-predictions/leagues-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { LeaguesStore } from '@f1-predictions/leagues-store';
@@ -21,7 +20,6 @@ import { of, switchMap, tap } from 'rxjs';
   imports: [
     CommonModule,
     MatDialogModule,
-    LeaguesListComponent,
     LeaguePlayersListComponent,
     LeaguesAddComponent,
     LeaguesJoinComponent,
@@ -54,9 +52,11 @@ export class HomeComponent {
       takeUntilDestroyed(),
       tap((active_player) => {
         if (active_player) {
-          return this.leagues.loadOne(active_player.selected_league_id);
+          console.log('active_player', active_player);
+          this.leagues.loadOne(active_player.selected_league_id);
         } else {
-          return this.leagues.loadOne(1);
+          console.log('active_player', active_player);
+          //this.leagues.loadOne(1);
         }
       })
     )
@@ -93,8 +93,7 @@ export class HomeComponent {
   constructor() {
     effect(
       () => {
-        console.log(this.leagues.leagues());
-        if (this.authStore.user()) {
+        if (this.authStore.isAuthenticated()) {
           this.players.loadActivePlayer();
         }
       },
@@ -110,8 +109,9 @@ export class HomeComponent {
     // } else {
     //   this.leagues.loadOne(1);
     // }
-    this.leagues.loadOne(1);
     this.leagues.loadAll();
+    this.races.loadAll();
+    this.leagues.loadOne(1);
   }
 
   toggleLeaguesList() {
@@ -119,8 +119,5 @@ export class HomeComponent {
     this.toggleLeaguesListIcon = this.detailedLeague
       ? 'radixEnter'
       : 'radixArrowLeft';
-  }
-  refresh() {
-    this.races.loadAll();
   }
 }

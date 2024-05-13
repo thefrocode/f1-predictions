@@ -6,7 +6,7 @@ export interface TopTeams {
   };
 }
 export type PredictionsState = {
-  top_teams: TopTeams;
+  top_teams: TopTeams | undefined;
   status: 'pending' | 'loading' | 'success' | 'failed';
   error: any;
 };

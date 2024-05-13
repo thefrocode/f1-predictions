@@ -47,7 +47,7 @@ export class LoginComponent {
     @Inject(APP_CONFIG) private appConfig: AppConfig
   ) {
     effect(() => {
-      if (this.authStore.user()) {
+      if (this.authStore.isAuthenticated()) {
         this.router.navigate(['home']);
       }
       console.log(this.authStore.error());

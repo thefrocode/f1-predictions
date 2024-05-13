@@ -186,7 +186,7 @@ export const LeaguesStore = signalStore(
   ),
   withHooks({
     onInit({ loadAll, loadOne, loadSelectedLeague }) {
-      loadAll();
+      //loadAll();
       loadSelectedLeague();
     },
   })

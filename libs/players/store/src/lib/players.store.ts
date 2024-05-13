@@ -98,8 +98,6 @@ export const PlayersStore = signalStore(
     ),
   })),
   withHooks({
-    onInit({ loadAll }) {
-      loadAll('');
-    },
+    onInit({ loadAll }) {},
   })
 );

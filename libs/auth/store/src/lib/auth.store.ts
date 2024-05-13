@@ -21,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 
 const initialState: AuthState = {
   user: undefined,
+  isAuthenticated: false,
   status: 'pending',
   error: null,
 };
@@ -28,9 +29,6 @@ const initialState: AuthState = {
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ user }) => ({
-    isAuthenticated: computed(() => !!user()),
-  })),
   withMethods(
     (
       store,
@@ -46,7 +44,8 @@ export const AuthStore = signalStore(
                 next: (user: User) => {
                   patchState(store, {
                     user,
-                    status: 'success',
+                    isAuthenticated: true,
+                    status: 'authenticated',
                   });
                 },
                 error: console.error,
@@ -75,13 +74,16 @@ export const AuthStore = signalStore(
           })
         )
       ),
-      // loginWithGoogle: rxMethod<User>(
-      //   pipe(
-      //     tap((user: User) =>
-      //       patchState(store, { user: user, status: 'authenticated' })
-      //     )
-      //   )
-      // ),
+      loginWithGoogle: rxMethod<void>(
+        pipe(
+          tap(() =>
+            patchState(store, {
+              isAuthenticated: true,
+              status: 'authenticated',
+            })
+          )
+        )
+      ),
     })
   )
 );

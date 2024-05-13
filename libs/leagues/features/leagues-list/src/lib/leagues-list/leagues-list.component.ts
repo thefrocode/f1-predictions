@@ -22,8 +22,8 @@ export class LeaguesListComponent {
   leagues = inject(LeaguesStore);
   auth = inject(AuthStore);
   ngOnInit() {
-    this.leagues.loadAll();
-    this.loadOneLeague(1);
+    //this.leagues.loadAll();
+    //this.loadOneLeague(1);
   }
   loadOneLeague(league_id: number) {
     this.leagues.loadOne(league_id);

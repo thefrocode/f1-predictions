@@ -14,7 +14,7 @@ import { inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
 
 const initialState: PredictionsState = {
-  top_teams: {},
+  top_teams: undefined,
   status: 'pending',
   error: null,
 };

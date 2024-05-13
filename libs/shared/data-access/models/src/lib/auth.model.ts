@@ -11,6 +11,7 @@ export type AuthRegisterPayload = AuthPayload & { name: string };
 
 export type AuthState = {
   user: User | undefined;
+  isAuthenticated: boolean;
   status:
     | 'pending'
     | 'authenticating'

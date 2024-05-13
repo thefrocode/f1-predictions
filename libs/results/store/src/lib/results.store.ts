@@ -54,8 +54,6 @@ export const ResultsStore = signalStore(
     ),
   })),
   withHooks({
-    onInit({ loadAll }) {
-      loadAll();
-    },
+    onInit({ loadAll }) {},
   })
 );

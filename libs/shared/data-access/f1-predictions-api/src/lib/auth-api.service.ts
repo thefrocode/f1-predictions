@@ -30,7 +30,9 @@ export class AuthApiService {
     );
   }
   loginWithGoogle() {
-    return this.http.get(`${this.appConfig.baseURL}/auth/google`);
+    return this.http.get(`${this.appConfig.baseURL}/auth/google`, {
+      withCredentials: true,
+    });
   }
   signup(user: AuthRegisterPayload): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(

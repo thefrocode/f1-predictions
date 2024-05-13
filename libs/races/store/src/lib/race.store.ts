@@ -45,7 +45,7 @@ export const RacesStore = signalStore(
   })),
   withHooks({
     onInit({ loadAll }) {
-      loadAll();
+      //loadAll();
     },
   })
 );
