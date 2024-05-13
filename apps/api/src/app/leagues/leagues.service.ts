@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
-import { join } from 'path';
 import { Connection, getConnection, IsNull, Not, Repository } from 'typeorm';
+import { Player } from '../players/entities/player.entity';
 import { Prediction } from '../predictions/entities/prediction.entity';
 import { JoinLeagueDto } from './dto/add-team-to-league.dto';
 import { CreateLeagueDto } from './dto/create-league.dto';
-import { SelectLeagueDto } from './dto/select-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { League } from './entities/league.entity';
 import { LeaguePlayer } from './entities/league_player.entity';
@@ -18,6 +17,9 @@ export class LeaguesService {
 
   @InjectRepository(LeaguePlayer)
   private readonly leaguePlayersRepository: Repository<LeaguePlayer>;
+
+  @InjectRepository(Player)
+  private readonly playersRepository: Repository<Player>;
 
   @InjectRepository(Prediction)
   private readonly predictionsRepository: Repository<Prediction>;
@@ -36,7 +38,7 @@ export class LeaguesService {
     return this.leaguePlayersRepository.insert(newLeaguePlayer);
   }
 
-  async findAll(player_id: number) {
+  async findAll(user_id?: string) {
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
       .select(['player_id', 'sum(points) as points'])
@@ -57,12 +59,17 @@ export class LeaguesService {
       )
       .getSql();
 
-    if (player_id) {
+    if (user_id) {
+      const player = await this.playersRepository.findOne({
+        where: { user_id: user_id },
+      });
       const activePlayerSubQuery = this.connection
         .createQueryBuilder()
         .select(['active_player_positions.*'])
         .from('(' + positionsSubQuery + ')', 'active_player_positions')
-        .where('active_player_positions.player_id = :player_id', { player_id });
+        .where('active_player_positions.player_id = :player_id', {
+          player_id: player!.id,
+        });
 
       return this.leaguesRepository
         .createQueryBuilder('leagues')

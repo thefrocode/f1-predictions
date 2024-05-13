@@ -10,6 +10,7 @@ import { SelectedLeagueService } from './selected-league.service';
 import { SelectedLeagueController } from './selected-league.controller';
 import { LeaguePlayersController } from './league-teams.controller';
 import { LeaguePlayersService } from './league-teams.service';
+import { Player } from '../players/entities/player.entity';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { LeaguePlayersService } from './league-teams.service';
       LeaguePlayer,
       Prediction,
       SelectedLeague,
+      Player,
     ]),
   ],
   controllers: [

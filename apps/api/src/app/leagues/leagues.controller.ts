@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { LeaguesService } from './leagues.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt.guard';
 
 @Controller('leagues')
 export class LeaguesController {
@@ -21,9 +23,10 @@ export class LeaguesController {
     return this.leaguesService.create(createLeagueDto);
   }
 
+  @UseGuards(OptionalJwtAuthGuard)
   @Get()
-  findAll(@Query() query: { player_id: string }) {
-    return this.leaguesService.findAll(+query.player_id);
+  findAll(@Req() req: any) {
+    return this.leaguesService.findAll(req.user?.user_id);
   }
 
   @Get(':league_id')

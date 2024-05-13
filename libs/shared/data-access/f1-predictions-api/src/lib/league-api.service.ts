@@ -20,14 +20,9 @@ export class LeagueApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadAll(player_id?: number) {
-    let params = new HttpParams();
-    if (player_id) {
-      params = params.append('player_id', player_id);
-    }
-
+  loadAll(isAuthenticated: boolean) {
     return this.http.get<League[]>(`${this.appConfig.baseURL}/leagues`, {
-      params,
+      withCredentials: isAuthenticated,
     });
   }
   loadOne(league_id: number) {

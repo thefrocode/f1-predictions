@@ -24,6 +24,7 @@ import { pipe, tap, switchMap, filter } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { PlayersStore } from '@f1-predictions/players-store';
+import { AuthStore } from '@f1-predictions/auth-store';
 
 const initialState: LeaguesState = {
   leagues: [],
@@ -52,13 +53,14 @@ export const LeaguesStore = signalStore(
       store,
       leagueApi = inject(LeagueApiService),
       toastr = inject(ToastrService),
-      players = inject(PlayersStore)
+      players = inject(PlayersStore),
+      auth = inject(AuthStore)
     ) => ({
       loadAll: rxMethod<void>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap(() => {
-            return leagueApi.loadAll(players.active_player()?.id).pipe(
+            return leagueApi.loadAll(auth.isAuthenticated()).pipe(
               tapResponse({
                 next: (leagues: League[]) => {
                   patchState(store, { leagues });
