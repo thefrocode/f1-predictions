@@ -182,16 +182,6 @@ export class LeaguesService {
     query.setParameters(lastRacePointsSubQuery.getParameters());
     query.where('league_id = :league_id', { league_id });
 
-    const players = await this.leaguePlayersRepository
-      .createQueryBuilder('league_players')
-      .select(['players.*'])
-      .innerJoin(
-        '(' + query.getQuery() + ')',
-        'players',
-        'league_players.player_id=players.player_id'
-      )
-      .setParameters(query.getParameters());
-
     if (filter) {
       query.where('players.name LIKE :filter', { filter: `%${filter}%` });
       query.groupBy('players.id');

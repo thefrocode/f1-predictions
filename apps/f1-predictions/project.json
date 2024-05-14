@@ -47,7 +47,9 @@
               "with": "apps/f1-predictions/src/environments/environment.prod.ts"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "ssr": false,
+          "prerender": false
         },
         "development": {
           "optimization": false,
