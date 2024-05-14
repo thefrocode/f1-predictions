@@ -26,7 +26,7 @@
       class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
       [ngClass]="{
         'text-base bg-[#B1B1EC] py-2.5 text-white':
-          league.id === leagues.display_league().league_id
+          league.id === league_players.selected_league()?.id
       }"
     >
       <p class="w-1/2 self-center">{{ league.name }}</p>
@@ -66,8 +66,8 @@
   <div class="flex flex-col gap-4 grow">
     <div class="bg-white rounded-md">
       <p>Stats</p>
-      @if(leagues.display_league()){
-      <p>No of Players: {{ leagues.display_league().number_of_players }}</p>
+      @if(league_players.players()){
+      <p>No of Players: {{ league_players.meta().totalItems }}</p>
       }
     </div>
     <league-players-list></league-players-list>

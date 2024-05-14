@@ -137,11 +137,14 @@ export class LeaguesService {
     }
   }
 
-  async findOne(league_id: number) {
+  async findOne(
+    league_id: number,
+    options: IPaginationOptions,
+    filter: string
+  ): Promise<Pagination<any>> {
     const race_id = await this.predictionsRepository.maximum('race_id', {
       result: Not(IsNull()),
     });
-    const league = await this.leaguesRepository.findOneBy({ id: league_id });
 
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
@@ -154,7 +157,7 @@ export class LeaguesService {
       .where('race_id = :race_id', { race_id })
       .groupBy('player_id');
 
-    const players = await this.leaguePlayersRepository
+    const query = await this.leaguePlayersRepository
       .createQueryBuilder('league_players')
       .select([
         'league_id',
@@ -174,16 +177,27 @@ export class LeaguesService {
         '(' + lastRacePointsSubQuery.getQuery() + ')',
         'last_race_points',
         'league_players.player_id=last_race_points.player_id'
+      );
+
+    query.setParameters(lastRacePointsSubQuery.getParameters());
+    query.where('league_id = :league_id', { league_id });
+
+    const players = await this.leaguePlayersRepository
+      .createQueryBuilder('league_players')
+      .select(['players.*'])
+      .innerJoin(
+        '(' + query.getQuery() + ')',
+        'players',
+        'league_players.player_id=players.player_id'
       )
-      .setParameters(lastRacePointsSubQuery.getParameters())
-      .where('league_id = :league_id', { league_id })
-      .getRawMany();
-    return {
-      league_id,
-      players,
-      number_of_players: players.length,
-      name: league?.name,
-    };
+      .setParameters(query.getParameters());
+
+    if (filter) {
+      query.where('players.name LIKE :filter', { filter: `%${filter}%` });
+      query.groupBy('players.id');
+    }
+
+    return paginateRaw<any>(query, options);
   }
 
   update(id: number, updateLeagueDto: UpdateLeagueDto) {

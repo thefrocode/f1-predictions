@@ -1,6 +1,12 @@
 <div class="bg-white rounded-lg px-4 py-4">
-  <p class="font-lemon">{{ displayed_league().name }}</p>
-
+  <p class="font-lemon">{{ league_players.selected_league()?.name }}</p>
+  <div class="relative">
+    <input
+      class="bg-[#FAF2F8] rounded-md w-full h-[30px]"
+      [formControl]="filterControl"
+    />
+    <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
+  </div>
   <div
     class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
   >
@@ -9,15 +15,15 @@
     <p>Last R</p>
     <p>Total</p>
   </div>
-  @if(displayed_league()){ @for(player of displayed_league().players; track
+  @if(league_players.players()){ @for(player of league_players.players(); track
   player;let index = $index){
-  <details #details (click)="loadOneTeam(details, player.player_id)">
+  <details #details (click)="loadOneTeam(details, player.id)">
     <summary>
       <div
         class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
         [ngClass]="{
           'text-base bg-[#B1B1EC] py-2.5 text-white':
-            player.player_id === active_player()?.id
+            player.id === active_player()?.id
         }"
       >
         <p class="w-1/10">{{ player.position }}.</p>
@@ -33,4 +39,17 @@
     </div>
   </details>
   } }
+  <button
+    (click)="
+      league_players.meta().currentPage > 1
+        ? page$.next(league_players.meta().currentPage - 1)
+        : ''
+    "
+  >
+    Prev
+  </button>
+  {{ league_players.meta().currentPage }}
+  <button (click)="page$.next(league_players.meta().currentPage + 1)">
+    Next
+  </button>
 </div>

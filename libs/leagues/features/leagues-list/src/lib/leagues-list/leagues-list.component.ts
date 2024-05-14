@@ -7,7 +7,10 @@ import {
   Signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LeaguesStore } from '@f1-predictions/leagues-store';
+import {
+  LeaguePlayersStore,
+  LeaguesStore,
+} from '@f1-predictions/leagues-store';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
@@ -35,18 +38,14 @@ import {
 })
 export class LeaguesListComponent {
   leagues = inject(LeaguesStore);
+  league_players = inject(LeaguePlayersStore);
   auth = inject(AuthStore);
 
   filterControl = new FormControl('');
   filter$ = this.filterControl.valueChanges;
   page$ = new BehaviorSubject<number>(1);
-  ngOnInit() {
-    this.loadOneLeague(1);
-  }
+  league_id = 1;
 
-  loadOneLeague(league_id: number) {
-    this.leagues.loadOne(league_id);
-  }
   constructor() {
     effect(() => {
       console.log(this.leagues.leagues());
@@ -66,5 +65,8 @@ export class LeaguesListComponent {
         })
       )
       .subscribe();
+  }
+  loadOneLeague(league_id: number) {
+    this.league_players.selectLeague(league_id, '');
   }
 }

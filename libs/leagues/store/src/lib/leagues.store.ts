@@ -31,9 +31,6 @@ import { AuthStore } from '@f1-predictions/auth-store';
 const initialState: LeaguesState = {
   leagues: [],
   meta: {} as Meta,
-  league_players: [],
-  display_league_id: null,
-  display_league: {} as LeaguePlayers,
   selected_league: {} as SelectedLeague,
   isLoading: false,
   error: null,
@@ -41,12 +38,7 @@ const initialState: LeaguesState = {
 export const LeaguesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ display_league_id, league_players, leagues }) => ({
-    display_league: computed(() => {
-      if (display_league_id()) {
-        return league_players()[display_league_id()!];
-      } else return {} as LeaguePlayers;
-    }),
+  withComputed(({ leagues }) => ({
     active_player_leagues: computed(() =>
       leagues().filter((league) => league.position)
     ),
@@ -62,7 +54,7 @@ export const LeaguesStore = signalStore(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap(({ page, filter }) => {
-            return leagueApi.loadAll(page, 10, filter).pipe(
+            return leagueApi.loadAll(page, 7, filter).pipe(
               tapResponse({
                 next: (leagues: PaginatedResponse<League>) => {
                   patchState(store, {
@@ -75,29 +67,6 @@ export const LeaguesStore = signalStore(
               })
             );
           })
-        )
-      ),
-      loadOne: rxMethod<number>(
-        pipe(
-          tap(() => patchState(store, { isLoading: true })),
-          switchMap((league_id: number) =>
-            leagueApi.loadOne(league_id).pipe(
-              tapResponse({
-                next: (league_players: LeaguePlayers) => {
-                  store.league_players()[league_players.league_id] =
-                    league_players;
-                  const new_league_players = [...store.league_players()];
-                  new_league_players[league_players.league_id] = league_players;
-                  patchState(store, {
-                    league_players: new_league_players,
-                    display_league_id: league_players.league_id,
-                  });
-                },
-                error: console.error,
-                finalize: () => patchState(store, { isLoading: false }),
-              })
-            )
-          )
         )
       ),
       loadSelectedLeague: rxMethod<void>(
@@ -191,7 +160,7 @@ export const LeaguesStore = signalStore(
     })
   ),
   withHooks({
-    onInit({ loadAll, loadOne, loadSelectedLeague }) {
+    onInit({ loadAll, loadSelectedLeague }) {
       //loadAll();
       loadSelectedLeague();
     },

@@ -8,6 +8,7 @@ import {
   LeaguePlayers,
   PaginatedResponse,
   Player,
+  PlayerWithPoints,
   Point,
   SelectedLeague,
 } from '@f1-predictions/models';
@@ -39,9 +40,24 @@ export class LeagueApiService {
       }
     );
   }
-  loadOne(league_id: number) {
-    return this.http.get<LeaguePlayers>(
-      `${this.appConfig.baseURL}/leagues/${league_id}`
+  loadOne(
+    league_id: number,
+    page: number = 1,
+    limit: number = 7,
+    filter: string | null
+  ) {
+    let params = new HttpParams();
+
+    params = params.append('page', page);
+    params = params.append('limit', limit);
+    if (filter) {
+      params = params.append('filter', filter);
+    }
+    return this.http.get<PaginatedResponse<PlayerWithPoints>>(
+      `${this.appConfig.baseURL}/leagues/${league_id}`,
+      {
+        params,
+      }
     );
   }
   loadSelectedLeague() {

@@ -1,4 +1,4 @@
-import { Player } from './player.model';
+import { Player, PlayerWithPoints } from './player.model';
 import { Point } from './point.model';
 import { Meta } from './response.model';
 
@@ -9,6 +9,11 @@ export interface League {
   position?: number;
 }
 export type AddLeague = Omit<League, 'id'>;
+
+export interface DisplayLeague {
+  id: number;
+  name: string;
+}
 
 export interface SelectedLeague {
   id: number;
@@ -25,10 +30,14 @@ export type LeaguePlayers = League & {
 export type LeaguesState = {
   leagues: League[];
   meta: Meta;
-  league_players: LeaguePlayers[];
-  display_league_id: number | null;
-  display_league: LeaguePlayers;
   selected_league: SelectedLeague;
   isLoading: boolean;
+  error: any;
+};
+export type LeaguePlayersState = {
+  players: PlayerWithPoints[];
+  meta: Meta;
+  selected_league: DisplayLeague;
+  status: 'pending' | 'loading' | 'success' | 'error';
   error: any;
 };

@@ -11,6 +11,7 @@ export type PlayerWithPoints = Player & {
   last_race_points: number;
   total_points: number;
   selected_league_id: number;
+  position: number;
 };
 
 export type PlayersState = {

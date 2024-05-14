@@ -51,8 +51,21 @@ export class LeaguesController {
   }
 
   @Get(':league_id')
-  findOne(@Param('league_id') league_id: string) {
-    return this.leaguesService.findOne(+league_id);
+  findOne(
+    @Param('league_id') league_id: string,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('filter') filter: string,
+    @Query('limit', new DefaultValuePipe(7), ParseIntPipe) limit: number = 7
+  ) {
+    limit = limit > 100 ? 100 : limit;
+    return this.leaguesService.findOne(
+      +league_id,
+      {
+        page,
+        limit,
+      },
+      filter
+    );
   }
 
   @Patch(':id')

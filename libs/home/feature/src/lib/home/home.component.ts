@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RacesStore } from '@f1-predictions/race-store';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlayersStore } from '@f1-predictions/players-store';
-import { LeaguesStore } from '@f1-predictions/leagues-store';
+import {
+  LeaguesStore,
+  LeaguePlayersStore,
+} from '@f1-predictions/leagues-store';
 import { LeaguePlayersListComponent } from '@f1-predictions/league-players-list';
 import { LeaguesAddComponent } from '@f1-predictions/leagues-add';
 import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
@@ -41,11 +44,10 @@ export class HomeComponent {
 
   home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
   readonly leagues = inject(LeaguesStore);
+  league_players = inject(LeaguePlayersStore);
 
   active_race = this.races.active_race;
   active_player = this.players.active_player;
-
-  displayed_league = this.leagues.display_league;
 
   active_player_league$ = toObservable(this.players.active_player)
     .pipe(
@@ -53,7 +55,10 @@ export class HomeComponent {
       tap((active_player) => {
         if (active_player) {
           console.log('active_player', active_player);
-          this.leagues.loadOne(active_player.selected_league_id);
+          this.league_players.selectLeague(
+            active_player.selected_league_id,
+            ''
+          );
         } else {
           console.log('active_player', active_player);
           //this.leagues.loadOne(1);
@@ -108,7 +113,7 @@ export class HomeComponent {
       filter: '',
     });
     this.races.loadAll();
-    this.leagues.loadOne(1);
+    this.league_players.selectLeague(1, '');
   }
 
   toggleLeaguesList() {
