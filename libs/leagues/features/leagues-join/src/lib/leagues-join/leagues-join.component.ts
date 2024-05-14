@@ -43,7 +43,10 @@ export class LeaguesJoinComponent {
         league_id: this.league.id,
         player_id: this.playersStore.active_player()!.id,
       });
-      this.leaguesStore.loadAll();
+      this.leaguesStore.loadAll({
+        page: 1,
+        filter: '',
+      });
     });
   }
 }

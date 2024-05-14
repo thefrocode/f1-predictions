@@ -6,24 +6,38 @@ import {
   League,
   LeaguePlayer,
   LeaguePlayers,
+  PaginatedResponse,
   Player,
   Point,
   SelectedLeague,
 } from '@f1-predictions/models';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
+import { AuthStore } from '@f1-predictions/auth-store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LeagueApiService {
   http = inject(HttpClient);
+  auth = inject(AuthStore);
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadAll(isAuthenticated: boolean) {
-    return this.http.get<League[]>(`${this.appConfig.baseURL}/leagues`, {
-      withCredentials: isAuthenticated,
-    });
+  loadAll(page: number = 1, limit: number = 10, filter: string | null) {
+    let params = new HttpParams();
+
+    params = params.append('page', page);
+    if (filter) {
+      params = params.append('filter', filter);
+    }
+
+    return this.http.get<PaginatedResponse<League>>(
+      `${this.appConfig.baseURL}/leagues`,
+      {
+        params,
+        withCredentials: this.auth.isAuthenticated(),
+      }
+    );
   }
   loadOne(league_id: number) {
     return this.http.get<LeaguePlayers>(

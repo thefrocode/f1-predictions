@@ -9,6 +9,12 @@ import { UpdateLeagueDto } from './dto/update-league.dto';
 import { League } from './entities/league.entity';
 import { LeaguePlayer } from './entities/league_player.entity';
 import { SelectedLeague } from './entities/selected_league.entity';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+  paginateRaw,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class LeaguesService {
@@ -37,8 +43,19 @@ export class LeaguesService {
     const newLeaguePlayer = this.leaguePlayersRepository.create(joinLeagueDto);
     return this.leaguePlayersRepository.insert(newLeaguePlayer);
   }
+  async findAllLeagies(
+    options: IPaginationOptions,
+    player_id: number
+  ): Promise<Pagination<League>> {
+    const query = this.leaguesRepository.createQueryBuilder('leagues');
+    return paginate<any>(query, options);
+  }
 
-  async findAll(user_id?: string) {
+  async findAll(
+    options: IPaginationOptions,
+    filter: string,
+    player_id?: number
+  ): Promise<Pagination<any>> {
     const pointsSubQuery = this.predictionsRepository
       .createQueryBuilder('predictions')
       .select(['player_id', 'sum(points) as points'])
@@ -59,19 +76,16 @@ export class LeaguesService {
       )
       .getSql();
 
-    if (user_id) {
-      const player = await this.playersRepository.findOne({
-        where: { user_id: user_id },
-      });
+    if (player_id) {
       const activePlayerSubQuery = this.connection
         .createQueryBuilder()
         .select(['active_player_positions.*'])
         .from('(' + positionsSubQuery + ')', 'active_player_positions')
         .where('active_player_positions.player_id = :player_id', {
-          player_id: player!.id,
+          player_id,
         });
 
-      return this.leaguesRepository
+      const query = this.leaguesRepository
         .createQueryBuilder('leagues')
         .select([
           'leagues.id as id, leagues.name as name, league_players.player_id as player_id, positions.position',
@@ -88,10 +102,18 @@ export class LeaguesService {
         )
         .groupBy('leagues.id')
         .orderBy('positions.position', 'DESC')
-        .setParameters(activePlayerSubQuery.getParameters())
-        .getRawMany();
+        .setParameters(activePlayerSubQuery.getParameters());
+      if (filter) {
+        // Apply filtering
+
+        query.where('leagues.name LIKE :filter ', {
+          filter: `%${filter}%`,
+        });
+      }
+
+      return paginateRaw<any>(query, options);
     } else {
-      return this.leaguesRepository
+      const query = this.leaguesRepository
         .createQueryBuilder('leagues')
         .select([
           'leagues.id as id, leagues.name as name, league_players.player_id as player_id',
@@ -102,8 +124,16 @@ export class LeaguesService {
           'leagues.id=league_players.league_id'
         )
         .groupBy('leagues.id')
-        .orderBy('leagues.id', 'ASC')
-        .getRawMany();
+        .orderBy('leagues.id', 'ASC');
+      if (filter) {
+        // Apply filtering
+
+        query.where('leagues.name LIKE :filter ', {
+          filter: `%${filter}%`,
+        });
+      }
+
+      return paginateRaw<any>(query, options);
     }
   }
 

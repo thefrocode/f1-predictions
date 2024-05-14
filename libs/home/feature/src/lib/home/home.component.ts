@@ -103,7 +103,10 @@ export class HomeComponent {
     );
   }
   ngOnInit() {
-    this.leagues.loadAll();
+    this.leagues.loadAll({
+      page: 1,
+      filter: '',
+    });
     this.races.loadAll();
     this.leagues.loadOne(1);
   }

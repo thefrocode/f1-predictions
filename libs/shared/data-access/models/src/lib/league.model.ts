@@ -1,5 +1,6 @@
 import { Player } from './player.model';
 import { Point } from './point.model';
+import { Meta } from './response.model';
 
 export interface League {
   id: number;
@@ -23,6 +24,7 @@ export type LeaguePlayers = League & {
 
 export type LeaguesState = {
   leagues: League[];
+  meta: Meta;
   league_players: LeaguePlayers[];
   display_league_id: number | null;
   display_league: LeaguePlayers;

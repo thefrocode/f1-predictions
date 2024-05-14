@@ -13,6 +13,8 @@ import {
   LeaguePlayer,
   LeaguePlayers,
   LeaguesState,
+  Meta,
+  PaginatedResponse,
   Player,
   Point,
   SelectedLeague,
@@ -20,7 +22,7 @@ import {
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap, filter } from 'rxjs';
+import { pipe, tap, switchMap, filter, startWith } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -28,6 +30,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
 
 const initialState: LeaguesState = {
   leagues: [],
+  meta: {} as Meta,
   league_players: [],
   display_league_id: null,
   display_league: {} as LeaguePlayers,
@@ -53,17 +56,19 @@ export const LeaguesStore = signalStore(
       store,
       leagueApi = inject(LeagueApiService),
       toastr = inject(ToastrService),
-      players = inject(PlayersStore),
-      auth = inject(AuthStore)
+      players = inject(PlayersStore)
     ) => ({
-      loadAll: rxMethod<void>(
+      loadAll: rxMethod<{ page: number; filter: string | null }>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
-          switchMap(() => {
-            return leagueApi.loadAll(auth.isAuthenticated()).pipe(
+          switchMap(({ page, filter }) => {
+            return leagueApi.loadAll(page, 10, filter).pipe(
               tapResponse({
-                next: (leagues: League[]) => {
-                  patchState(store, { leagues });
+                next: (leagues: PaginatedResponse<League>) => {
+                  patchState(store, {
+                    leagues: leagues.items,
+                    meta: leagues.meta,
+                  });
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),

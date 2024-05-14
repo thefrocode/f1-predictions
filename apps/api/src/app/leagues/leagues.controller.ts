@@ -8,6 +8,9 @@ import {
   Delete,
   UseGuards,
   Req,
+  DefaultValuePipe,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { LeaguesService } from './leagues.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
@@ -30,8 +33,21 @@ export class LeaguesController {
 
   @UseGuards(OptionalJwtAuthGuard)
   @Get()
-  findAll(@Req() req: any) {
-    return this.leaguesService.findAll(req.user?.user_id);
+  findAll(
+    @Req() req: any,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('filter') filter: string,
+    @Query('limit', new DefaultValuePipe(7), ParseIntPipe) limit: number = 7
+  ) {
+    limit = limit > 100 ? 100 : limit;
+    return this.leaguesService.findAll(
+      {
+        page,
+        limit,
+      },
+      filter,
+      req.user?.player_id
+    );
   }
 
   @Get(':league_id')
