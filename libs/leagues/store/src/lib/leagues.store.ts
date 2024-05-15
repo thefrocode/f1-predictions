@@ -22,7 +22,15 @@ import {
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap, filter, startWith } from 'rxjs';
+import {
+  pipe,
+  tap,
+  switchMap,
+  filter,
+  startWith,
+  debounceTime,
+  of,
+} from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -30,6 +38,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
 
 const initialState: LeaguesState = {
   leagues: [],
+  options: { page: 1, filter: null },
   meta: {} as Meta,
   selected_league: {} as SelectedLeague,
   isLoading: false,
@@ -50,6 +59,37 @@ export const LeaguesStore = signalStore(
       toastr = inject(ToastrService),
       players = inject(PlayersStore)
     ) => ({
+      updateCurrentPage: (page: number) => {
+        patchState(store, {
+          options: {
+            ...store.options(),
+            page: page,
+          },
+        });
+      },
+      updateFilter: rxMethod<Event>((filter$) =>
+        filter$.pipe(
+          debounceTime(300),
+          tap((filter) =>
+            patchState(store, {
+              options: {
+                ...store.options(),
+                filter: (filter.target as HTMLInputElement).value,
+                page: 1,
+              },
+            })
+          )
+        )
+      ),
+      resetOptions: () => {
+        patchState(store, {
+          options: {
+            ...store.options(),
+            page: 1,
+            filter: '',
+          },
+        });
+      },
       loadAll: rxMethod<{ page: number; filter: string | null }>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
@@ -160,8 +200,8 @@ export const LeaguesStore = signalStore(
     })
   ),
   withHooks({
-    onInit({ loadAll, loadSelectedLeague }) {
-      //loadAll();
+    onInit({ loadAll, loadSelectedLeague, options }) {
+      loadAll(options);
       loadSelectedLeague();
     },
   })

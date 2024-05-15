@@ -108,12 +108,9 @@ export class HomeComponent {
     );
   }
   ngOnInit() {
-    this.leagues.loadAll({
-      page: 1,
-      filter: '',
-    });
     this.races.loadAll();
     this.league_players.selectLeague(1, '');
+    this.leagues.resetOptions();
   }
 
   toggleLeaguesList() {

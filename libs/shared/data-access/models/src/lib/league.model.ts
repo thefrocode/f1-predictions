@@ -29,6 +29,7 @@ export type LeaguePlayers = League & {
 
 export type LeaguesState = {
   leagues: League[];
+  options: { page: number; filter: string | null };
   meta: Meta;
   selected_league: SelectedLeague;
   isLoading: boolean;

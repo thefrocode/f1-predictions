@@ -10,6 +10,7 @@
       <input
         class="bg-[#FAF2F8] rounded-md w-full h-[30px]"
         [formControl]="filterControl"
+        (input)="leagues.updateFilter($event)"
       />
       <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
     </div>
@@ -54,14 +55,22 @@
     <button
       (click)="
         leagues.meta().currentPage > 1
-          ? page$.next(leagues.meta().currentPage - 1)
+          ? leagues.updateCurrentPage(leagues.options().page - 1)
           : ''
       "
     >
       Prev
     </button>
     {{ leagues.meta().currentPage }}
-    <button (click)="page$.next(leagues.meta().currentPage + 1)">Next</button>
+    <button
+      (click)="
+        leagues.meta().totalPages > leagues.meta().currentPage
+          ? leagues.updateCurrentPage(leagues.options().page + 1)
+          : ''
+      "
+    >
+      Next
+    </button>
   </div>
   <div class="flex flex-col gap-4 grow">
     <div class="bg-white rounded-md">
