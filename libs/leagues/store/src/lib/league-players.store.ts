@@ -7,17 +7,27 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
+  ActivePlayer,
   LeaguePlayers,
   LeaguePlayersState,
   Meta,
   PaginatedResponse,
   PlayerWithPoints,
   Point,
+  SelectedLeague,
 } from '@f1-predictions/models';
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap, filter, startWith, debounceTime } from 'rxjs';
+import {
+  pipe,
+  tap,
+  switchMap,
+  filter,
+  startWith,
+  debounceTime,
+  of,
+} from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -28,7 +38,7 @@ const initialState: LeaguePlayersState = {
   meta: {} as Meta,
   options: { page: 1, filter: null },
   selected_league: {
-    id: 1,
+    id: 0,
     name: '',
   },
   status: 'pending',
@@ -80,6 +90,33 @@ export const LeaguePlayersStore = signalStore(
           },
         });
       },
+      loadActivePlayerLeague: rxMethod<ActivePlayer | undefined>(
+        pipe(
+          switchMap((player) => {
+            console.log('player', player);
+            let league_id;
+            if (!player) {
+              league_id = 1;
+            } else {
+              league_id = player.selected_league_id;
+            }
+            console.log('league_id', league_id);
+            patchState(store, {
+              selected_league: {
+                id: league_id,
+                name: '',
+              },
+              options: {
+                page: 1,
+                filter: '',
+              },
+            });
+
+            return of(null);
+          })
+        )
+      ),
+
       loadLeaguePlayers: rxMethod<{
         league_id: number;
         page: number;

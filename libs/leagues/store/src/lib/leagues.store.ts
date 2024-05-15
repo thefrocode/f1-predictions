@@ -7,6 +7,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
+  ActivePlayer,
   AddLeague,
   AddLeaguePlayer,
   League,
@@ -33,14 +34,13 @@ import {
 } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { PlayersStore } from '@f1-predictions/players-store';
+import { ActivePlayerStore, PlayersStore } from '@f1-predictions/players-store';
 import { AuthStore } from '@f1-predictions/auth-store';
 
 const initialState: LeaguesState = {
   leagues: [],
   options: { page: 1, filter: null },
   meta: {} as Meta,
-  selected_league: {} as SelectedLeague,
   isLoading: false,
   error: null,
 };
@@ -57,7 +57,7 @@ export const LeaguesStore = signalStore(
       store,
       leagueApi = inject(LeagueApiService),
       toastr = inject(ToastrService),
-      players = inject(PlayersStore)
+      active_player = inject(ActivePlayerStore)
     ) => ({
       updateCurrentPage: (page: number) => {
         patchState(store, {
@@ -109,34 +109,15 @@ export const LeaguesStore = signalStore(
           })
         )
       ),
-      loadSelectedLeague: rxMethod<void>(
-        pipe(
-          filter(() => (players.active_player() ? true : false)),
-          switchMap(() =>
-            leagueApi.loadSelectedLeague().pipe(
-              tapResponse({
-                next: (selected_league: SelectedLeague) => {
-                  patchState(store, {
-                    selected_league,
-                  });
-                },
-                error: console.error,
-              })
-            )
-          )
-        )
-      ),
-      selectLeague: rxMethod<{
-        id: number;
-        league_id: number;
-      }>(
+
+      selectLeague: rxMethod<number>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap((league) =>
             leagueApi.selectLeagueToBeDisplayed(league).pipe(
               tapResponse({
                 next: (selected_league: SelectedLeague) => {
-                  patchState(store, { selected_league });
+                  active_player.updateSelectedLeague(selected_league.league_id);
                   toastr.success(
                     'Display league changed successfully',
                     'Success!'
@@ -200,9 +181,8 @@ export const LeaguesStore = signalStore(
     })
   ),
   withHooks({
-    onInit({ loadAll, loadSelectedLeague, options }) {
+    onInit({ loadAll, options }) {
       loadAll(options);
-      loadSelectedLeague();
     },
   })
 );

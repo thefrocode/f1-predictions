@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthStore } from '@f1-predictions/auth-store';
+import { ActivePlayerStore } from '@f1-predictions/players-store';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
@@ -13,7 +14,11 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 export class AppComponent {
   title = 'f1-predictions';
   auth = inject(AuthStore);
+  active_player = inject(ActivePlayerStore);
   ngOnInit() {
-    this.auth.loginAutomatically();
+    //this.auth.loginAutomatically();
+  }
+  constructor() {
+    this.active_player.loadActivePlayer(this.auth.isAuthenticated);
   }
 }

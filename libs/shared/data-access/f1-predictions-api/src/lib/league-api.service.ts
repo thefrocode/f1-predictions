@@ -68,11 +68,11 @@ export class LeagueApiService {
       }
     );
   }
-  selectLeagueToBeDisplayed(league: { id: number; league_id: number }) {
+  selectLeagueToBeDisplayed(league_id: number) {
     return this.http.patch<SelectedLeague>(
-      `${this.appConfig.baseURL}/selected-league/${league.id}`,
+      `${this.appConfig.baseURL}/selected-league/`,
       {
-        league_id: league.league_id,
+        league_id,
       },
       {
         withCredentials: true,

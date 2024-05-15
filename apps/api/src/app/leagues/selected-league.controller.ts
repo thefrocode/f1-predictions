@@ -16,14 +16,12 @@ export class SelectedLeagueController {
   constructor(private readonly selectedLeagueService: SelectedLeagueService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @Patch()
   updateSelectedLeague(
-    @Param('id') id: string,
     @Req() req: any,
     @Body() selectLeagueDto: SelectLeagueDto
   ) {
     return this.selectedLeagueService.update(
-      +id,
       req.user.player_id,
       selectLeagueDto.league_id
     );

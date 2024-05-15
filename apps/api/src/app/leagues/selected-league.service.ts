@@ -15,15 +15,28 @@ export class SelectedLeagueService {
     return this.selectedLeagueRepository.insert(newLeague);
   }
 
-  async update(id: number, player_id: number, league_id: number) {
-    const league = await this.selectedLeagueRepository.update(id, {
-      league_id: league_id,
-      player_id: player_id,
+  async update(player_id: number, league_id: number) {
+    // Find the first league entry that matches the given player_id and league_id
+    console.log('player_id', player_id);
+    console.log('league_id', league_id);
+    const league = await this.selectedLeagueRepository.findOne({
+      where: { player_id },
     });
-    return {
-      league_id: league_id,
-      player_id: player_id,
-    };
+
+    // If a league entry is found, update it
+    if (league) {
+      await this.selectedLeagueRepository.update(league.id, {
+        league_id: league_id,
+      });
+
+      return {
+        league_id: league_id,
+        player_id: player_id,
+      };
+    } else {
+      // Handle case where no league entry matches the criteria
+      throw new Error('League entry not found');
+    }
   }
 
   async findOne(player_id: number) {

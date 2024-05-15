@@ -36,6 +36,9 @@
         "libs/shared/data-access/f1-predictions-api/src/index.ts"
       ],
       "@f1-predictions/home": ["libs/home/feature/src/index.ts"],
+      "@f1-predictions/home-session-times": [
+        "libs/home/ui/home-session-times/src/index.ts"
+      ],
       "@f1-predictions/home-teamlock-deadline": [
         "libs/home/ui/home-teamlock-deadline/src/index.ts"
       ],

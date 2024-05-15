@@ -26,4 +26,8 @@ export class LeaguesListComponent {
   league_players = inject(LeaguePlayersStore);
   auth = inject(AuthStore);
   filterControl = new FormControl('');
+
+  constructor() {
+    this.league_players.selectLeague(1, '');
+  }
 }

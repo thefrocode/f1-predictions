@@ -2,7 +2,7 @@ import { Component, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RacesStore } from '@f1-predictions/race-store';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PlayersStore } from '@f1-predictions/players-store';
+import { ActivePlayerStore, PlayersStore } from '@f1-predictions/players-store';
 import {
   LeaguesStore,
   LeaguePlayersStore,
@@ -14,8 +14,7 @@ import { RouterModule } from '@angular/router';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-deadline';
 import { PredictionsStore } from '@f1-predictions/predictions-store';
-import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { of, switchMap, tap } from 'rxjs';
+import { HomeSessionTimesComponent } from '@f1-predictions/home-session-times';
 
 @Component({
   selector: 'f1-predictions-home',
@@ -28,6 +27,7 @@ import { of, switchMap, tap } from 'rxjs';
     LeaguesJoinComponent,
     RouterModule,
     HomeTeamlockDeadlineComponent,
+    HomeSessionTimesComponent,
   ],
   providers: [],
   templateUrl: './home.component.html',
@@ -40,83 +40,19 @@ export class HomeComponent {
 
   predictionsStore = inject(PredictionsStore);
 
-  readonly players = inject(PlayersStore);
+  active_player = inject(ActivePlayerStore);
 
-  home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
   readonly leagues = inject(LeaguesStore);
+  home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
   league_players = inject(LeaguePlayersStore);
 
   active_race = this.races.active_race;
-  active_player = this.players.active_player;
-
-  active_player_league$ = toObservable(this.players.active_player)
-    .pipe(
-      takeUntilDestroyed(),
-      tap((active_player) => {
-        if (active_player) {
-          console.log('active_player', active_player);
-          this.league_players.selectLeague(
-            active_player.selected_league_id,
-            ''
-          );
-        } else {
-          console.log('active_player', active_player);
-          //this.leagues.loadOne(1);
-        }
-      })
-    )
-    .subscribe();
-
-  dates = computed(() => {
-    const dates = [];
-    if (this.active_race()) {
-      for (let key in this.active_race()) {
-        if (this.isDateValid(this.active_race()![key])) {
-          dates.push({
-            session: key.split('_')[0],
-            session_time: this.active_race()![key] as Date,
-          });
-        }
-      }
-    }
-    return dates;
-  });
-
-  detailedLeague = true;
-  toggleLeaguesListIcon = 'radixEnter';
-  isDateValid(dateString: string | Date | boolean): boolean {
-    if (
-      typeof dateString === 'string' &&
-      dateString.charAt(dateString.length - 1) === 'Z'
-    ) {
-      const date = new Date(dateString);
-      return !isNaN(date.getTime());
-    }
-    return false;
-  }
 
   constructor() {
-    effect(
-      () => {
-        if (this.authStore.isAuthenticated()) {
-          this.players.loadActivePlayer();
-        }
-      },
-      {
-        allowSignalWrites: true,
-      }
-    );
-  }
-  ngOnInit() {
-    this.races.loadAll();
-    this.league_players.selectLeague(1, '');
-    this.leagues.resetOptions();
+    this.league_players.loadActivePlayerLeague(this.active_player.player);
   }
 
-  toggleLeaguesList() {
-    this.detailedLeague = !this.detailedLeague;
-    this.toggleLeaguesListIcon = this.detailedLeague
-      ? 'radixEnter'
-      : 'radixArrowLeft';
+  ngOnInit() {
+    this.races.loadAll();
   }
 }

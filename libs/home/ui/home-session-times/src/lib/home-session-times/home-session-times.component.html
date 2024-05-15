@@ -1,0 +1,18 @@
+<div class="flex gap-4">
+  @for (session of dates(); track session.session) {
+  <div class="flex-auto bg-white pr-4 py-2 font-lemonada rounded-md">
+    <div class="grid grid-cols-2 grid-rows-2 gap-2">
+      <i
+        class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
+      ></i>
+      <p class="text-center text-xs capitalize">
+        {{ session.session }}
+      </p>
+
+      <p class="text-center text-xs">
+        {{ session.session_time | date : 'HH:mm' }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
