@@ -17,7 +17,7 @@ import {
 import { LeagueApiService } from '@f1-predictions/f1-predictions-api';
 import { ToastrService } from 'ngx-toastr';
 import { computed, inject } from '@angular/core';
-import { pipe, tap, switchMap, filter, startWith } from 'rxjs';
+import { pipe, tap, switchMap, filter, startWith, debounceTime } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { PlayersStore } from '@f1-predictions/players-store';
@@ -26,6 +26,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
 const initialState: LeaguePlayersState = {
   players: [],
   meta: {} as Meta,
+  options: { page: 1, filter: null },
   selected_league: {
     id: 1,
     name: '',
@@ -36,6 +37,12 @@ const initialState: LeaguePlayersState = {
 export const LeaguePlayersStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withComputed(({ selected_league, options }) => ({
+    extended_options: computed(() => ({
+      ...options(),
+      league_id: selected_league().id,
+    })),
+  })),
   withMethods(
     (
       store,
@@ -43,6 +50,28 @@ export const LeaguePlayersStore = signalStore(
       toastr = inject(ToastrService),
       players = inject(PlayersStore)
     ) => ({
+      updateCurrentPage: (page: number) => {
+        patchState(store, {
+          options: {
+            ...store.options(),
+            page: page,
+          },
+        });
+      },
+      updateFilter: rxMethod<Event>((filter$) =>
+        filter$.pipe(
+          debounceTime(300),
+          tap((filter) =>
+            patchState(store, {
+              options: {
+                ...store.options(),
+                filter: (filter.target as HTMLInputElement).value,
+                page: 1,
+              },
+            })
+          )
+        )
+      ),
       selectLeague: (league_id: number, name: string) => {
         patchState(store, {
           selected_league: {
@@ -77,6 +106,8 @@ export const LeaguePlayersStore = signalStore(
     })
   ),
   withHooks({
-    onInit({}) {},
+    onInit({ extended_options, loadLeaguePlayers }) {
+      loadLeaguePlayers(extended_options);
+    },
   })
 );

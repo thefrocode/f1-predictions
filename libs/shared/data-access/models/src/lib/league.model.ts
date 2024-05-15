@@ -37,6 +37,7 @@ export type LeaguesState = {
 };
 export type LeaguePlayersState = {
   players: PlayerWithPoints[];
+  options: { page: number; filter: string | null };
   meta: Meta;
   selected_league: DisplayLeague;
   status: 'pending' | 'loading' | 'success' | 'error';

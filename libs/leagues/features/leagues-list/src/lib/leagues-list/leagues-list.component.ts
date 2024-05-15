@@ -26,8 +26,4 @@ export class LeaguesListComponent {
   league_players = inject(LeaguePlayersStore);
   auth = inject(AuthStore);
   filterControl = new FormControl('');
-
-  loadOneLeague(league_id: number) {
-    this.league_players.selectLeague(league_id, '');
-  }
 }

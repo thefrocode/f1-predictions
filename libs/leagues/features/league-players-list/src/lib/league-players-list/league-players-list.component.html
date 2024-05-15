@@ -1,9 +1,16 @@
+<div class="bg-white rounded-md">
+  <p>Stats</p>
+  @if(league_players.players()){
+  <p>No of Players: {{ league_players.meta().totalItems }}</p>
+  }
+</div>
 <div class="bg-white rounded-lg px-4 py-4">
   <p class="font-lemon">{{ league_players.selected_league()?.name }}</p>
   <div class="relative">
     <input
       class="bg-[#FAF2F8] rounded-md w-full h-[30px]"
       [formControl]="filterControl"
+      (input)="league_players.updateFilter($event)"
     />
     <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
   </div>
@@ -42,14 +49,20 @@
   <button
     (click)="
       league_players.meta().currentPage > 1
-        ? page$.next(league_players.meta().currentPage - 1)
+        ? league_players.updateCurrentPage(league_players.options().page - 1)
         : ''
     "
   >
     Prev
   </button>
   {{ league_players.meta().currentPage }}
-  <button (click)="page$.next(league_players.meta().currentPage + 1)">
+  <button
+    (click)="
+      league_players.meta().totalPages > league_players.meta().currentPage
+        ? league_players.updateCurrentPage(league_players.options().page + 1)
+        : ''
+    "
+  >
     Next
   </button>
 </div>

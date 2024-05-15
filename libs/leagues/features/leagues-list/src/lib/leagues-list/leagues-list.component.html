@@ -46,7 +46,7 @@
       <span class="w-1/6"
         ><i
           class="bi bi-eye text-base text-[#F98AE0]"
-          (click)="loadOneLeague(league.id)"
+          (click)="league_players.selectLeague(league.id, league.name)"
         ></i
       ></span>
       }
@@ -73,12 +73,6 @@
     </button>
   </div>
   <div class="flex flex-col gap-4 grow">
-    <div class="bg-white rounded-md">
-      <p>Stats</p>
-      @if(league_players.players()){
-      <p>No of Players: {{ league_players.meta().totalItems }}</p>
-      }
-    </div>
     <league-players-list></league-players-list>
   </div>
 </div>

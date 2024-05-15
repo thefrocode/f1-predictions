@@ -36,8 +36,6 @@ export class LeaguePlayersListComponent {
   selected_team = this.teamsStore.selected_team;
 
   filterControl = new FormControl('');
-  filter$ = this.filterControl.valueChanges;
-  page$ = new BehaviorSubject<number>(1);
 
   @ViewChildren('details') details!: QueryList<any>;
 
@@ -49,23 +47,5 @@ export class LeaguePlayersListComponent {
     });
     return this.teamsStore.loadOne(player_id);
   }
-  constructor() {
-    combineLatest([
-      this.page$.asObservable().pipe(startWith(1)),
-      this.filter$.pipe(startWith('')),
-      this.selected_league$,
-    ])
-      .pipe(
-        takeUntilDestroyed(),
-        switchMap(([page, filter, league]) => {
-          this.league_players.loadLeaguePlayers({
-            league_id: league.id,
-            page,
-            filter,
-          });
-          return of(null);
-        })
-      )
-      .subscribe();
-  }
+  constructor() {}
 }
