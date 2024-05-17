@@ -26,7 +26,10 @@ body,html {
   height: 100vh;
   overflow-y: hidden;
   overflow-x: hidden;
+  background-color: #211134;
 }
+
+
 img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
