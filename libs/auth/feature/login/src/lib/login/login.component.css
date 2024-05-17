@@ -1,6 +1,19 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff; /* Adjust opacity as needed */
+  z-index: 999; /* Make sure it's above other content */
+}
 
+/* Content styles */
+.content {
+  position: relative;
+  z-index: 1000; /* Make sure it's above the overlay */
+  
+}
   .textbox input {
-    width: 359px; 
+    
     height: 29px; 
     padding-left: 0px; 
     padding-right: 12px; 
