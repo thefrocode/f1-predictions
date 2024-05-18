@@ -8,17 +8,18 @@ export interface User {
 }
 
 export type AuthRegisterPayload = AuthPayload & { name: string };
+export type AuthStatus =
+  | 'pending'
+  | 'authenticating'
+  | 'authenticated'
+  | 'registering'
+  | 'registered'
+  | 'success'
+  | 'error';
 
 export type AuthState = {
   user: User | undefined;
   isAuthenticated: boolean;
-  status:
-    | 'pending'
-    | 'authenticating'
-    | 'authenticated'
-    | 'registering'
-    | 'registered'
-    | 'success'
-    | 'error';
+  status: AuthStatus;
   error: any;
 };

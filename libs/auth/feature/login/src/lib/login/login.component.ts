@@ -52,7 +52,6 @@ export class LoginComponent {
       if (this.authStore.isAuthenticated()) {
         this.router.navigate(['home']);
       }
-      console.log(this.authStore.error());
     });
   }
   get f() {

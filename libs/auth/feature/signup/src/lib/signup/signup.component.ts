@@ -48,7 +48,6 @@ export class SignupComponent {
       if (this.authStore.status() === 'registered') {
         this.router.navigate(['login']);
       }
-      console.log(this.authStore.error());
     });
   }
 

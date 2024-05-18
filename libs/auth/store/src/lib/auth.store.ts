@@ -10,6 +10,7 @@ import {
   AuthPayload,
   AuthRegisterPayload,
   AuthState,
+  AuthStatus,
   User,
 } from '@f1-predictions/models';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -35,6 +36,9 @@ export const AuthStore = signalStore(
       authApi = inject(AuthApiService),
       toastr = inject(ToastrService)
     ) => ({
+      updateStatus: (status: AuthStatus) => {
+        patchState(store, { status });
+      },
       login: rxMethod<AuthPayload>(
         pipe(
           tap(() => patchState(store, { status: 'authenticating' })),
@@ -77,6 +81,7 @@ export const AuthStore = signalStore(
                 },
                 error: (error: any) => {
                   console.error(error);
+                  toastr.error(error.error.error.message, 'Error');
                   patchState(store, {
                     isAuthenticated: false,
                     status: 'error',
