@@ -10,6 +10,7 @@
     <form
       [formGroup]="loginForm"
       (ngSubmit)="login()"
+      #form="ngForm"
       class="w-full flex flex-col gap-10 mt-6"
     >
       <div class="textbox w-full">
@@ -20,6 +21,15 @@
           placeholder="Email"
           formControlName="email"
         />
+        @if(f['email'].invalid && (f['email'].touched || form.submitted)){
+        <div class="errors">
+          @if(f['email'].errors?.['required']){
+          <span>Email is required</span>
+          } @if(f['email'].errors?.['email']){
+          <span>Email should be a valid email address</span>
+          }
+        </div>
+        }
       </div>
       <div class="textbox">
         <label></label>
@@ -29,6 +39,15 @@
           placeholder="Password"
           formControlName="password"
         />
+        @if(f['password'].invalid && (f['password'].touched || form.submitted)){
+        <div class="errors">
+          @if(f['password'].errors?.['required']){
+          <span>Password is required</span>
+          } @if(f['password'].errors?.['minlength']){
+          <span>Password must contain atleast 6 digits</span>
+          }
+        </div>
+        }
       </div>
       <button
         type="submit"

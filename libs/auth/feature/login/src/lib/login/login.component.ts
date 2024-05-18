@@ -36,8 +36,8 @@ export class LoginComponent {
   authStore = inject(AuthStore);
 
   loginForm: FormGroup = this.fb.group({
-    email: ['example@gmail.com', [Validators.required, Validators.email]],
-    password: ['123456', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   constructor(
@@ -52,6 +52,9 @@ export class LoginComponent {
       }
       console.log(this.authStore.error());
     });
+  }
+  get f() {
+    return this.loginForm.controls;
   }
 
   login(): void {

@@ -1,11 +1,27 @@
 <div class="flex flex-col justify-center items-center h-full">
-  <div class="flex flex-col gap-3 rounded-md bg-gray-100 w-2/5 p-4">
-    <h1 class="text-3xl font-bold text-center">Welcome</h1>
-    <p class="text-center">Create an account</p>
-    <form [formGroup]="signUpForm" (ngSubmit)="signUp()" #form="ngForm">
-      <div class="textbox mt-8">
+  <div
+    class="flex flex-col gap-4 rounded-md bg-[#2B1643] w-1/3 p-4 text-white h-5/6"
+  >
+    <div>
+      <h1 class="text-3xl font-bold text-center">Welcome</h1>
+      <p class="text-center">Create an account</p>
+    </div>
+
+    <form
+      [formGroup]="signUpForm"
+      (ngSubmit)="signUp()"
+      #form="ngForm"
+      class="w-full flex flex-col gap-6"
+      autocomplete="off"
+    >
+      <div class="textbox w-full">
         <label></label>
-        <input type="text" placeholder="Name" formControlName="name" />
+        <input
+          class="w-full"
+          type="text"
+          placeholder="Name"
+          formControlName="name"
+        />
         @if(f['name'].invalid && (f['name'].touched || form.submitted)){
         <div class="errors">
           @if(f['name'].errors?.['required']){
@@ -14,9 +30,14 @@
         </div>
         }
       </div>
-      <div class="textbox mt-8">
+      <div class="textbox w-full">
         <label></label>
-        <input type="text" placeholder="Email" formControlName="email" />
+        <input
+          class="w-full"
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
         @if(f['email'].invalid && (f['email'].touched || form.submitted)){
         <div class="errors">
           @if(f['email'].errors?.['required']){
@@ -28,9 +49,14 @@
         }
       </div>
 
-      <div class="textbox mt-8">
+      <div class="textbox w-full">
         <label></label>
-        <input type="text" placeholder="Password" formControlName="password" />
+        <input
+          class="w-full"
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
         @if(f['password'].invalid && (f['password'].touched || form.submitted)){
         <div class="errors">
           @if(f['password'].errors?.['required']){
@@ -41,10 +67,11 @@
         </div>
         }
       </div>
-      <div class="textbox mt-8">
+      <div class="textbox w-full">
         <label></label>
         <input
-          type="text"
+          class="w-full"
+          type="password"
           placeholder="Confirm Password"
           formControlName="confirm_password"
         />
@@ -64,20 +91,27 @@
       </div>
       <button
         type="submit"
-        class="w-full bg-red-900 rounded-md text-white my-6 py-3 flex items-center justify-center"
+        class="w-full bg-[#432268] rounded-md text-white py-2 flex items-center justify-center"
       >
         Sign Up
       </button>
     </form>
-    <p class="text-center">Or Sign up with</p>
+    <div class="flex flex-col gap-2">
+      <p class="text-center">or sign up with</p>
 
-    <button
-      (click)="signupWithGoogle()"
-      class="w-1/3 mx-auto bg-blue-900 rounded-md text-white py-3 flex items-center justify-center"
-    >
-      Google
-    </button>
+      <button
+        (click)="signupWithGoogle()"
+        class="w-1/3 mx-auto bg-[#432268] rounded-md text-white my-0.5 py-1 flex items-center justify-center"
+      >
+        <i class="bi bi-google"></i>
+      </button>
+    </div>
 
-    <p class="text-center">Already have an account <a>Sign In</a></p>
+    <p class="text-center">
+      Already have an account?
+      <a class="text-link" [routerLink]="'/login'"
+        ><span class="text-green"> Sign in </span></a
+      >
+    </p>
   </div>
 </div>

@@ -8,13 +8,13 @@ import {
 } from '@angular/forms';
 import { passwordMatchesValidator, showErrors } from '@f1-predictions/utils';
 import { AuthStore } from '@f1-predictions/auth-store';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '@f1-predictions/app-config';
 
 @Component({
   selector: 'f1-predictions-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
