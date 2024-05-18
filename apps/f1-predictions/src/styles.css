@@ -1,5 +1,7 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
 @import '@angular/cdk/overlay-prebuilt.css';
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 @tailwind base;
 @tailwind components;
@@ -54,7 +56,7 @@ body,html {
 }
 
 
-img, picture, video, canvas, svg {
+img, picture, video, canvas {
   display: block;
   max-width: 100%;
 }
@@ -306,3 +308,4 @@ p, h1, h2, h3, h4, h5, h6 {
       width: 25em;
     }
   }
+

@@ -10,11 +10,17 @@ import { passwordMatchesValidator, showErrors } from '@f1-predictions/utils';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { Router, RouterModule } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '@f1-predictions/app-config';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'f1-predictions-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
@@ -25,10 +31,10 @@ export class SignupComponent {
 
   signUpForm: FormGroup = this.fb.group(
     {
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirm_password: ['', Validators.required],
+      name: ['Christine', [Validators.required]],
+      email: ['christine@gmail.com', [Validators.required, Validators.email]],
+      password: ['123456', [Validators.required, Validators.minLength(6)]],
+      confirm_password: ['123456', Validators.required],
     },
     {
       validators: [passwordMatchesValidator],

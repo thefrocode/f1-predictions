@@ -48,7 +48,14 @@ export const AuthStore = signalStore(
                     status: 'authenticated',
                   });
                 },
-                error: console.error,
+                error: (error) => {
+                  patchState(store, {
+                    isAuthenticated: false,
+                    status: 'error',
+                    error: 'Login failed. Invalid Credentials',
+                  });
+                },
+                finalize: () => patchState(store, { status: 'pending' }),
               })
             );
           })
@@ -68,7 +75,14 @@ export const AuthStore = signalStore(
                     });
                   }, 2000);
                 },
-                error: console.error,
+                error: (error: any) => {
+                  console.error(error);
+                  patchState(store, {
+                    isAuthenticated: false,
+                    status: 'error',
+                    error: error.error.error.message,
+                  });
+                },
               })
             );
           })

@@ -89,11 +89,18 @@
         </div>
         }
       </div>
+      @if (authStore.status() === 'error'){
+      <div class="errors">{{ authStore.error() }}</div>
+      }
       <button
         type="submit"
         class="w-full bg-[#432268] rounded-md text-white py-2 flex items-center justify-center"
       >
-        Sign Up
+        @if(authStore.status() === 'registering'){
+        <mat-spinner diameter="20" color="primary"></mat-spinner>
+        } @else {
+        <span>Sign Up</span>
+        }
       </button>
     </form>
     <div class="flex flex-col gap-2">

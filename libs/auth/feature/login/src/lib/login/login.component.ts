@@ -16,6 +16,7 @@ import {
 import { AuthStore } from '@f1-predictions/auth-store';
 import { AuthApiService } from '@f1-predictions/f1-predictions-api';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'f1-predictions-login',
@@ -26,6 +27,7 @@ import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
     RouterModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -36,8 +38,8 @@ export class LoginComponent {
   authStore = inject(AuthStore);
 
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    email: ['example@gmail.com', [Validators.required, Validators.email]],
+    password: ['123456', [Validators.required, Validators.minLength(6)]],
   });
 
   constructor(
