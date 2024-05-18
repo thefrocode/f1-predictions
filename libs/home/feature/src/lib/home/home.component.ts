@@ -15,6 +15,7 @@ import { AuthStore } from '@f1-predictions/auth-store';
 import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-deadline';
 import { PredictionsStore } from '@f1-predictions/predictions-store';
 import { HomeSessionTimesComponent } from '@f1-predictions/home-session-times';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'f1-predictions-home',
@@ -28,6 +29,7 @@ import { HomeSessionTimesComponent } from '@f1-predictions/home-session-times';
     RouterModule,
     HomeTeamlockDeadlineComponent,
     HomeSessionTimesComponent,
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
   templateUrl: './home.component.html',
@@ -35,7 +37,7 @@ import { HomeSessionTimesComponent } from '@f1-predictions/home-session-times';
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  readonly races = inject(RacesStore);
+  readonly racesStore = inject(RacesStore);
   authStore = inject(AuthStore);
 
   predictionsStore = inject(PredictionsStore);
@@ -46,13 +48,13 @@ export class HomeComponent {
   home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
   league_players = inject(LeaguePlayersStore);
 
-  active_race = this.races.active_race;
+  active_race = this.racesStore.active_race;
 
   constructor() {
     this.league_players.loadActivePlayerLeague(this.active_player.player);
   }
 
   ngOnInit() {
-    this.races.loadAll();
+    this.racesStore.loadAll();
   }
 }

@@ -14,7 +14,7 @@ import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap } from 'rxjs';
 const initialState: RacesState = {
   races: [],
-  isLoading: false,
+  status: 'pending',
   error: null,
 };
 export const RacesStore = signalStore(
@@ -28,15 +28,17 @@ export const RacesStore = signalStore(
   withMethods((store, raceApi = inject(RaceApiService)) => ({
     loadAll: rxMethod<void>(
       pipe(
-        tap(() => patchState(store, { isLoading: true })),
+        tap(() => patchState(store, { status: 'loading' })),
         switchMap(() =>
           raceApi.loadAll().pipe(
             tapResponse({
               next: (races: Race[]) => {
-                patchState(store, { races });
+                patchState(store, { races, status: 'success' });
               },
-              error: console.error,
-              finalize: () => patchState(store, { isLoading: false }),
+              error: () => {
+                patchState(store, { status: 'error' });
+                console.error;
+              },
             })
           )
         )

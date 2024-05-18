@@ -1,55 +1,48 @@
-<div class="grid grid-cols-[110px_minmax(300px,_1fr)] h-full bg-[#FAF2F8]">
-  <div class="flex my-4 mx-6">
-    <div
-      class="flex flex-col flex-1 bg-[#954FEE] opacity-70 gap-20 rounded-full py-6"
-    >
-      <i class="bi bi-car-front text-2xl self-center"></i>
-      <div class="flex flex-col gap-8">
-        <a
-          routerLink="/home"
-          routerLinkActive="active_link"
-          class="flex self-center justify-center content-center"
-        >
-          <div
-            class="rounded-full w-[42px] h-[42px] self-center absolute"
-          ></div>
-          <i class="bi bi-house text-2xl"></i>
-        </a>
-        @if(authStore.isAuthenticated()){
-        <a
-          routerLink="/team"
-          routerLinkActive="active_link"
-          class="flex self-center justify-center content-center"
-        >
-          <div
-            class="rounded-full w-[42px] h-[42px] self-center absolute"
-          ></div>
-          <i class="bi bi-people-fill text-2xl"></i>
-        </a>
-        }
-        <a
-          routerLink="/results"
-          routerLinkActive="active_link"
-          class="flex self-center justify-center content-center"
-        >
-          <div
-            class="rounded-full w-[42px] h-[42px] self-center absolute"
-          ></div>
-          <i class="bi bi-chat-fill text-2xl"></i>
-        </a>
-      </div>
-      @if(authStore.isAuthenticated()){
+<div class="grid grid-cols-[100px_minmax(70px,_1fr)] h-full">
+  <div
+    class="flex flex-col my-4 mx-4 bg-[#954FEE] opacity-60 gap-20 rounded-full py-6"
+  >
+    <i class="bi bi-car-front text-2xl self-center"></i>
+    <div class="flex flex-col gap-8">
       <a
-        routerLink="/settings"
+        routerLink="/home"
         routerLinkActive="active_link"
         class="flex self-center justify-center content-center"
       >
-        <i class="bi bi-gear text-2xl"></i>
+        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
+        <i class="bi bi-house text-2xl"></i>
+      </a>
+      @if(authStore.isAuthenticated()){
+      <a
+        routerLink="/team"
+        routerLinkActive="active_link"
+        class="flex self-center justify-center content-center"
+      >
+        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
+        <i class="bi bi-people-fill text-2xl"></i>
       </a>
       }
+      <a
+        routerLink="/results"
+        routerLinkActive="active_link"
+        class="flex self-center justify-center content-center"
+      >
+        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
+        <i class="bi bi-chat-fill text-2xl"></i>
+      </a>
     </div>
+    @if(authStore.isAuthenticated()){
+    <a
+      routerLink="/settings"
+      routerLinkActive="active_link"
+      class="flex self-center justify-center content-center"
+    >
+      <i class="bi bi-gear text-2xl"></i>
+    </a>
+    }
   </div>
-  <div class="px-4 py-2">
+
+  <!-- <div class="px-4 py-2">
     <div class="flex justify-end">
       @if(authStore.isAuthenticated()){
       <i class="bi bi-person-circle text-3xl" (click)="toggleDropdown()"></i>
@@ -121,5 +114,5 @@
       </div>
     </div>
     <router-outlet></router-outlet>
-  </div>
+  </div> -->
 </div>

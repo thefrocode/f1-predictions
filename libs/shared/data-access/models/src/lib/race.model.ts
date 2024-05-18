@@ -13,7 +13,7 @@ export interface Race {
 
 export type RacesState = {
   races: Race[];
-  isLoading: boolean;
+  status: 'pending' | 'loading' | 'success' | 'error';
   error: unknown;
   active_race?: Race;
 };
