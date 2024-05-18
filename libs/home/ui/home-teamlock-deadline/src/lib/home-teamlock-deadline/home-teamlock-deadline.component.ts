@@ -74,7 +74,7 @@ export class HomeTeamlockDeadlineComponent {
         return `<div class="flex gap-2 w-full">
         <div class="grow">
           <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+            class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
               class="absolute pt-3 text-xs text-white font-lemonada font-medium"
               >${splitDaysandTime[0]}</span
@@ -84,7 +84,7 @@ export class HomeTeamlockDeadlineComponent {
         </div> 
         <div class="grow">
           <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+            class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
               class="absolute pt-3 text-xs text-white font-lemonada font-medium"
               >${splitTime[0]}</span
@@ -94,7 +94,7 @@ export class HomeTeamlockDeadlineComponent {
         </div>
         <div class="grow">
           <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+            class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
               class="absolute pt-3 text-xs text-white font-lemonada font-medium"
               >${splitTime[1]}</span
@@ -104,7 +104,7 @@ export class HomeTeamlockDeadlineComponent {
         </div>
         <div class="grow">
           <i
-            class="bi bi-calendar-fill text-[#B1B1EC] text-3xl relative inline-flex justify-center items-center"
+            class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
               class="absolute pt-3 text-xs text-white font-lemonada font-medium"
               >${splitTime[2]}</span

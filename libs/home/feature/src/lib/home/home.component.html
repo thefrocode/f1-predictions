@@ -1,8 +1,8 @@
 <div class="flex">
   <div class="w-2/3 relative mx-4 flex flex-col gap-2">
-    @if(racesStore.status() === 'loading'){
-    <div class="flex flex-row mt-2 rounded-md bg-banner justify-between px-12">
-      <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6">
+    @if(racesStore.status() === 'success'){
+    <div class="flex flex-row mt-2 rounded-md bg-banner justify-between px-8">
+      <div class="flex flex-col w-1/3 gap-4 pt-6 pb-6 justify-between">
         @if(active_race()){
         <p class="text-white text-xl font-lemon uppercase">
           {{ active_race()?.short_name }}
@@ -11,11 +11,11 @@
         <p class="text-white text-xl font-lemon">ACTIVE RACE LOADING ...</p>
         }
         <div
-          class="bg-[#F98AE0] rounded-full flex flex-row px-6 py-2 gap-3 items-center shrink"
+          class="bg-[#C328C5] rounded-full flex flex-row max-w-fit px-4 py-2 gap-3 items-center"
         >
           <i class="bi bi-calendar2-week text-white"></i>
           @if(active_race()){
-          <p class="text-xs self-center text-white font-lemon">
+          <p class="text-xs self-center text-center text-white font-lemon mb-0">
             {{ active_race()?.fp1_time | date : 'dd MMM' }} -
             {{ active_race()?.race_time | date : 'dd MMM' }}
           </p>
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div
-        class="px-4 py-2 my-auto flex-col flex gap-2 justify-center items-center rounded-md bg-[#F98AE0]"
+        class="px-4 py-4 my-6 flex-col flex gap-1 justify-center items-center rounded-md bg-[#C328C5]"
       >
         <p class="font-lemonada text-sm text-white">TEAM LOCK DEADLINE</p>
 
@@ -35,11 +35,16 @@
     </div>
     }@else {
     <div class="item">
-      <ngx-skeleton-loader count="1" appearance="line" />
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress-dark"
+        appearance="line"
+        [theme]="{ background: '#412165', height: '200px' }"
+      />
     </div>
     }
-    <home-session-times [race]="active_race()"></home-session-times>
-    <div class="flex gap-2">
+    <!-- <home-session-times [race]="active_race()"></home-session-times> -->
+    <!-- <div class="flex gap-2">
       <div class="bg-white rounded-lg px-4 py-2 flex flex-col w-3/5">
         <div class="flex justify-between">
           <p class="font-lemon self-center">LEAGUES</p>
@@ -101,16 +106,9 @@
         </div>
       </div>
       }
-    </div>
+    </div> -->
   </div>
-  <div class="mt-2 mb-4 w-1/3 flex flex-col gap-4">
-    @if(active_player.player()){
-    <div class="bg-white rounded-lg p-4">
-      <p>Last Race Points : {{ active_player.player()?.last_race_points }}</p>
-      <p>Overall Points : {{ active_player.player()?.total_points }}</p>
-    </div>
-    }
-
+  <!-- <div class="mt-2 mb-4 w-1/3 flex flex-col gap-4">
     <league-players-list></league-players-list>
-  </div>
+  </div> -->
 </div>

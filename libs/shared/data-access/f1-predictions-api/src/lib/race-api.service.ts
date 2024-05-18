@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Race } from '@f1-predictions/models';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 
 @Injectable({
