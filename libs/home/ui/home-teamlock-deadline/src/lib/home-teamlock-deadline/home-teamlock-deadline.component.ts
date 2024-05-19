@@ -77,7 +77,7 @@ export class HomeTeamlockDeadlineComponent {
             class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
               class="absolute text-xs text-white font-lemonada font-medium"
-              >${splitDaysandTime[0]}</span
+              >${splitDaysandTime[0] != '' ? splitDaysandTime[0] : '00'}</span
             ></i
           >
           <p class="font-lemonada text-2xs text-center text-white -mt-1">Days</p>

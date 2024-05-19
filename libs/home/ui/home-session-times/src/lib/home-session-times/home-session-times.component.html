@@ -1,7 +1,9 @@
 <div class="flex gap-4">
   @for (session of dates(); track session.session) {
-  <div class="flex-auto bg-white pr-4 py-2 font-lemonada rounded-md">
-    <div class="grid grid-cols-2 grid-rows-2 gap-2">
+  <div
+    class="flex-auto bg-[#381D57] text-white md:pr-4 py-2 font-lemonada rounded-md"
+  >
+    <div class="flex flex-col md:grid md:grid-cols-2 md:grid-rows-2 md:gap-2">
       <i
         class="bi bi-clock-fill text-[#F98AE0] row-span-2 self-center text-center"
       ></i>
@@ -14,5 +16,14 @@
       </p>
     </div>
   </div>
-  }
+  }@empty { @for (session of [1,2,3,4,5]; track session) {
+  <div class="flex-auto bg-[#381D57]">
+    <ngx-skeleton-loader
+      count="1"
+      animation="progress-dark"
+      appearance="line"
+      [theme]="{ background: '#412165', height: '60px', margin: '0' }"
+    />
+  </div>
+  }}
 </div>

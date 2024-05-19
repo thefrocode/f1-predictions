@@ -16,8 +16,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalFilters(new TypeOrmFilter());
+  const frontend = process.env.FRONTEND_URL || '';
   app.enableCors({
-    origin: [process.env.FRONTEND_URL || ''],
+    origin: [frontend],
     credentials: true,
   });
   console.log(process.env.FRONTEND_URL);

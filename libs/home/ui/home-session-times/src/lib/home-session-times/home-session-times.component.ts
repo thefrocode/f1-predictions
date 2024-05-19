@@ -7,10 +7,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Race } from '@f1-predictions/models';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 @Component({
   selector: 'home-session-times',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxSkeletonLoaderModule],
   templateUrl: './home-session-times.component.html',
   styleUrls: ['./home-session-times.component.css'],
 })
@@ -41,6 +42,9 @@ export class HomeSessionTimesComponent {
       return !isNaN(date.getTime());
     }
     return false;
+  }
+  ngOnInit() {
+    console.log(this.race);
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['race']) {
