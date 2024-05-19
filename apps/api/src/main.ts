@@ -20,6 +20,7 @@ async function bootstrap() {
     origin: [process.env.FRONTEND_URL || ''],
     credentials: true,
   });
+  console.log(process.env.FRONTEND_URL);
   app.useGlobalPipes(new ValidationPipe());
   const port = process.env.PORT || 3000;
   app.use(cookieParser.default());
