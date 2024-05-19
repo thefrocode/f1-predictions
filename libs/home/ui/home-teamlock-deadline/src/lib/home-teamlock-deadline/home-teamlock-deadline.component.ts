@@ -76,41 +76,41 @@ export class HomeTeamlockDeadlineComponent {
           <i
             class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
-              class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+              class="absolute text-xs text-white font-lemonada font-medium"
               >${splitDaysandTime[0]}</span
             ></i
           >
-          <p class="font-lemonada text-2xs text-center text-white">Days</p>
+          <p class="font-lemonada text-2xs text-center text-white -mt-1">Days</p>
         </div> 
         <div class="grow">
           <i
             class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
-              class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+              class="absolute text-xs text-white font-lemonada font-medium"
               >${splitTime[0]}</span
             ></i
           >
-          <p class="font-lemonada text-2xs text-center text-white">Hrs</p>
+          <p class="font-lemonada text-2xs text-center text-white -mt-1">Hrs</p>
         </div>
         <div class="grow">
           <i
             class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
-              class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+              class="absolute text-xs text-white font-lemonada font-medium"
               >${splitTime[1]}</span
             ></i
           >
-          <p class="font-lemonada text-2xs text-center text-white">Mins</p>
+          <p class="font-lemonada text-2xs text-center text-white -mt-1">Mins</p>
         </div>
         <div class="grow">
           <i
             class="bi bi-calendar-fill text-[#BF28C5] text-3xl relative inline-flex justify-center items-center"
             ><span
-              class="absolute pt-3 text-xs text-white font-lemonada font-medium"
+              class="absolute text-xs text-white font-lemonada font-medium"
               >${splitTime[2]}</span
             ></i
           >
-          <p class="font-lemonada text-2xs text-center text-white">Secs</p>
+          <p class="font-lemonada text-2xs text-center text-white -mt-1">Secs</p>
         </div>
       </div>`;
       },
