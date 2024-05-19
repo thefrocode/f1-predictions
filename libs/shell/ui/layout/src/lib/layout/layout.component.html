@@ -1,16 +1,22 @@
-<div class="grid grid-cols-[100px_minmax(70px,_1fr)] h-full">
+<div
+  class="md:grid md:grid-cols-[100px_minmax(70px,_1fr)] md:h-full flex flex-col-reverse w-full"
+>
   <div
-    class="flex flex-col my-4 mx-4 bg-[#954FEE] opacity-60 gap-20 rounded-full py-6"
+    class="flex flex-row md:flex-col my-4 md:mx-4 bg-[#954FEE] opacity-60 gap-20 rounded-full py-3 md:py-6 px-6 w-full"
   >
-    <i class="bi bi-car-front text-2xl self-center"></i>
-    <div class="flex flex-col gap-8">
+    <i class="bi bi-car-front text-2xl self-center hidden md:block"></i>
+    <div
+      class="flex flex-row justify-center w-full md:flex-col gap-36 md:gap-8"
+    >
       <a
         routerLink="/home"
         routerLinkActive="active_link"
         class="flex self-center justify-center content-center"
       >
-        <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
-        <i class="bi bi-house text-2xl"></i>
+        <div
+          class="rounded-full w-[50px] h-[50px] md:w-[42px] md:h-[42px] self-center absolute"
+        ></div>
+        <i class="bi bi-house text-3xl md:text-2xl"></i>
       </a>
       @if(authStore.isAuthenticated()){
       <a
@@ -19,7 +25,7 @@
         class="flex self-center justify-center content-center"
       >
         <div class="rounded-full w-[42px] h-[42px] self-center absolute"></div>
-        <i class="bi bi-people-fill text-2xl"></i>
+        <i class="bi bi-people-fill text-3xl md:text-2xl"></i>
       </a>
       }
       <a
@@ -113,6 +119,6 @@
         </button>
       </div> -->
     </div>
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
   </div>
 </div>
