@@ -12,6 +12,7 @@ module.exports = {
       fontFamily: {
         lemon: ['Lemon', 'serif'],
         lemonada: ['Lemonada', 'serif'],
+        roboto: ['Roboto', 'sans-serif'],
       },
       fontSize: {
         '2xs': '0.625rem',
