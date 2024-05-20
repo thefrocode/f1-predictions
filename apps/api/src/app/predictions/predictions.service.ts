@@ -101,6 +101,7 @@ export class PredictionsService {
         'predictions.player_id as player_id',
         'SUM(predictions.points) as points',
         'players.name as name',
+        'players.nick_name as nick_name',
       ])
       .innerJoin('players', 'players', 'predictions.player_id = players.id')
       .groupBy('predictions.player_id')
@@ -116,6 +117,7 @@ export class PredictionsService {
           'predictions.player_id as player_id',
           'SUM(predictions.points) as points',
           'players.name as name',
+          'players.nick_name as nick_name',
         ])
         .innerJoin('players', 'players', 'predictions.player_id = players.id')
         .where('predictions.race_id = :race_id', { race_id: last_race_id })

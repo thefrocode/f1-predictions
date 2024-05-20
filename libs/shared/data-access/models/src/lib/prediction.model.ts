@@ -3,6 +3,7 @@ export interface TopTeams {
     player_id: number;
     points: number;
     name: string;
+    nick_name: string;
   };
 }
 export type PredictionsState = {

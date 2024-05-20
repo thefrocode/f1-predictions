@@ -1,5 +1,4 @@
 .bg-banner{
-    
     background: linear-gradient(to bottom, #954FEE99, #F80BBD80),url('/assets/img/f1-car6.png');
     background-blend-mode: overlay;
     background-size: cover;
@@ -9,6 +8,10 @@
 .timing_grid div:last-child{
     grid-column: span 2 / span 2;
 }
-
-
+@media (max-width: 640px) {
+    .home {
+      height: calc(100vh - 160px); /* Adjust as needed */
+    }
+    
+  }
 
