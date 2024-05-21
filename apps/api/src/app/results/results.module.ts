@@ -9,10 +9,18 @@ import { Prediction } from '../predictions/entities/prediction.entity';
 import { Team } from '../predictions/entities/team.entity';
 import { Race } from '../races/entities/race.entity';
 import { RacesService } from '../races/races.service';
+import { Driver } from '../drivers/entities/driver.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Result, PredictionType, Prediction, Team, Race]),
+    TypeOrmModule.forFeature([
+      Result,
+      PredictionType,
+      Prediction,
+      Team,
+      Race,
+      Driver,
+    ]),
   ],
   controllers: [ResultsController],
   providers: [ResultsService, PredictionsService, RacesService],

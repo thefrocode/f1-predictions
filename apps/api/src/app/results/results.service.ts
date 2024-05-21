@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PredictionType } from '../predictions/entities/prediction-type.entity';
+import { Prediction } from '../predictions/entities/prediction.entity';
 import { PredictionsService } from '../predictions/predictions.service';
 import { Race } from '../races/entities/race.entity';
 import { RacesService } from '../races/races.service';
 import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
 import { Result } from './entities/result.entity';
+import { Driver } from '../drivers/entities/driver.entity';
 
 @Injectable()
 export class ResultsService {
@@ -19,6 +21,12 @@ export class ResultsService {
 
   @InjectRepository(Race)
   private readonly racesRepository: Repository<Race>;
+
+  @InjectRepository(Prediction)
+  private readonly predictionsRepository: Repository<Prediction>;
+
+  @InjectRepository(Driver)
+  private readonly driversRepository: Repository<Driver>;
 
   constructor(
     private readonly predictionsService: PredictionsService,
@@ -87,8 +95,82 @@ export class ResultsService {
     return results;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} result`;
+  async findOne() {
+    const overall_highest_points = await this.predictionsRepository
+      .createQueryBuilder('predictions')
+      .select([
+        'predictions.player_id as player_id',
+        'SUM(predictions.points) as points',
+        'players.name as name',
+        'players.nick_name as nick_name',
+      ])
+      .innerJoin('players', 'players', 'predictions.player_id = players.id')
+      .groupBy('predictions.player_id')
+      .orderBy('points', 'DESC')
+      .limit(1)
+      .getRawOne();
+    const last_race_id = await this.predictionsRepository.maximum('race_id');
+    let last_race_highest_points;
+    let top_scorer;
+    let bottom_scorer;
+    if (last_race_id) {
+      last_race_highest_points = await this.predictionsRepository
+        .createQueryBuilder('predictions')
+        .select([
+          'predictions.player_id as player_id',
+          'SUM(predictions.points) as points',
+          'players.name as name',
+          'players.nick_name as nick_name',
+        ])
+        .innerJoin('players', 'players', 'predictions.player_id = players.id')
+        .where('predictions.race_id = :race_id', { race_id: last_race_id })
+        .groupBy('predictions.player_id')
+        .orderBy('points', 'DESC')
+        .limit(1)
+        .getRawOne();
+
+      const driver_points = this.resultsRepository
+        .createQueryBuilder('results')
+        .select([
+          'if(prediction_type_id<=20,(20-prediction_type_id+1),5) as points',
+          'driver_id',
+        ])
+        .where('results.race_id = :race_id', { race_id: last_race_id });
+      const driver_order = this.driversRepository
+        .createQueryBuilder('drivers')
+        .select([
+          'drivers.id as driver_id',
+          'drivers.name as name',
+          'SUM(points) as points',
+        ])
+        .innerJoin(
+          '(' + driver_points.getQuery() + ')',
+          'points_per_predicition',
+          'drivers.id = points_per_predicition.driver_id'
+        )
+        .groupBy('drivers.id');
+
+      top_scorer = await driver_order
+        .orderBy('points', 'DESC')
+        .limit(1)
+        .setParameters(driver_points.getParameters())
+        .getRawOne();
+      bottom_scorer = await driver_order
+        .orderBy('points', 'ASC')
+        .limit(1)
+        .setParameters(driver_points.getParameters())
+        .getRawOne();
+    }
+    return {
+      top_teams: {
+        overall_highest_points,
+        last_race_highest_points,
+      },
+      driver_points: {
+        top_scorer,
+        bottom_scorer,
+      },
+    };
   }
 
   update(id: number, updateResultDto: UpdateResultDto) {

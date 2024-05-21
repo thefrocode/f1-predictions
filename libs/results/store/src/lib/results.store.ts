@@ -12,6 +12,7 @@ import {
   League,
   LeaguesState,
   Point,
+  RaceSummary,
   Result,
   ResultsState,
   SelectedLeague,
@@ -28,6 +29,7 @@ import { tapResponse } from '@ngrx/operators';
 
 const initialState: ResultsState = {
   results: [],
+  last_race: undefined,
   status: 'pending',
   error: null,
 };
@@ -52,8 +54,29 @@ export const ResultsStore = signalStore(
         })
       )
     ),
+    loadLastRaceSummary: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { status: 'loading' })),
+        switchMap(() =>
+          resultApi.loadLastRaceSummary().pipe(
+            tapResponse({
+              next: (last_race: RaceSummary) => {
+                console.log(last_race);
+                patchState(store, { last_race, status: 'success' });
+              },
+              error: () => {
+                console.error, patchState(store, { status: 'failed' });
+              },
+            })
+          )
+        )
+      )
+    ),
   })),
   withHooks({
-    onInit({ loadAll }) {},
+    onInit({ loadAll, loadLastRaceSummary }) {
+      loadAll();
+      loadLastRaceSummary();
+    },
   })
 );

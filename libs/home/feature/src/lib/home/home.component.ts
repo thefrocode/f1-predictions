@@ -13,7 +13,7 @@ import { LeaguesJoinComponent } from '@f1-predictions/leagues-join';
 import { RouterModule } from '@angular/router';
 import { AuthStore } from '@f1-predictions/auth-store';
 import { HomeTeamlockDeadlineComponent } from '@f1-predictions/home-teamlock-deadline';
-import { PredictionsStore } from '@f1-predictions/predictions-store';
+import { ResultsStore } from '@f1-predictions/results-store';
 import { HomeSessionTimesComponent } from '@f1-predictions/home-session-times';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
@@ -40,7 +40,7 @@ export class HomeComponent {
   readonly racesStore = inject(RacesStore);
   authStore = inject(AuthStore);
 
-  predictionsStore = inject(PredictionsStore);
+  resultsStore = inject(ResultsStore);
 
   active_player = inject(ActivePlayerStore);
 
@@ -52,6 +52,7 @@ export class HomeComponent {
 
   constructor() {
     this.league_players.loadActivePlayerLeague(this.active_player.player);
+    console.log(this.resultsStore.last_race()?.driver_points);
   }
 
   ngOnInit() {

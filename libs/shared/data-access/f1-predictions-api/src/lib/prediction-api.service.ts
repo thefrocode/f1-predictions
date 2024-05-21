@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '@f1-predictions/app-config';
-import { TopTeams } from '@f1-predictions/models';
+import {
+  DriverPoints,
+  TopBottomDriverPoints,
+  TopTeams,
+} from '@f1-predictions/models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +17,10 @@ export class PredictionApiService {
 
   loadTopTeams() {
     return this.http.get<TopTeams>(`${this.appConfig.baseURL}/predictions`);
+  }
+  loadDriverScores() {
+    return this.http.get<TopBottomDriverPoints>(
+      `${this.appConfig.baseURL}/predictions`
+    );
   }
 }

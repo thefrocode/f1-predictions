@@ -5,6 +5,7 @@ import { Result } from '../results/entities/result.entity';
 import { UpdatePredictionDto } from './dto/update-prediction.dto';
 import { Prediction } from './entities/prediction.entity';
 import { Team } from './entities/team.entity';
+import { Driver } from '../drivers/entities/driver.entity';
 
 @Injectable()
 export class PredictionsService {
@@ -16,6 +17,8 @@ export class PredictionsService {
 
   @InjectRepository(Result)
   private readonly resultsRepository: Repository<Result>;
+
+  
 
   async create(race_id: number) {
     //for Positional prediction types
@@ -94,43 +97,7 @@ export class PredictionsService {
     return { predictions, randomPredictions };
   }
 
-  async findOne() {
-    const overall_highest_points = await this.predictionsRepository
-      .createQueryBuilder('predictions')
-      .select([
-        'predictions.player_id as player_id',
-        'SUM(predictions.points) as points',
-        'players.name as name',
-        'players.nick_name as nick_name',
-      ])
-      .innerJoin('players', 'players', 'predictions.player_id = players.id')
-      .groupBy('predictions.player_id')
-      .orderBy('points', 'DESC')
-      .limit(1)
-      .getRawOne();
-    const last_race_id = await this.predictionsRepository.maximum('race_id');
-    let last_race_highest_points;
-    if (last_race_id) {
-      last_race_highest_points = await this.predictionsRepository
-        .createQueryBuilder('predictions')
-        .select([
-          'predictions.player_id as player_id',
-          'SUM(predictions.points) as points',
-          'players.name as name',
-          'players.nick_name as nick_name',
-        ])
-        .innerJoin('players', 'players', 'predictions.player_id = players.id')
-        .where('predictions.race_id = :race_id', { race_id: last_race_id })
-        .groupBy('predictions.player_id')
-        .orderBy('points', 'DESC')
-        .limit(1)
-        .getRawOne();
-    }
-    return {
-      overall_highest_points,
-      last_race_highest_points,
-    };
-  }
+  async findOne() {}
 
   update(id: number, updatePredictionDto: UpdatePredictionDto) {
     return `This action updates a #${id} prediction`;

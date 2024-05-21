@@ -106,30 +106,72 @@
                   class="text-base md:text-sm whitespace-nowrap text-ellipsis overflow-hidden"
                 >
                   {{
-                    predictionsStore.top_teams()!['last_race_highest_points']
-                      .name
+                    resultsStore.last_race()?.top_teams?.['last_race_highest_points']
+                      ?.name
                   }}
                 </p>
                 <p
                   class="text-xs md:text-3xs text-[#ffffff7f] whitespace-nowrap overflow-hidden"
                 >
                   {{
-                    predictionsStore.top_teams()!['last_race_highest_points']
-                      .nick_name
+                  resultsStore.last_race()?.top_teams?.['last_race_highest_points']
+                    ?.nick_name
                   }}
                 </p>
               </div>
               <p class="text-3xl md:text-base">
                 {{
-                  predictionsStore.top_teams()!['last_race_highest_points']
-                    .points
+                  resultsStore.last_race()?.top_teams?.['last_race_highest_points']
+                    ?.points
                 }}
                 <span class="text-xs text-[#ffffff7f]">Points</span>
               </p>
             </div>
           </div>
         </div>
-        <div class="flex-1 bg-white">Hello</div>
+        <div class="flex flex-col gap-2 flex-1 text-white">
+          <div
+            class="rounded-lg bg-[#381D57] px-2 py-2 flex-1 flex flex-row justify-between items-center"
+          >
+            <div>
+              <p class="md:text-xs mb-1 text-[#ffffff7f]">Top Scorer</p>
+              <p class="md:text-sm">
+                {{
+                resultsStore.last_race()?.driver_points?.['top_scorer']
+                  ?.name
+                }}
+              </p>
+            </div>
+
+            <p class="md:text-sm">
+              {{
+              resultsStore.last_race()?.driver_points?.['top_scorer']
+                ?.points
+              }}
+              <span>Points</span>
+            </p>
+          </div>
+          <div
+            class="rounded-lg bg-[#381D57] px-2 py-2 flex-1 flex flex-row justify-between items-center"
+          >
+            <div>
+              <p class="md:text-xs mb-1 text-[#ffffff7f]">Bottom Scorer</p>
+              <p class="md:text-sm">
+                {{
+                resultsStore.last_race()?.driver_points?.['bottom_scorer']
+                  ?.name
+                }}
+              </p>
+            </div>
+            <p class="md:text-sm">
+              {{
+              resultsStore.last_race()?.driver_points?.['bottom_scorer']
+                ?.points
+              }}
+              <span>Points</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

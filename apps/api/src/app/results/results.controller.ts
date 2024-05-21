@@ -25,9 +25,9 @@ export class ResultsController {
     return this.resultsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.resultsService.findOne(+id);
+  @Get(':type')
+  findOne(@Param('id') type: string) {
+    return this.resultsService.findOne();
   }
 
   @Patch(':id')

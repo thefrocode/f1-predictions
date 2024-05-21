@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
-import { Result } from '@f1-predictions/models';
+import { RaceSummary, Result } from '@f1-predictions/models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,5 +14,10 @@ export class ResultApiService {
 
   loadAll(): Observable<Result[]> {
     return this.http.get<Result[]>(`${this.appConfig.baseURL}/results`);
+  }
+  loadLastRaceSummary() {
+    return this.http.get<RaceSummary>(
+      `${this.appConfig.baseURL}/results/summary`
+    );
   }
 }

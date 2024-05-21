@@ -14,6 +14,7 @@ import { Result } from '../results/entities/result.entity';
 import { PlayersService } from '../players/players.service';
 import { LeaguePlayer } from '../leagues/entities/league_player.entity';
 import { SelectedLeague } from '../leagues/entities/selected_league.entity';
+import { Driver } from '../drivers/entities/driver.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SelectedLeague } from '../leagues/entities/selected_league.entity';
       Team,
       LeaguePlayer,
       SelectedLeague,
+      Driver,
     ]),
   ],
   controllers: [
