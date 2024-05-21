@@ -18,7 +18,7 @@ export class ResultsListComponent {
       console.log('Results', this.resultsStore.results());
     });
   }
-  ngOnInit(): void {
-    this.resultsStore.loadAll();
-  }
+  // ngOnInit(): void {
+  //   this.resultsStore.loadAll();
+  // }
 }

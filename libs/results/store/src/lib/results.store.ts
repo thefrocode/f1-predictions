@@ -11,6 +11,8 @@ import {
   AddLeaguePlayer,
   League,
   LeaguesState,
+  Meta,
+  PaginatedResponse,
   Point,
   RaceSummary,
   Result,
@@ -30,6 +32,8 @@ import { tapResponse } from '@ngrx/operators';
 const initialState: ResultsState = {
   results: [],
   last_race: undefined,
+  options: { page: 1 },
+  meta: {} as Meta,
   status: 'pending',
   error: null,
 };
@@ -37,16 +41,26 @@ export const ResultsStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withMethods((store, resultApi = inject(ResultApiService)) => ({
-    loadAll: rxMethod<void>(
+    updateCurrentPage: (page: number) => {
+      patchState(store, {
+        options: {
+          ...store.options(),
+          page: page,
+        },
+      });
+    },
+    loadAll: rxMethod<{ page: number }>(
       pipe(
         tap(() => patchState(store, { status: 'loading' })),
-        switchMap(() => {
-          console.log('Loading Results');
-          return resultApi.loadAll().pipe(
+        switchMap(({ page }) => {
+          return resultApi.loadAll(page, 10).pipe(
             tapResponse({
-              next: (results: Result[]) => {
-                console.log('Results', results);
-                patchState(store, { results, status: 'success' });
+              next: (results: PaginatedResponse<Result>) => {
+                patchState(store, {
+                  results: results.items,
+                  meta: results.meta,
+                  status: 'success',
+                });
               },
               error: console.error,
             })
@@ -74,8 +88,8 @@ export const ResultsStore = signalStore(
     ),
   })),
   withHooks({
-    onInit({ loadAll, loadLastRaceSummary }) {
-      loadAll();
+    onInit({ loadAll, loadLastRaceSummary, options }) {
+      loadAll(options);
       loadLastRaceSummary();
     },
   })

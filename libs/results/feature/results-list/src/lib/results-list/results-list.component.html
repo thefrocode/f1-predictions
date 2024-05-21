@@ -1,7 +1,7 @@
-<div class="bg-white rounded-md my-2 w-full p-4">
+<div class="bg-[#381D57] text-white rounded-md my-2 w-full p-4">
   <h2 class="font-bold text-lg my-1">Race Results</h2>
   <div
-    class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-1 my-1.5 text-2xs text-white font-lemonada"
+    class="w-full bg-[#954FEE] opacity-60 rounded-md flex gap-2 px-2 py-2 my-1.5 text-2xs text-white font-lemonada"
   >
     <p class="w-1/12">No.</p>
     <p class="w-2/6">Race</p>
@@ -24,27 +24,45 @@
       </div>
     </summary>
     <div>
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-3 px-10">
         <p>1. {{ result['P1'] }}</p>
-        <p>2. {{ result['P2'] }}</p>
-        <p>3. {{ result['P3'] }}</p>
-        <p>4. {{ result['P4'] }}</p>
-        <p>5. {{ result['P5'] }}</p>
         <p>6. {{ result['P6'] }}</p>
-        <p>7. {{ result['P7'] }}</p>
-        <p>8. {{ result['P8'] }}</p>
-        <p>9. {{ result['P9'] }}</p>
-        <p>10. {{ result['P10'] }}</p>
-      </div>
-      <hr class="border" />
-      <div class="grid grid-cols-2">
         <p>Fastest Lap - {{ result['Fastest_Lap'] }}</p>
+        <p>2. {{ result['P2'] }}</p>
+        <p>7. {{ result['P7'] }}</p>
         <p>Most Positions Gained - {{ result['Most_Positions_Gained'] }}</p>
+        <p>3. {{ result['P3'] }}</p>
+        <p>8. {{ result['P8'] }}</p>
         <p>Pole Position - {{ result['Pole_Position'] }}</p>
+        <p>4. {{ result['P4'] }}</p>
+        <p>9. {{ result['P9'] }}</p>
         <p>Driver of the day - {{ result['Driver_of_the_Day'] }}</p>
+        <p>5. {{ result['P5'] }}</p>
+        <p>10. {{ result['P10'] }}</p>
         <p>Fastest Pitstop - {{ result['Fastest_Pistop'] }}</p>
       </div>
     </div>
   </details>
   }
+  <div class="flex justify-center gap-4 mt-1 items-center">
+    <button
+      (click)="
+        resultsStore.meta().currentPage > 1
+          ? resultsStore.updateCurrentPage(resultsStore.options().page - 1)
+          : ''
+      "
+    >
+      <i class="bi bi-chevron-double-left text-2xl text-[#F98AE0]"></i>
+    </button>
+    {{ resultsStore.meta().currentPage }}
+    <button
+      (click)="
+        resultsStore.meta().totalPages > resultsStore.meta().currentPage
+          ? resultsStore.updateCurrentPage(resultsStore.options().page + 1)
+          : ''
+      "
+    >
+      <i class="bi bi-chevron-double-right text-2xl text-[#F98AE0]"></i>
+    </button>
+  </div>
 </div>

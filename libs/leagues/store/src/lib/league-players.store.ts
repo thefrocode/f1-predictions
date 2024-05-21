@@ -91,7 +91,6 @@ export const LeaguePlayersStore = signalStore(
       loadActivePlayerLeague: rxMethod<ActivePlayer | undefined>(
         pipe(
           switchMap((player) => {
-            console.log('player', player);
             let selected_league_id;
             if (!player) {
               selected_league_id = 1;

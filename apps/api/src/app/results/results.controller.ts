@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  DefaultValuePipe,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { ResultsService } from './results.service';
 import { CreateResultDto } from './dto/create-result.dto';
@@ -21,8 +24,14 @@ export class ResultsController {
   }
 
   @Get()
-  findAll() {
-    return this.resultsService.findAll();
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
+  ) {
+    return this.resultsService.findAll({
+      page,
+      limit,
+    });
   }
 
   @Get(':type')

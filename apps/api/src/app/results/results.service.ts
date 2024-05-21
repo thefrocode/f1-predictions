@@ -10,6 +10,7 @@ import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
 import { Result } from './entities/result.entity';
 import { Driver } from '../drivers/entities/driver.entity';
+import { IPaginationOptions, paginateRaw } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class ResultsService {
@@ -50,7 +51,7 @@ export class ResultsService {
     });
   }
 
-  async findAll() {
+  async findAll(options: IPaginationOptions) {
     const predictionTypesQuery = await this.predictionTypesRepository
       .createQueryBuilder('prediction_types')
       .select([
@@ -75,7 +76,7 @@ export class ResultsService {
       .andWhere('id>15')
       .getRawOne();
 
-    const results = this.resultsRepository
+    const resultsQuery = this.resultsRepository
       .createQueryBuilder('results')
       .select(['race_id, races.short_name as name'])
       .addSelect(predictionTypesQuery.pivot_columns)
@@ -89,10 +90,9 @@ export class ResultsService {
         'results.prediction_type_id = prediction_types.id'
       )
       .groupBy('race_id')
-      .orderBy('race_id', 'ASC')
-      .getRawMany();
+      .orderBy('race_id', 'ASC');
 
-    return results;
+    return paginateRaw<any>(resultsQuery, options);
   }
 
   async findOne() {
