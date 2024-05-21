@@ -16,14 +16,5 @@
       </p>
     </div>
   </div>
-  }@empty { @for (session of [1,2,3,4,5]; track session) {
-  <div class="flex-auto bg-[#381D57]">
-    <ngx-skeleton-loader
-      count="1"
-      animation="progress-dark"
-      appearance="line"
-      [theme]="{ background: '#412165', height: '60px', margin: '0' }"
-    />
-  </div>
-  }}
+  }
 </div>

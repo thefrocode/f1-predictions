@@ -50,6 +50,14 @@ export class HomeComponent {
 
   active_race = this.racesStore.active_race;
 
+  display_data = computed(() => {
+    return (
+      this.racesStore.races().length > 0 &&
+      this.leagues.leagues().length > 0 &&
+      this.resultsStore.last_race() &&
+      this.league_players.players().length > 0
+    );
+  });
   constructor() {
     this.league_players.loadActivePlayerLeague(this.active_player.player);
   }
