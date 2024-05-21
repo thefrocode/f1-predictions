@@ -14,6 +14,7 @@ import {
 } from '@f1-predictions/models';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 import { AuthStore } from '@f1-predictions/auth-store';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

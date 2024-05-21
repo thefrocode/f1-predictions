@@ -27,7 +27,7 @@
       class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
       [ngClass]="{
         'text-base bg-[#B1B1EC] py-2.5 text-white':
-          league.id === league_players.selected_league()?.id
+          league.id === league_players.selected_league_id()
       }"
     >
       <p class="w-1/2 self-center">{{ league.name }}</p>
@@ -46,7 +46,7 @@
       <span class="w-1/6"
         ><i
           class="bi bi-eye text-base text-[#F98AE0]"
-          (click)="league_players.selectLeague(league.id, league.name)"
+          (click)="league_players.selectLeague(league.id)"
         ></i
       ></span>
       }

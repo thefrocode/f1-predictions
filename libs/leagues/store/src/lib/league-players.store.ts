@@ -37,20 +37,17 @@ const initialState: LeaguePlayersState = {
   players: [],
   meta: {} as Meta,
   options: { page: 1, filter: null },
-  selected_league: {
-    id: 0,
-    name: '',
-  },
+  selected_league_id: 0,
   status: 'pending',
   error: null,
 };
 export const LeaguePlayersStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({ selected_league, options }) => ({
+  withComputed(({ selected_league_id, options }) => ({
     extended_options: computed(() => ({
       ...options(),
-      league_id: selected_league().id,
+      league_id: selected_league_id(),
     })),
   })),
   withMethods(
@@ -82,30 +79,24 @@ export const LeaguePlayersStore = signalStore(
           )
         )
       ),
-      selectLeague: (league_id: number, name: string) => {
+      selectLeague: (selected_league_id: number) => {
         patchState(store, {
-          selected_league: {
-            id: league_id,
-            name: name,
-          },
+          selected_league_id,
         });
       },
       loadActivePlayerLeague: rxMethod<ActivePlayer | undefined>(
         pipe(
           switchMap((player) => {
             console.log('player', player);
-            let league_id;
+            let selected_league_id;
             if (!player) {
-              league_id = 1;
+              selected_league_id = 1;
             } else {
-              league_id = player.selected_league_id;
+              selected_league_id = player.selected_league_id;
             }
-            console.log('league_id', league_id);
+
             patchState(store, {
-              selected_league: {
-                id: league_id,
-                name: '',
-              },
+              selected_league_id,
               options: {
                 page: 1,
                 filter: '',
@@ -125,7 +116,7 @@ export const LeaguePlayersStore = signalStore(
         pipe(
           tap(() => patchState(store, { status: 'loading' })),
           switchMap(({ league_id, page, filter }) =>
-            leagueApi.loadOne(league_id, page, 7, filter).pipe(
+            leagueApi.loadOne(league_id, page, 5, filter).pipe(
               tapResponse({
                 next: (league_players: PaginatedResponse<PlayerWithPoints>) => {
                   patchState(store, {

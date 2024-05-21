@@ -109,7 +109,6 @@ export const LeaguesStore = signalStore(
           })
         )
       ),
-
       selectLeague: rxMethod<number>(
         pipe(
           tap(() => patchState(store, { isLoading: true })),

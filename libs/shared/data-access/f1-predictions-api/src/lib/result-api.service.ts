@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, Inject } from '@angular/core';
 import { AppConfig, APP_CONFIG } from '@f1-predictions/app-config';
 import { RaceSummary, Result } from '@f1-predictions/models';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

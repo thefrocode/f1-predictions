@@ -166,8 +166,10 @@ export class LeaguesService {
         'last_race_points.points as last_race_points',
         'points.points as total_points',
         'players.name as name',
+        'leagues.name as league_name',
       ])
       .innerJoin('players', 'players', 'league_players.player_id=players.id')
+      .innerJoin('leagues', 'leagues', 'league_players.league_id=leagues.id')
       .leftJoin(
         '(' + pointsSubQuery + ')',
         'points',

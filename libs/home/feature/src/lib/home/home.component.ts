@@ -52,7 +52,6 @@ export class HomeComponent {
 
   constructor() {
     this.league_players.loadActivePlayerLeague(this.active_player.player);
-    console.log(this.resultsStore.last_race()?.driver_points);
   }
 
   ngOnInit() {

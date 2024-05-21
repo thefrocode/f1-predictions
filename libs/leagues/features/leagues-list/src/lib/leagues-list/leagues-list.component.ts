@@ -28,6 +28,6 @@ export class LeaguesListComponent {
   filterControl = new FormControl('');
 
   constructor() {
-    this.league_players.selectLeague(1, '');
+    this.league_players.selectLeague(1);
   }
 }

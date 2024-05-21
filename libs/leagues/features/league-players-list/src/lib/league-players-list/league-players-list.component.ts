@@ -31,8 +31,6 @@ export class LeaguePlayersListComponent {
   league_players = inject(LeaguePlayersStore);
   active_player = inject(PlayersStore).active_player;
 
-  selected_league$ = toObservable(this.league_players.selected_league);
-
   selected_team = this.teamsStore.selected_team;
 
   filterControl = new FormControl('');
@@ -47,5 +45,4 @@ export class LeaguePlayersListComponent {
     });
     return this.teamsStore.loadOne(player_id);
   }
-  constructor() {}
 }

@@ -9,7 +9,6 @@ summary::after {
     height: 18px;
     background: url('/assets/img/chevron-down.svg') no-repeat;
     transition: 0.2s;
-  
 }
 details[open] > summary::after {
     transform: rotate(180deg);
