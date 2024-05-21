@@ -1,5 +1,7 @@
 <div class="flex gap-4 py-2">
-  <div class="bg-white rounded-lg px-4 py-3 w-2/3">
+  <div
+    class="bg-[#381D57] text-white flex flex-col gap-2 rounded-lg px-4 py-3 w-2/3"
+  >
     <div class="flex justify-between">
       <p class="font-lemon self-center">LEAGUES</p>
       @if(auth.isAuthenticated()){
@@ -8,69 +10,74 @@
     </div>
     <div class="relative">
       <input
-        class="bg-[#FAF2F8] rounded-md w-full h-[30px]"
+        class="bg-[#AA84D5] rounded-md w-full h-[30px] px-8 focus:outline-none"
         [formControl]="filterControl"
         (input)="leagues.updateFilter($event)"
       />
-      <i class="bi bi-search absolute left-2 top-0.5 text-[#F98AE0]"></i>
+      <i class="bi bi-search absolute left-2 top-0.5 text-[#954FEE]"></i>
     </div>
 
     <div
-      class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
+      class="w-full bg-[#954FEE] opacity-60 rounded-md flex gap-2 px-2 py-2 my-1 text-2xs text-white font-lemonada"
     >
-      <p class="w-3/5">League Name</p>
-      <p class="w-1/5">Pos</p>
-      <p></p>
+      <p class="w-1/2">League Name</p>
+      <p class="w-1/6">Pos</p>
+      <p class="w-1/6"></p>
+      <p class="w-1/6"></p>
     </div>
-    @for(league of leagues.leagues(); track league){
-    <div
-      class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
-      [ngClass]="{
-        'text-base bg-[#B1B1EC] py-2.5 text-white':
-          league.id === league_players.selected_league_id()
-      }"
-    >
-      <p class="w-1/2 self-center">{{ league.name }}</p>
+    <div>
+      @for(league of leagues.leagues(); track league){
+      <div
+        class="w-full rounded-md flex gap-2 px-2 py-1.5 my-1 text-xs font-lemonada shadow text-nowrap"
+        [ngClass]="{
+          'text-base bg-[#AA84D5] py-2.5 text-white':
+            league.id === league_players.selected_league_id()
+        }"
+      >
+        <p class="w-1/2 self-center">{{ league.name }}</p>
 
-      @if(league.position){
-      <p class="w-1/6 self-center">{{ league.position }}</p>
-      <p class="w-1/6 self-center">Joined</p>
-      <span class="w-1/6"
-        ><i class="bi bi-eye text-base text-[#F98AE0]"></i
-      ></span>
-      }@else {
-      <p class="w-1/5 self-center">-</p>
-      <span class="w-1/6"
-        ><i class="bi bi-door-open text-base text-[#F98AE0]"></i
-      ></span>
-      <span class="w-1/6"
-        ><i
-          class="bi bi-eye text-base text-[#F98AE0]"
-          (click)="league_players.selectLeague(league.id)"
-        ></i
-      ></span>
+        @if(league.position){
+        <p class="w-1/6 self-center">{{ league.position }}</p>
+        <p class="w-1/6 self-center">Joined</p>
+        <span class="w-1/6"
+          ><i class="bi bi-eye text-base text-[#F98AE0]"></i
+        ></span>
+        }@else {
+        <p class="w-1/5 self-center">-</p>
+        <span class="w-1/6"
+          ><i class="bi bi-door-open text-base text-[#F98AE0]"></i
+        ></span>
+        <span class="w-1/6"
+          ><i
+            class="bi bi-eye text-base text-[#F98AE0]"
+            (click)="league_players.selectLeague(league.id)"
+          ></i
+        ></span>
+        }
+      </div>
       }
     </div>
-    }
-    <button
-      (click)="
-        leagues.meta().currentPage > 1
-          ? leagues.updateCurrentPage(leagues.options().page - 1)
-          : ''
-      "
-    >
-      Prev
-    </button>
-    {{ leagues.meta().currentPage }}
-    <button
-      (click)="
-        leagues.meta().totalPages > leagues.meta().currentPage
-          ? leagues.updateCurrentPage(leagues.options().page + 1)
-          : ''
-      "
-    >
-      Next
-    </button>
+    <div class="flex justify-center gap-4 mt-1 items-center">
+      <button
+        (click)="
+          leagues.meta().currentPage > 1
+            ? leagues.updateCurrentPage(leagues.options().page - 1)
+            : ''
+        "
+      >
+        <i class="bi bi-chevron-double-left text-2xl text-[#F98AE0]"></i>
+      </button>
+      {{ leagues.meta().currentPage }}
+      <button
+        (click)="
+          leagues.meta().totalPages > leagues.meta().currentPage
+            ? leagues.updateCurrentPage(leagues.options().page + 1)
+            : ''
+        "
+      >
+        <i class="bi bi-chevron-double-right text-2xl text-[#F98AE0]"></i>
+      </button>
+    </div>
   </div>
   <div class="flex flex-col gap-4 grow">
     <league-players-list></league-players-list>

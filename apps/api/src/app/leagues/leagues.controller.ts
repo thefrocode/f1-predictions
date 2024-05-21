@@ -53,9 +53,9 @@ export class LeaguesController {
   @Get(':league_id')
   findOne(
     @Param('league_id') league_id: string,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('filter') filter: string,
-    @Query('limit', new DefaultValuePipe(7), ParseIntPipe) limit: number = 7
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
   ) {
     limit = limit > 100 ? 100 : limit;
     return this.leaguesService.findOne(

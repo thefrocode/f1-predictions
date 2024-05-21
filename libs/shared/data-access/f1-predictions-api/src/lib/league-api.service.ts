@@ -25,10 +25,11 @@ export class LeagueApiService {
 
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
-  loadAll(page: number = 1, limit: number = 10, filter: string | null) {
+  loadAll(page: number, limit: number, filter: string | null) {
     let params = new HttpParams();
 
     params = params.append('page', page);
+    params = params.append('limit', limit);
     if (filter) {
       params = params.append('filter', filter);
     }

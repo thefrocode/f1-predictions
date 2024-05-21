@@ -94,7 +94,7 @@ export const LeaguesStore = signalStore(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap(({ page, filter }) => {
-            return leagueApi.loadAll(page, 7, filter).pipe(
+            return leagueApi.loadAll(page, 8, filter).pipe(
               tapResponse({
                 next: (leagues: PaginatedResponse<League>) => {
                   patchState(store, {

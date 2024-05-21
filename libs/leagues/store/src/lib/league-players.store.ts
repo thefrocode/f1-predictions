@@ -82,6 +82,10 @@ export const LeaguePlayersStore = signalStore(
       selectLeague: (selected_league_id: number) => {
         patchState(store, {
           selected_league_id,
+          options: {
+            ...store.options(),
+            page: 1,
+          },
         });
       },
       loadActivePlayerLeague: rxMethod<ActivePlayer | undefined>(
@@ -116,7 +120,7 @@ export const LeaguePlayersStore = signalStore(
         pipe(
           tap(() => patchState(store, { status: 'loading' })),
           switchMap(({ league_id, page, filter }) =>
-            leagueApi.loadOne(league_id, page, 5, filter).pipe(
+            leagueApi.loadOne(league_id, page, 6, filter).pipe(
               tapResponse({
                 next: (league_players: PaginatedResponse<PlayerWithPoints>) => {
                   patchState(store, {

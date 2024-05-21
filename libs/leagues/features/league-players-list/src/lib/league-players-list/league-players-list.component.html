@@ -3,7 +3,7 @@
 </p>
 <div class="rounded-md flex justify-between gap-4 my-4">
   <div
-    class="row bg-gradient-to-r from-purple-500 to-pink-600 flex-1 py-5 px-4 flex gap-4 items-end ml-4 rounded-s-3xl justify-end items-center"
+    class="row bg-gradient-to-r from-[#954FEE99] to-[#F80BBD80] flex-1 py-5 px-4 flex gap-4 items-end ml-4 rounded-s-3xl justify-end items-center"
   >
     <div>
       <p class="text-[#AA84D5]">Avg Points</p>
@@ -12,7 +12,7 @@
     <i class="bi bi-file-earmark text-[#AA84D5] text-2xl font-bold"></i>
   </div>
   <div
-    class="row bg-gradient-to-r from-pink-600 to-purple-500 flex-1 flex gap-4 py-5 px-4 mr-4 rounded-e-3xl items-center"
+    class="row bg-gradient-to-r from-[#F80BBD80] to-[#954FEE99] flex-1 flex gap-4 py-5 px-4 mr-4 rounded-e-3xl items-center"
   >
     <i class="bi bi-person-fill text-[#FF53C0] text-2xl font-bold"></i>
     <div>
@@ -23,10 +23,10 @@
     </div>
   </div>
 </div>
-<div class="bg-[#381D57] text-white rounded-lg px-4 py-4">
+<div class="bg-[#381D57] text-white rounded-lg px-4 pt-4 pb-1">
   <div class="relative">
     <input
-      class="bg-[#AA84D5] rounded-md w-full h-[30px] border-none"
+      class="bg-[#AA84D5] rounded-md w-full h-[30px] focus:border-none px-8 focus:outline-none"
       [formControl]="filterControl"
       (input)="league_players.updateFilter($event)"
     />
@@ -43,30 +43,18 @@
   @if(league_players.players()){ @for(player of league_players.players(); track
   player;let index = $index){
 
-  <details #details (click)="loadOneTeam(details, player.player_id)">
-    <summary>
-      <div
-        class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
-        [ngClass]="{
-          'text-base bg-[#B1B1EC] py-2.5 text-white':
-            player.player_id === active_player()?.id
-        }"
-      >
-        <p class="w-1/10">{{ player.position }}.</p>
-        <p class="w-3/5">{{ player.name }}</p>
-        <p class="grow">{{ player.last_race_points }}</p>
-        <p class="grow">{{ player.total_points }}</p>
-      </div>
-    </summary>
-    <div>
-      @for(prediction of selected_team()?.team; track prediction){
-      <div class="flex">
-        <p>{{ prediction.prediction_type }} -</p>
-        <p>{{ prediction.driver_name }}</p>
-      </div>
-      }
-    </div>
-  </details>
+  <div
+    class="w-full rounded-md flex gap-2 px-2 py-2 my-1 text-xs font-lemonada shadow text-nowrap"
+    [ngClass]="{
+      'text-base bg-[#B1B1EC] py-2.5 text-white':
+        player.player_id === active_player()?.id
+    }"
+  >
+    <p class="w-1/10">{{ player.position }}.</p>
+    <p class="w-3/5">{{ player.name }}</p>
+    <p class="grow">{{ player.last_race_points }}</p>
+    <p class="grow">{{ player.total_points }}</p>
+  </div>
   } }
   <div class="flex justify-center gap-4 mt-1 items-center">
     <button
