@@ -14,8 +14,6 @@ export class RaceApiService {
   constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   loadAll(): Observable<Race[]> {
-    return this.http
-      .get<Race[]>(`${this.appConfig.baseURL}/races`)
-      .pipe(delay(5000));
+    return this.http.get<Race[]>(`${this.appConfig.baseURL}/races`);
   }
 }

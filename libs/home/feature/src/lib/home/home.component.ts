@@ -45,7 +45,7 @@ export class HomeComponent {
   active_player = inject(ActivePlayerStore);
 
   readonly leagues = inject(LeaguesStore);
-  home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 4));
+  home_leagues = computed(() => [...this.leagues.leagues()].splice(0, 5));
   league_players = inject(LeaguePlayersStore);
 
   active_race = this.racesStore.active_race;
