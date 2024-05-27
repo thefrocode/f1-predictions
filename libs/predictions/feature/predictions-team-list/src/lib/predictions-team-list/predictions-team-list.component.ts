@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import {
   DriversStore,
   PredictionTypesStore,
@@ -9,11 +9,12 @@ import { Team } from '@f1-predictions/models';
 import { PlayersStore } from '@f1-predictions/players-store';
 import { toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
+import { ReplaceUnderscorePipe } from '@f1-predictions/utils';
 
 @Component({
   selector: 'predictions-team-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReplaceUnderscorePipe],
   templateUrl: './predictions-team-list.component.html',
   styleUrls: ['./predictions-team-list.component.css'],
 })
@@ -21,12 +22,18 @@ export class PredictionsTeamListComponent {
   prediction_types = inject(PredictionTypesStore).prediction_types;
   teams = inject(TeamStore);
   active_player = inject(PlayersStore).active_player;
+  originalOrder = (
+    a: KeyValue<string, string | undefined>,
+    b: KeyValue<string, string | undefined>
+  ): number => {
+    return 0;
+  };
 
   selected_team = computed(() => {
     const team: {
       [key: string]: string | undefined;
     } = {};
-    if (!this.teams.active_player_team) return team;
+    if (!this.teams.active_player_team()) return team;
     this.teams.active_player_team()!.forEach((t) => {
       team[t.prediction_type] = t.driver_name;
     });
@@ -69,12 +76,11 @@ export class PredictionsTeamListComponent {
     type: string;
   } | null;
 
-  removeSelection(prediction: string, driver: string) {
-    console.log(prediction);
+  removeSelection(prediction: string, driver: string | undefined) {
     const prediction_type = this.prediction_types().find(
       (p) => p.name === prediction
     )!;
-    console.log(this.selected_team()[prediction], driver);
+
     if (
       prediction_type.type === 'Positional' &&
       this.selected_team()[prediction] === driver
@@ -119,7 +125,6 @@ export class PredictionsTeamListComponent {
         )?.id,
         driver_name: this.selected_team()[key],
         prediction_type: prediction_type.name,
-        player_id: this.active_player()!.id,
       });
     });
     console.log(team);

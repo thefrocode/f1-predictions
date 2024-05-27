@@ -18,8 +18,6 @@ export class PredictionsService {
   @InjectRepository(Result)
   private readonly resultsRepository: Repository<Result>;
 
-  
-
   async create(race_id: number) {
     //for Positional prediction types
     const resultsSubQuery = this.resultsRepository

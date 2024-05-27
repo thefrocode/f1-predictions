@@ -13,6 +13,7 @@ import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { pipe, tap, switchMap, startWith } from 'rxjs';
 import { PlayersStore } from '@f1-predictions/players-store';
+import { ToastrService } from 'ngx-toastr';
 const initialState: TeamsState = {
   teams: [],
   active_player_team: undefined,
@@ -35,7 +36,8 @@ export const TeamStore = signalStore(
     (
       store,
       teamApi = inject(TeamApiService),
-      players = inject(PlayersStore)
+      players = inject(PlayersStore),
+      toastr = inject(ToastrService)
     ) => ({
       loadOne: rxMethod<number>(
         pipe(
@@ -82,19 +84,11 @@ export const TeamStore = signalStore(
         pipe(
           tap(() => patchState(store, { isLoading: true })),
           switchMap((team) =>
-            teamApi.updateTeam(players.active_player()!.id, team).pipe(
+            teamApi.updateTeam(team).pipe(
               tapResponse({
                 next: (team: Team[]) => {
-                  console.log(team);
-                  const new_teams = [...store.teams()];
-                  new_teams[players.active_player()!.id] = {
-                    player_id: players.active_player()!.id,
-                    team: team,
-                  };
-                  patchState(store, {
-                    teams: new_teams,
-                  });
-                  patchState(store, { teams: new_teams });
+                  patchState(store, { active_player_team: team });
+                  toastr.success('Team updated successfully');
                 },
                 error: console.error,
                 finalize: () => patchState(store, { isLoading: false }),

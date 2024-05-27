@@ -3,7 +3,6 @@ export interface Team {
   prediction_type_id: number;
   driver_name?: string;
   driver_id?: number;
-  player_id: number;
 }
 
 export type AddTeam = Omit<Team, 'id'>;

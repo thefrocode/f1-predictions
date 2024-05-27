@@ -207,7 +207,7 @@ export default class MainSeeder implements Seeder {
         type: 'Random',
       },
       {
-        name: 'Most_Positions_Gained',
+        name: 'Most_Overtakes',
         type: 'Random',
       },
       {

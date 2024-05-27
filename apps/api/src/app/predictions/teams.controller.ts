@@ -24,9 +24,11 @@ export class TeamsController {
     return this.teamsService.create(team);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() team: CreateTeamDto[]) {
-    return this.teamsService.update(+id, team);
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  update(@Req() req: any, @Body() team: CreateTeamDto[]) {
+    console.log(req.user.player_id);
+    return this.teamsService.update(req.user.player_id, team);
   }
   @UseGuards(JwtAuthGuard)
   @Get()

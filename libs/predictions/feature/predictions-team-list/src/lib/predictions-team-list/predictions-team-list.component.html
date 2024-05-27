@@ -1,49 +1,48 @@
-<div class="flex gap-4">
-  <div class="bg-white rounded-md w-2/3">
+<div class="flex gap-4 team h-full">
+  <div class="text-white rounded-md w-2/3 flex flex-col h-full justify-between">
     <p class="self-center text-center font-lemonada text-lg py-2">My Team</p>
-    <div class="grid px-14 py-4">
-      @for(driver of selected_team() | keyvalue; track driver){
+    <div class="grid px-14 flex-1">
+      @for(driver of selected_team() |keyvalue: originalOrder ; let index =
+      $index; track index){
       <div class="col flex justify-center">
-        @if(driver.value){
-        <div
-          class="bg-[#FAF2F8] w-[150px] h-full rounded-md flex flex-col relative"
-        >
+        <div class="flex flex-col grid-box">
           <i
-            class="absolute right-0 top-0 bi bi-x-lg px-2 py-0.5"
+            class="text-white remove-icon bi bi-x-lg px-2 py-0.5 text-right"
             (click)="removeSelection(driver.key, driver.value)"
           ></i>
-          <img src="assets/img/driver.png" class="mt-4" />
-          <hr class="border" />
-          <div class="flex justify-between text-sm items-center p-2">
-            <p class="text-center">{{ driver.key }}</p>
-            <p class="text-center">{{ driver.value }}</p>
+          <p class="text-center">
+            {{ driver.key | replaceUnderscore }}
+          </p>
+          <div class="border w-[150px] border-b-0">
+            @if(driver.value){
+            <p class="driver-value mx-auto text-center mt-2">
+              {{ driver.value }}
+            </p>
+            }@else{
+            <p class="mx-auto w-[20px]">
+              <i
+                class="bi bi-plus text-2xl"
+                (click)="setSelectionPrediction(driver.key)"
+              ></i>
+            </p>
+
+            }
           </div>
         </div>
-        }@else {
-        <div
-          class="bg-[#FAF2F8] w-[150px] h-full rounded-md flex flex-col items-center justify-center"
-          (click)="setSelectionPrediction(driver.key)"
-        >
-          <span
-            class="bg-[#B1B1EC] rounded-md w-[fit-content] mx-auto px-1 py-0.5"
-          >
-            <i class="bi bi-plus text-white mx-auto"></i>
-          </span>
-          <p class="text-center">Add Driver</p>
-        </div>
-        }
       </div>
       }
     </div>
     <button
-      class="text-white rounded-sm px-4 py-1.5 text-sm bg-[#B1B1EC] font-semibold my-2 mx-auto block"
+      class="text-white rounded-sm px-4 py-1.5 text-sm bg-[#B1B1EC] mt-6 font-semibold mx-auto block"
       (click)="saveTeam()"
     >
       Save Team
     </button>
   </div>
   @if(selected_position){
-  <div class="bg-white rounded-md flex-grow p-4">
+  <div
+    class="bg-[#381D57] text-white rounded-md flex-grow p-4 overflow-y-scroll h-full"
+  >
     <div
       class="w-full bg-[#B1B1EC] rounded-md flex gap-2 px-2 py-0.5 mt-2 mb-3 text-2xs text-white font-lemonada"
     >

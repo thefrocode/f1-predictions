@@ -24,10 +24,9 @@ export class TeamApiService {
     );
   }
 
-  updateTeam(player_id: number, team: Team[]): Observable<Team[]> {
-    return this.http.patch<Team[]>(
-      `${this.appConfig.baseURL}/teams/${player_id}`,
-      team
-    );
+  updateTeam(team: Team[]): Observable<Team[]> {
+    return this.http.patch<Team[]>(`${this.appConfig.baseURL}/teams`, team, {
+      withCredentials: true,
+    });
   }
 }
