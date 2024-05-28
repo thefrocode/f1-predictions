@@ -23,7 +23,9 @@
     </div>
   </div>
 </div>
+
 <div class="bg-[#381D57] text-white rounded-lg px-2 py-4">
+  @if(!selectedPlayer){
   <div class="relative">
     <input
       class="bg-[#AA84D5] rounded-md w-full h-[30px] focus:border-none px-8 focus:outline-none"
@@ -36,9 +38,10 @@
     class="w-full bg-[#954FEE] opacity-60 rounded-md flex gap-1 px-2 py-2 mt-2 mb-3 text-2xs text-white font-lemonada"
   >
     <p class="w-1/10">Pos</p>
-    <p class="w-3/5">Player Name</p>
-    <p>Last R</p>
-    <p>Total</p>
+    <p class="w-1/2">Player Name</p>
+    <p class="grow">Last R</p>
+    <p class="grow">Total</p>
+    <p class="grow"></p>
   </div>
   @if(league_players.players()){ @for(player of league_players.players(); track
   player;let index = $index){
@@ -51,9 +54,13 @@
     }"
   >
     <p class="w-1/10">{{ player.position }}.</p>
-    <p class="w-3/5">{{ player.name }}</p>
+    <p class="w-1/2">{{ player.name }}</p>
     <p class="grow">{{ player.last_race_points }}</p>
     <p class="grow">{{ player.total_points }}</p>
+    <i
+      class="bi bi-chevron-right text-white grow"
+      (click)="loadOneTeam(player)"
+    ></i>
   </div>
   } }
   <div class="flex justify-center gap-4 mt-2 items-center">
@@ -77,4 +84,16 @@
       <i class="bi bi-chevron-double-right text-2xl text-[#F98AE0]"></i>
     </button>
   </div>
+  }@else {
+
+  <i class="bi bi-arrow-left" (click)="goBack()"></i>
+  <p class="text-center text-lg text-white">{{ selectedPlayer.name }}</p>
+  @for(prediction of selected_team()?.team; track prediction){
+  <div class="flex flex-col h-full">
+    <div class="grid grid-cols-2 grow py-0.5">
+      <p>{{ prediction.prediction_type | replaceUnderscore }}</p>
+      <p>{{ prediction.driver_name }}</p>
+    </div>
+  </div>
+  } }
 </div>

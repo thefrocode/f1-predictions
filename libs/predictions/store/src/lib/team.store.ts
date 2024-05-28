@@ -39,6 +39,9 @@ export const TeamStore = signalStore(
       players = inject(PlayersStore),
       toastr = inject(ToastrService)
     ) => ({
+      removeSelectedPlayer: () => {
+        patchState(store, { selected_player_id: null });
+      },
       loadOne: rxMethod<number>(
         pipe(
           tap(() =>
