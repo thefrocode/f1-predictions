@@ -60,6 +60,7 @@ export class HomeComponent {
   });
   constructor() {
     this.league_players.loadActivePlayerLeague(this.active_player.player);
+    this.leagues.loadAll({ page: 1, filter: '' });
   }
 
   ngOnInit() {

@@ -69,7 +69,7 @@ export class LeaguesService {
         'league_players.player_id as player_id',
         'ROW_NUMBER() over(partition by league_id order by points desc) as position',
       ])
-      .innerJoin(
+      .leftJoin(
         '(' + pointsSubQuery + ')',
         'points',
         'league_players.player_id=points.player_id'

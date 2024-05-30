@@ -33,7 +33,6 @@ export class LeagueApiService {
     if (filter) {
       params = params.append('filter', filter);
     }
-
     return this.http.get<PaginatedResponse<League>>(
       `${this.appConfig.baseURL}/leagues`,
       {
